@@ -17,7 +17,7 @@ class CreateClassScheduleTable extends Migration {
 			$table->bigIncrements('id');
 			$table->integer('teacher_id')->nullable()->foreign('teacher_id')->references('id')->on('teachers');
 			$table->integer('room_id')->nullable()->foreign('room_id')->references('id')->on('rooms');
-			$table->integer('subject_id')->nullable()->foreign('subject_id')->references('id')->on('courses');
+			$table->integer('course_id')->nullable()->foreign('course_id')->references('id')->on('courses');
 			$table->date('date')->nullable();
 			$table->time('start_time')->nullable();
 			$table->time('end_time')->nullable();
@@ -34,7 +34,7 @@ class CreateClassScheduleTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('class_schedule');
+		Schema::dropIfExists('class_schedule');
 	}
 
 }

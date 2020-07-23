@@ -15,12 +15,11 @@ class CreateTeachersTable extends Migration {
 		Schema::create('teachers', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('user_id')->nullable()->foreign('user_id', 'user_id')->references('id')->on('users');
-			$table->boolean('status')->nullable();
-			$table->integer('department')->nullable()->foreign('department', 'department_id')->references('id')->on('departments');
+			$table->integer('user_id')->nullable()->foreign('user_id')->references('id')->on('users');
+            $table->integer('rank_id')->nullable()->foreign('rank_id')->references('id')->on('teacher_ranks');
+            $table->enum('is_active',['1','0'])->default('1');
 			$table->date('join_date')->nullable();
 			$table->timestamps();
-
 		});
 	}
 
@@ -32,7 +31,7 @@ class CreateTeachersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('teachers');
+		Schema::dropIfExists('teachers');
 	}
 
 }

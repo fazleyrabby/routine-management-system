@@ -15,9 +15,10 @@ class CreateShiftTable extends Migration {
 		Schema::create('shifts', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->timestamps();
-			$table->enum('status', ['active', 'inactive']);
-			$table->string('shift_name', 45)->nullable()->comment('day/evening');
+            $table->string('shift_name', 45)->nullable()->comment('day/evening');
+            $table->string('slug')->unique();
+            $table->enum('is_active',['1','0'])->default('1');
+            $table->timestamps();
 		});
 	}
 
@@ -29,7 +30,7 @@ class CreateShiftTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('shifts');
+		Schema::dropIfExists('shifts');
 	}
 
 }

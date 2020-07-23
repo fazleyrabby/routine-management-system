@@ -19,7 +19,7 @@ class CreateAssignedClassTable extends Migration {
 			$table->bigInteger('schedule_id')->nullable()->foreign('schedule_id')->references('id')->on('class_schedule')->unsigned();
 			$table->date('class_date')->nullable();
 			$table->timestamps();
-			$table->boolean('status')->nullable();
+            $table->enum('is_active',['1','0'])->default('1');
 
 		});
 	}
@@ -32,7 +32,7 @@ class CreateAssignedClassTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('assigned_class');
+		Schema::dropIfExists('assigned_class');
 	}
 
 }

@@ -1,37 +1,38 @@
-@section('title', 'Register')
-
+@section('title', 'Login')
 @include('layouts.includes.header')
-
+<style>
+    body {
+        background: linear-gradient(rgba(0, 0, 0, .50),rgba(0, 0, 0, .50) ), url( {{asset ('assets/images/bg.jpg') }} );
+    }
+</style>
 <div class="container">
-    <h4 class="text-center mt-4">Routine Management System</h4>
+    <h4 class="text-center mt-4 text-light">Routine Management System</h4>
     <div class="row justify-content-center">
         <div class="col-md-8 pt-4">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">
+                    Login
+                    <a href="{{ route('home') }}" class="btn btn-sm btn-primary float-right">Home</a>
+                </div>
 
                 <div class="card-body">
-                    
+
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
-                        
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail / Username') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                
-                                @if ($errors->has('email'))
-                                <span class="invalid-feedback">
-                                    <strong>{{ $errors->first('email') }}</strong>
-                                </span>
-                                @endif
-                                
-                                {{-- @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                <input id="email" type="text" class="form-control
+                                @if ($errors->has('username') || $errors->has('email'))
+                                    is-invalid
+                                @endif " name="login" value="{{ old('username') ?: old('email') }}" required autocomplete="login" autofocus>
+
+                                @if ($errors->has('username') || $errors->has('email'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('username') ?: $errors->first('email') }}</strong>
                                     </span>
-                                @enderror --}}
+                                @endif
                             </div>
                         </div>
 
@@ -73,7 +74,7 @@
                                     </a>
                                 @endif
 
-                                
+
                             </div>
 
                             <div class="col-md-8 offset-md-4 pt-3">
@@ -83,7 +84,7 @@
                                 </a>
                             </div>
 
-                            
+
                         </div>
                     </form>
                 </div>

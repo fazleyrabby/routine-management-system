@@ -15,17 +15,11 @@ class CreateStudentsTable extends Migration {
 		Schema::create('students', function(Blueprint $table)
 		{
 			$table->bigIncrements('id');
-			$table->integer('user_id')->nullable()->foreign('user_id')->references('id')->on('users')->unsigned();
+			$table->integer('number_of_student');
 			$table->integer('batch')->nullable()->foreign('batch')->references('id')->on('batch')->unsigned();
-			$table->integer('current_semester')->nullable()->foreign('current_semester')->references('id')->on('semesters')->unsigned();
-			$table->integer('current_session')->nullable()->foreign('current_session')->references('id')->on('sessions')->unsigned();
-			$table->integer('current_section')->nullable()->foreign('current_section')->references('id')->on('sections')->unsigned();
-			$table->integer('department')->nullable()->foreign('department')->references('id')->on('departments')->unsigned();
-			$table->integer('study_program')->nullable()->foreign('study_program')->references('id')->on('study_program')->unsigned();
 			$table->integer('current_shift')->nullable()->foreign('current_shift')->references('id')->on('shifts')->unsigned();
-			$table->enum('status', array('active','inactive'))->default('active');
+            $table->enum('is_active',['1','0'])->default('1');
 			$table->timestamps();
-
 		});
 	}
 
@@ -37,7 +31,7 @@ class CreateStudentsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('students');
+		Schema::dropIfExists('students');
 	}
 
 }

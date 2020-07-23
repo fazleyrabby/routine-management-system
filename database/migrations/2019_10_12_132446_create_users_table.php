@@ -16,17 +16,16 @@ class CreateUsersTable extends Migration {
 		{
 			$table->bigIncrements('id');
 			$table->string('key')->nullable();
-			$table->string('id_no', 191)->comment('id,faculty')->nullable();
 			$table->string('firstname', 191)->nullable();
 			$table->string('lastname', 191)->nullable();
 			$table->date('date_of_birth')->nullable();
-			$table->string('username', 191)->nullable()->unique('username_UNIQUE');
+			$table->string('username', 191)->unique();
 			$table->boolean('gender')->nullable()->comment('1=male,2=female');
-			$table->string('email', 191)->nullable();
+			$table->string('email', 191)->unique();
 			$table->dateTime('email_verified_at')->nullable();
 			$table->string('password', 191)->nullable();
 			$table->enum('role', array('superadmin','admin','teacher'))->default('superadmin');
-			$table->enum('status', array('active','inactive'))->default('active');
+            $table->enum('is_active',['1','0'])->default('1');
 			$table->string('remember_token', 191)->nullable();
 			$table->string('photo', 191)->nullable();
 			$table->timestamps();
@@ -41,7 +40,7 @@ class CreateUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users');
+		Schema::dropIfExists('users');
 	}
 
 }

@@ -16,9 +16,9 @@ class CreateSectionsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('section_name', 45)->nullable()->comment('A,B,C..etc');
-			$table->string('section_code', 45)->nullable();
+			$table->string('slug', 45)->nullable();
 			$table->timestamps();
-			$table->boolean('status')->nullable();
+            $table->enum('is_active',['1','0'])->default('1');
 		});
 	}
 
@@ -30,7 +30,7 @@ class CreateSectionsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('sections');
+		Schema::dropIfExists('sections');
 	}
 
 }

@@ -15,7 +15,7 @@ class CreateAssignCoursesToTeachersTable extends Migration {
 		Schema::create('assign_courses_to_teachers', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('batch')->nullable()->index('batch_id_idx')->foreign('batch')->references('id')->on('batch')->unsigned();
+			$table->integer('batch')->nullable()->foreign('batch')->references('id')->on('batch')->unsigned();
 			$table->integer('section_id')->nullable()->foreign('section_id')->references('id')->on('sections')->unsigned();
 			$table->integer('session_id')->nullable()->foreign('session_id')->references('id')->on('sessions')->unsigned();
 			$table->integer('shift')->nullable()->foreign('shift')->references('id')->on('shifts')->unsigned();
@@ -34,7 +34,7 @@ class CreateAssignCoursesToTeachersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('assign_courses_to_teachers');
+		Schema::dropIfExists('assign_courses_to_teachers');
 	}
 
 }

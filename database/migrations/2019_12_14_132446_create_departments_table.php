@@ -17,7 +17,7 @@ class CreateDepartmentsTable extends Migration {
 			$table->increments('id');
 			$table->string('department_name', 45)->nullable()->comment('CSE, EEE');
 			$table->timestamps();
-			$table->enum('status', array('active','inactive'))->default('active');
+            $table->enum('is_active',['1','0'])->default('1');
 		});
 	}
 
@@ -29,7 +29,7 @@ class CreateDepartmentsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('departments');
+		Schema::dropIfExists('departments');
 	}
 
 }

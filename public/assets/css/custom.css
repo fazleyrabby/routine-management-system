@@ -9,7 +9,7 @@
 }
 @media (max-width: 768px) {
     .logo span{
-        font-size: 12px;    
+        font-size: 12px;
     }
 }
 
@@ -22,3 +22,24 @@ li.has-submenu > a:after {
     transform: translateY(50%);
     font-size: 15px;
   }
+
+
+/*.page-content-wrapper {*/
+/*    padding-top: 5rem !important;*/
+/*}*/
+.page-title-box .breadcrumb a{
+    color: #111 !important;
+}
+.breadcrumb > li + li{
+    position: relative;
+}
+.breadcrumb > li + li:before {
+    position: absolute;
+    left: -5px;
+    content: "\56" !important;
+    font-family: "dripicons-v2" !important;
+}
+
+.breadcrumb > li + li a{
+    padding-left: 15px;
+}

@@ -14,15 +14,23 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 
-Route::get('/', function () { return view('auth/login'); });
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/routine', 'HomeController@routineView')->name('routine');
 
-Route::get('/home', 'HomeController@index')->name('home'); 
-
-// Route::resource('home', 'HomeController');
-
-
-
-
+Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
+    Route::get('/', 'AdminController@index')->name('admin');
+    Route::get('teachers/requests', 'TeacherController@requests')->name('teachers.requests');
+    Route::resource('sessions', 'SessionController');
+    Route::resource('shifts', 'ShiftController');
+    Route::resource('rooms', 'RoomController');
+    Route::resource('teachers', 'TeacherController');
+    Route::resource('courses', 'StudentController');
+    Route::resource('batches', 'BatchController');
+    Route::resource('sections', 'SectionController');
+    Route::resource('users', 'UserController');
+    Route::resource('courses', 'CourseController');
+    Route::resource('routine_committee', 'RoutineCommitteeController');
+});
 
 #============================ *Logout Route* ============================#
 

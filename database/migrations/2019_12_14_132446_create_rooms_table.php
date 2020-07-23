@@ -18,7 +18,7 @@ class CreateRoomsTable extends Migration {
 			$table->string('building', 45)->nullable();
 			$table->string('room_no', 45)->nullable();
 			$table->timestamps();
-			$table->boolean('status')->nullable();
+            $table->enum('is_active',['1','0'])->default('1');
 		});
 	}
 
@@ -30,7 +30,7 @@ class CreateRoomsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('rooms');
+		Schema::dropIfExists('rooms');
 	}
 
 }

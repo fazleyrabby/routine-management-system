@@ -1,15 +1,14 @@
-   <!-- Navigation Bar-->
-   <header id="topnav">
+<header id="topnav">
     <div class="topbar-main">
         <div class="container-fluid">
 
             <!-- Logo container-->
             <div class="logo">
-                
-                <a href="{{ route('home')}}" class="logo">
+
+                <a href="{{ route('admin') }}" class="logo">
                     {{-- <img src="assets/images/logo-sm-light.png" alt="" class="logo-small">
                     <img src="assets/images/logo-light.png" alt="" class="logo-large"> --}}
-                    <span class="font-weight-bold">Routine Management Systemn</span>
+                    <span class="font-weight-bold">Routine Management System</span>
                 </a>
 
             </div>
@@ -22,11 +21,11 @@
                 <ul class="navbar-right d-flex list-inline float-right mb-0">
                     <li class="dropdown notification-list d-none d-sm-block">
                         <form role="search" class="app-search">
-                            <div class="form-group mb-0"> 
+                            <div class="form-group mb-0">
                                 <input type="text" class="form-control" placeholder="Search..">
                                 <button type="submit"><i class="fa fa-search"></i></button>
                             </div>
-                        </form> 
+                        </form>
                     </li>
 
                     <li class="dropdown notification-list">
@@ -70,25 +69,25 @@
                             <a href="javascript:void(0);" class="dropdown-item text-center text-primary">
                                 View all <i class="fi-arrow-right"></i>
                             </a>
-                        </div>        
+                        </div>
                     </li>
                     <li class="dropdown notification-list">
                         <div class="dropdown notification-list">
                             <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="assets/images/users/user-4.jpg" alt="user" class="rounded-circle">
+                                <img src="{{ asset('assets/images/users/user-4.jpg')  }}" alt="user" class="rounded-circle">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                                 <!-- item-->
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> Profile</a>
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5"></i> My Wallet</a>
-                                <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="mdi mdi-settings m-r-5"></i> Settings</a>
-                                <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> Lock screen</a>
-                                <div class="dropdown-divider"></div>
+{{--                                <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> Profile</a>--}}
+{{--                                <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5"></i> My Wallet</a>--}}
+{{--                                <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="mdi mdi-settings m-r-5"></i> Settings</a>--}}
+{{--                                <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> Lock screen</a>--}}
+{{--                                <div class="dropdown-divider"></div>--}}
                             <a class="dropdown-item text-danger" href="{{ route('logout') }}"><i class="mdi mdi-power text-danger"></i> Logout</a>
-                            </div>                                                                    
+                            </div>
                         </div>
                     </li>
-                    
+
                     <li class="menu-item list-inline-item">
                         <!-- Mobile menu toggle-->
                         <a class="navbar-toggle nav-link">
@@ -120,11 +119,6 @@
             <div id="navigation">
                 <!-- Navigation Menu-->
                 <ul class="navigation-menu">
-
-                    <li class="">
-                        <a href="index.html"><i class="mdi mdi-home"></i>Dashboard</a>
-                    </li>
-
                     {{-- <li class="has-submenu">
                         <a href="#"><i class="mdi mdi-buffer"></i>UI Elements</a>
                         <ul class="submenu megamenu">
@@ -248,8 +242,131 @@
                         </ul>
                     </li> --}}
 
+                    <li>
+                        <a href="{{ url("/admin") }}"><i class="mdi mdi-home"></i>Dashboard</a>
+                    </li>
+
                     <li class="has-submenu">
-                        <a href="#">Routine Comitee</a>
+                        <a href="#">Shift</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('shifts.index') }}">
+                                    View All
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('shifts.create') }}">
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#">Courses</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('courses.index') }}">
+                                    View all
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('courses.create') }}">
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#">Rooms</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('rooms.index') }}">
+                                    View all
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('rooms.create') }}">
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#">Teachers</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('teachers.index') }}">
+                                    View All
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('teachers.create') }}">
+                                    Add New
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('teachers.requests') }}">
+                                    Requests
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+
+
+                    <li class="has-submenu">
+                        <a href="#">Batch</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('batches.index') }}">
+                                    View all
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('batches.create') }}">
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#">Sessions</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="#">
+                                    View all
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#">Sections</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('sections.index') }}">
+                                    View all
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('sections.create') }}">
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#">Routine Committee</a>
                         <ul class="submenu">
                             <li>
                                 <a href="#">
@@ -262,28 +379,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li> 
-
-                    <li class="has-submenu">
-                        <a href="#">Teachers</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="#">
-                                    View All
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Add New 
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Requests 
-                                </a>
-                            </li>
-                        </ul>
-                    </li> 
+                    </li>
 
                 </ul>
                 <!-- End navigation menu -->

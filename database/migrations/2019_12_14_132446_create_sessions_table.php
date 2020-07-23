@@ -20,7 +20,7 @@ class CreateSessionsTable extends Migration {
 			$table->date('session_end')->nullable();
 			$table->string('session_code', 45)->nullable();
 			$table->timestamps();
-			$table->enum('status',array('active','inactive'))->default('active');
+            $table->enum('is_active',['1','0'])->default('1');
 		});
 	}
 
@@ -32,7 +32,7 @@ class CreateSessionsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('sessions');
+		Schema::dropIfExists('sessions');
 	}
 
 }
