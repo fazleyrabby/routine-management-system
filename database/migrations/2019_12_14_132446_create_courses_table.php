@@ -19,8 +19,8 @@ class CreateCoursesTable extends Migration {
 		$table->string('credit', 191)->nullable();
 		$table->string('course_code', 45)->unique()->comment('CSE 222, CEN 431 ..etc');
 		$table->timestamps();
-		$table->enum('is_active',['1','0'])->default('1');
-		$table->boolean('course_type')->nullable()->comment('0=Theory,1=Sessional');
+		$table->enum('is_active',['yes','no'])->default('yes');
+		$table->enum('course_type',['0', '1'])->comment('0=Theory,1=Sessional');
 		});
 	}
 

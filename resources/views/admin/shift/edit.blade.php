@@ -42,11 +42,11 @@
                                         {!! Form::label('Status') !!}
                                     </div>
                                     <div class="col-md-10">
-                                        {!! Form::select('is_active', [0=> 'Inactive',1 => 'Active'], isset($shift->is_active) ? $shift->is_active : null,['class'=> 'form-control']) !!}
+                                        {!! Form::select('is_active', ['no'=> 'Inactive','yes' => 'Active'], isset($shift->is_active) ? $shift->is_active : null,['class'=> 'form-control']) !!}
                                     </div>
                                 </div>
 
-                                {!! Form::submit('Create',['class' => 'btn btn-sm btn-primary'] ) !!}
+                                {!! Form::submit('Update',['class' => 'btn btn-sm btn-warning'] ) !!}
 
                                 {!! Form::close() !!}
 

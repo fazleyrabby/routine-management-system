@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Room;
+use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class RoomController extends Controller
 {
@@ -14,7 +15,8 @@ class RoomController extends Controller
      */
     public function index()
     {
-        return view('admin.room.index');
+        $rooms = Room::orderBy('id', 'DESC')->get();
+        return view('admin.room.index', compact('rooms'));
     }
 
     /**
@@ -24,7 +26,7 @@ class RoomController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.room.create');
     }
 
     /**
@@ -35,7 +37,24 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'room_no' => 'required|unique:rooms',
+            'building' => 'required',
+        ],
+            [
+                'room_no.required' => 'Enter Room No',
+                'room_no.unique' => 'Room no already exist',
+                'building.required' => 'Enter Building Name'
+            ]);
+
+        $room = new Room();
+        $room->building = $request->building;
+        $room->room_no = $request->room_no;
+        $room->room_type = $request->room_type;
+        $room->save();
+
+        Session::flash('message', 'Room created successfully');
+        return redirect()->route('rooms.index');
     }
 
     /**
@@ -46,7 +65,6 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        //
     }
 
     /**
@@ -57,7 +75,7 @@ class RoomController extends Controller
      */
     public function edit(Room $room)
     {
-        //
+        return view('admin.room.edit', compact('room'));
     }
 
     /**
@@ -69,7 +87,24 @@ class RoomController extends Controller
      */
     public function update(Request $request, Room $room)
     {
-        //
+        $this->validate($request, [
+            'room_no' => 'required|unique:rooms,room_no,' . $room->id,
+            'building' => 'required',
+        ],
+            [
+                'room_no.required' => 'Enter Room No',
+                'room_no.unique' => 'Room no already exist',
+                'building.required' => 'Enter Building Name'
+            ]);
+
+        $room->building = $request->building;
+        $room->room_no = $request->room_no;
+        $room->room_type = $request->room_type;
+        $room->is_active = $request->is_active;
+        $room->save();
+
+        Session::flash('message', 'Room updated successfully');
+        return redirect()->route('rooms.index');
     }
 
     /**
@@ -80,6 +115,8 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
-        //
+        $room->delete();
+        Session::flash('delete-message', 'Room deleted successfully');
+        return redirect()->route('rooms.index');
     }
 }

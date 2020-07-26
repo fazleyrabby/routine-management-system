@@ -1,10 +1,29 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Teacher extends Model
 {
-    //
+    protected $table = 'teachers';
+    public $primaryKey = 'id';
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Department');
+    }
+
+    public function rank()
+    {
+        return $this->belongsTo('App\Models\TeacherRank');
+    }
+
 }
+
+

@@ -17,7 +17,7 @@ class CreateShiftTable extends Migration {
 			$table->increments('id');
             $table->string('shift_name', 45)->nullable()->comment('day/evening');
             $table->string('slug')->unique();
-            $table->enum('is_active',['1','0'])->default('1');
+            $table->enum('is_active',['yes','no'])->default('yes');
             $table->timestamps();
 		});
 	}

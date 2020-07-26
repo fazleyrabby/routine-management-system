@@ -17,7 +17,7 @@ class CreateBatchTable extends Migration {
 			$table->increments('id');
 			$table->integer('batch_no')->nullable()->comment('CSE, EEE');
 			$table->timestamps();
-            $table->enum('is_active',['1','0'])->default('1');
+            $table->enum('is_active',['yes','no'])->default('yes');
 		});
 	}
 

@@ -23,6 +23,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::resource('sessions', 'SessionController');
     Route::resource('shifts', 'ShiftController');
     Route::resource('rooms', 'RoomController');
+    Route::resource('departments', 'DepartmentController');
     Route::resource('teachers', 'TeacherController');
     Route::resource('courses', 'StudentController');
     Route::resource('batches', 'BatchController');

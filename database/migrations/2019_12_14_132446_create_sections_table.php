@@ -18,7 +18,7 @@ class CreateSectionsTable extends Migration {
 			$table->string('section_name', 45)->nullable()->comment('A,B,C..etc');
 			$table->string('slug', 45)->nullable();
 			$table->timestamps();
-            $table->enum('is_active',['1','0'])->default('1');
+            $table->enum('is_active',['yes','no'])->default('yes');
 		});
 	}
 

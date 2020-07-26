@@ -18,7 +18,7 @@ class CreateStudentsTable extends Migration {
 			$table->integer('number_of_student');
 			$table->integer('batch')->nullable()->foreign('batch')->references('id')->on('batch')->unsigned();
 			$table->integer('current_shift')->nullable()->foreign('current_shift')->references('id')->on('shifts')->unsigned();
-            $table->enum('is_active',['1','0'])->default('1');
+            $table->enum('is_active',['yes','no'])->default('yes');
 			$table->timestamps();
 		});
 	}

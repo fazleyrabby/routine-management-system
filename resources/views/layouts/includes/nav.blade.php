@@ -247,6 +247,22 @@
                     </li>
 
                     <li class="has-submenu">
+                        <a href="#">Department</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('departments.index') }}">
+                                    View All
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('departments.create') }}">
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
                         <a href="#">Shift</a>
                         <ul class="submenu">
                             <li>

@@ -20,7 +20,7 @@ class CreateSessionsTable extends Migration {
 			$table->date('session_end')->nullable();
 			$table->string('session_code', 45)->nullable();
 			$table->timestamps();
-            $table->enum('is_active',['1','0'])->default('1');
+            $table->enum('is_active',['yes','no'])->default('yes');
 		});
 	}
 

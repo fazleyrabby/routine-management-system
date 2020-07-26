@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Course')
+@section('title', 'Room')
 
 @section('stylesheets')
     <!-- DataTables -->
@@ -18,9 +18,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="mt-0 header-title mb-4">
-                                    Course - List
-                                    <a href="{{ route('courses.create') }}" class="btn btn-sm btn-primary float-right">Add
-                                        New</a>
+                                    Room - List
+                                    <a href="{{ route('rooms.create') }}" class="btn btn-sm btn-primary float-right">Add New</a>
                                 </div>
                                 @if (Session::has('message'))
                                     <div class="alert-dismissable alert alert-success">
@@ -42,10 +41,9 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Course Name</th>
-                                        <th>Course Code</th>
-                                        <th>Credit</th>
-                                        <th>Course Type</th>
+                                        <th>Building</th>
+                                        <th>Room No</th>
+                                        <th>Room Type</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -53,32 +51,31 @@
 
 
                                     <tbody>
-                                    @foreach($courses as $course)
+                                    @foreach($rooms as $room)
                                         <tr>
-                                            <td>{{ $course->id }}</td>
-                                            <td>{{ $course->course_name }}</td>
-                                            <td>{{ $course->course_code }}</td>
-                                            <td>{{ $course->credit }}</td>
-                                            <td>{{ $course->course_type == 0 ? 'Theory' : 'Sessional' }}</td>
-                                            <td>{{ $course->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
+                                            <td>{{ $room->id }}</td>
+                                            <td>{{ $room->building }}</td>
+                                            <td>{{ $room->room_no }}</td>
+                                            <td>{{ $room->room_type == '0' ? 'Theory' : 'Sessional' }}</td>
+                                            <td>{{ $room->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
                                             <td>
-                                                <a href="{{ route('courses.edit', $course->id) }}"
+                                                <a href="{{ route('rooms.edit', $room->id) }}"
                                                    class="btn btn-sm btn-primary">Edit</a>
 
-                                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{$course->id}}">Delete</button>
+                                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{$room->id}}">Delete</button>
                                             </td>
                                         </tr>
-                                        <div class="modal fade bs-example-modal-center{{$course->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                        <div class="modal fade bs-example-modal-center{{$room->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5>Are you sure? You want to delete this?</h5>
                                                     </div>
                                                     <div class="modal-body">
-                                                        {!! Form::open(['route' => ['courses.destroy', $course->id ], 'method' => 'delete', 'style' => 'display:inline']) !!}
+                                                        {!! Form::open(['route' => ['rooms.destroy', $room->id ], 'method' => 'delete', 'style' => 'display:inline']) !!}
                                                         {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
                                                         {!! Form::close() !!}
-                                                        <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{$course->id}}"> No </button>
+                                                        <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{$room->id}}"> No </button>
                                                     </div>
                                                 </div>
                                             </div>

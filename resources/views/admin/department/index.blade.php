@@ -1,260 +1,138 @@
 @extends('layouts.app')
 
-@section('title', 'Home')
+@section('title', 'Department')
+
+@section('stylesheets')
+    <!-- DataTables -->
+    <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
+          type="text/css"/>
+    <link href="{{ asset('assets/plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
+@endsection
 
 @section('content')
-    <!-- page wrapper start -->
-    <div class="wrapper">
-        <div class="page-title-box">
-            <div class="container-fluid">
-
-                <div class="row">
-                    <div class="col-sm-12">
-
-                        <h4 class="page-title">Teachers</h4>
-
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
+    <div class="page-content-wrapper">
+        <div class="container-fluid">
+            <!-- end row -->
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="mt-0 header-title mb-4">
+                                Department - List
+                                <a href="{{ route('departments.create') }}" class="btn btn-sm btn-primary float-right">Add New</a>
                             </div>
-                        @endif
-
-                        {{ __('You are logged in!') }}
-
-                    </div>
-                </div>
-            </div>
-            <!-- end container-fluid -->
-
-        </div>
-        <!-- page-title-box -->
-
-        <div class="page-content-wrapper">
-            <div class="container-fluid">
-                <!-- end row -->
-
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="mt-0 header-title mb-4">Latest Trasaction</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-hover mb-0">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">(#) Id</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Amount</th>
-                                            <th scope="col" colspan="2">Status</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th scope="row">#15236</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-2.jpg" alt="" class="thumb-md rounded-circle mr-2"> Jeanette James
-                                                </div>
-                                            </td>
-                                            <td>14/8/2018</td>
-                                            <td>$104</td>
-                                            <td><span class="badge badge-success">Delivered</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#15237</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-3.jpg" alt="" class="thumb-md rounded-circle mr-2"> Christopher Taylor
-                                                </div>
-                                            </td>
-                                            <td>15/8/2018</td>
-                                            <td>$112</td>
-                                            <td><span class="badge badge-warning">Pending</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#15238</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-4.jpg" alt="" class="thumb-md rounded-circle mr-2"> Edward Vazquez
-                                                </div>
-                                            </td>
-                                            <td>15/8/2018</td>
-                                            <td>$116</td>
-                                            <td><span class="badge badge-success">Delivered</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#15239</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-5.jpg" alt="" class="thumb-md rounded-circle mr-2"> Michael Flannery
-                                                </div>
-                                            </td>
-                                            <td>16/8/2018</td>
-                                            <td>$109</td>
-                                            <td><span class="badge badge-primary">Cancel</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#15240</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-6.jpg" alt="" class="thumb-md rounded-circle mr-2"> Jamie Fishbourne
-                                                </div>
-                                            </td>
-                                            <td>17/8/2018</td>
-                                            <td>$120</td>
-                                            <td><span class="badge badge-success">Delivered</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                            @if (Session::has('message'))
+                                <div class="alert-dismissable alert alert-success">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x
+                                    </button>
+                                    {{ Session('message') }}
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="mt-0 header-title mb-4">Latest Order</h4>
-                                <div class="table-responsive order-table">
-                                    <table class="table table-hover mb-0">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">(#) Id</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Date/Time</th>
-                                            <th scope="col">Amount</th>
-                                            <th scope="col" colspan="2">Status</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <th scope="row">#14562</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-4.jpg" alt="" class="thumb-md rounded-circle mr-2"> Matthew Drapeau
-                                                </div>
-                                            </td>
-                                            <td>17/8/2018
-                                                <p class="font-13 text-muted mb-0">8:26AM</p>
-                                            </td>
-                                            <td>$104</td>
-                                            <td><span class="badge badge-success badge-pill"><i class="mdi mdi-checkbox-blank-circle text-success"></i> Delivered</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#14563</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-5.jpg" alt="" class="thumb-md rounded-circle mr-2"> Ralph Shockey
-                                                </div>
-                                            </td>
-                                            <td>18/8/2018
-                                                <p class="font-13 text-muted mb-0">10:18AM</p>
-                                            </td>
-                                            <td>$112</td>
-                                            <td><span class="badge badge-warning badge-pill"><i class="mdi mdi-checkbox-blank-circle text-warning"></i> Pending</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#14564</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-6.jpg" alt="" class="thumb-md rounded-circle mr-2"> Alexander Pierson
-                                                </div>
-                                            </td>
-                                            <td>18//8/2018
-                                                <p class="font-13 text-muted mb-0">12:36PM</p>
-                                            </td>
-                                            <td>$116</td>
-                                            <td><span class="badge badge-success badge-pill"><i class="mdi mdi-checkbox-blank-circle text-success"></i> Delivered</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#14565</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-7.jpg" alt="" class="thumb-md rounded-circle mr-2"> Robert Rankin
-                                                </div>
-                                            </td>
-                                            <td>19/8/2018
-                                                <p class="font-13 text-muted mb-0">11:47AM</p>
-                                            </td>
-                                            <td>$109</td>
-                                            <td><span class="badge badge-primary badge-pill"><i class="mdi mdi-checkbox-blank-circle text-primary"></i> Cancel</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#14566</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-8.jpg" alt="" class="thumb-md rounded-circle mr-2"> Myrna Shields
-                                                </div>
-                                            </td>
-                                            <td>20/8/2018
-                                                <p class="font-13 text-muted mb-0">02:52PM</p>
-                                            </td>
-                                            <td>$120</td>
-                                            <td><span class="badge badge-success badge-pill"><i class="mdi mdi-checkbox-blank-circle text-success"></i> Delivered</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                            @endif
+                            @if (Session::has('delete-message'))
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x
+                                    </button>
+                                    {{ Session('delete-message') }}
                                 </div>
-                            </div>
+                            @endif
+
+
+                            <table id="datatable-buttons"
+                                   class="table table-striped table-bordered dt-responsive nowrap"
+                                   style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Department Name</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+
+
+                                <tbody>
+
+                                @foreach($departments as $department)
+                                    <tr>
+                                        <td>{{ $department->id }}</td>
+                                        <td>{{ $department->department_name }}</td>
+                                        <td>{{ $department->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
+                                        </td>
+
+                                        <td>
+                                            <a href="{{ route('departments.edit', $department->id) }}"
+                                               class="btn btn-sm btn-primary">Edit</a>
+
+                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{$department->id}}">Delete</button>
+                                        </td>
+                                    </tr>
+                                    <div class="modal fade bs-example-modal-center{{$department->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5>Are you sure? You want to delete this?</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {!! Form::open(['route' => ['departments.destroy', $department->id ], 'method' => 'delete', 'style' => 'display:inline']) !!}
+                                                    {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
+                                                    {!! Form::close() !!}
+                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{$department->id}}"> No </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <!-- end row -->
+
             </div>
-            <!-- end container-fluid -->
+            <!-- end row -->
         </div>
-        <!-- end page content-->
+        <!-- end container-fluid -->
+    </div>
+    <!-- end page content-->
 
     </div>
     <!-- page wrapper end -->
 @endsection
+
+
+@push('script')
+    <!-- Datatable init js -->
+
+    <!-- Required datatable js -->
+    <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/buttons.colVis.min.js') }}"></script>
+    <script src="../"></script>
+    <!-- Buttons examples -->
+
+
+    <script>
+        $(document).ready(function () {
+            $('#datatable').DataTable();
+
+            //Buttons examples
+            var table = $('#datatable-buttons').DataTable({
+                lengthChange: false,
+                buttons: ['copy', 'excel', 'pdf', 'print',]
+            });
+
+            table.buttons().container()
+                .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+
+
+@endpush

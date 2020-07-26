@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Cassandra\Date;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Teacher;
 
 class TeacherController extends Controller
 {
@@ -14,7 +16,8 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return view('admin.teacher.index');
+        $data = Teacher::with(['department','rank','user'])->get();
+        return $data;
     }
 
     /**

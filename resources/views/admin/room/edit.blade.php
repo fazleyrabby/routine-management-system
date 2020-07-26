@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Course')
+@section('title', 'Room')
 
 @section('stylesheets')
     <!-- DataTables -->
@@ -20,48 +20,34 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="mt-0 header-title mb-4">
-                                Course - Create
-                                <a href="{{ route('courses.index') }}" class="btn btn-sm btn-primary float-right">Course List</a>
+                                Room - Edit
+                                <a href="{{ route('rooms.index') }}" class="btn btn-sm btn-primary float-right">Room List</a>
                             </div>
-                            {!! Form::open(['route' =>'courses.store'])!!}
+                            {!! Form::open(['route' => ['rooms.update', $room->id], "method"=>"put" ])!!}
 
-                            <div class="form-group row @if($errors->has('course_name')) has-error @endif">
+                            <div class="form-group row @if($errors->has('building')) has-error @endif">
                                 <div class="col-md-2 align-self-center">
-                                    {!! Form::label('course Name') !!}
+                                    {!! Form::label('Building') !!}
                                 </div>
                                 <div class="col-md-10">
-                                    {!! Form::text('course_name', $course->course_name, ['class'=> 'form-control']) !!}
-                                    @if ($errors->has('course_name'))
+                                    {!! Form::text('building', $room->building, ['class'=> 'form-control']) !!}
+                                    @if ($errors->has('building'))
                                         <span class="help-block">
-                                            {!! $errors->first('course_name') !!}
+                                            {!! $errors->first('building') !!}
                                         </span>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="form-group row @if($errors->has('course_code')) has-error @endif">
+                            <div class="form-group row @if($errors->has('room_no')) has-error @endif">
                                 <div class="col-md-2 align-self-center">
-                                    {!! Form::label('course Code') !!}
+                                    {!! Form::label('Room No') !!}
                                 </div>
                                 <div class="col-md-10">
-                                    {!! Form::text('course_code', $course->course_code, ['class'=> 'form-control']) !!}
-                                    @if ($errors->has('course_code'))
+                                    {!! Form::text('room_no', $room->room_no, ['class'=> 'form-control']) !!}
+                                    @if ($errors->has('room_no'))
                                         <span class="help-block">
-                                            {!! $errors->first('course_code') !!}
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group row @if($errors->has('credit')) has-error @endif">
-                                <div class="col-md-2 align-self-center">
-                                    {!! Form::label('Credit') !!}
-                                </div>
-                                <div class="col-md-10">
-                                    {!! Form::text('credit', $course->credit, ['class'=> 'form-control']) !!}
-                                    @if ($errors->has('credit'))
-                                        <span class="help-block">
-                                            {!! $errors->first('credit') !!}
+                                            {!! $errors->first('room_no') !!}
                                         </span>
                                     @endif
                                 </div>
@@ -69,10 +55,10 @@
 
                             <div class="form-group row">
                                 <div class="col-md-2 align-self-center">
-                                    {!! Form::label('Course Type') !!}
+                                    {!! Form::label('Room Type') !!}
                                 </div>
                                 <div class="col-md-10">
-                                    {!! Form::select('course_type', [0=> 'Theory',1 => 'Sessional'], $course->course_type ,['class'=> 'form-control']) !!}
+                                    {!! Form::select('room_type', [0=> 'Theory',1 => 'Sessional'], $room->room_type ,['class'=> 'form-control']) !!}
                                 </div>
                             </div>
 
@@ -81,7 +67,7 @@
                                     {!! Form::label('Status') !!}
                                 </div>
                                 <div class="col-md-10">
-                                    {!! Form::select('is_active', ['no'=> 'Inactive','yes' => 'Active'], $course->is_active ,['class'=> 'form-control']) !!}
+                                    {!! Form::select('is_active',['no'=> 'Inactive','yes' => 'Active'], $room->is_active ,['class'=> 'form-control']) !!}
                                 </div>
                             </div>
 

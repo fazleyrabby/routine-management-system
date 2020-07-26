@@ -16,7 +16,7 @@ class CreateTeacherRanksTable extends Migration
         Schema::create('teacher_ranks', function (Blueprint $table) {
             $table->id();
             $table->string('rank')->nullable();
-            $table->enum('is_active',['1','0'])->default('1');
+            $table->enum('is_active',['yes','no'])->default('yes');
             $table->timestamps();
         });
     }

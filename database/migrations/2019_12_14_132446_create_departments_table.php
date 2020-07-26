@@ -15,9 +15,9 @@ class CreateDepartmentsTable extends Migration {
 		Schema::create('departments', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->string('department_name', 45)->nullable()->comment('CSE, EEE');
+			$table->string('department_name', 45)->nullable()->comment('CSE, EEE, MBA');
+            $table->enum('is_active',['yes','no'])->default('yes');
 			$table->timestamps();
-            $table->enum('is_active',['1','0'])->default('1');
 		});
 	}
 

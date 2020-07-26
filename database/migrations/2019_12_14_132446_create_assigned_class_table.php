@@ -19,7 +19,7 @@ class CreateAssignedClassTable extends Migration {
 			$table->bigInteger('schedule_id')->nullable()->foreign('schedule_id')->references('id')->on('class_schedule')->unsigned();
 			$table->date('class_date')->nullable();
 			$table->timestamps();
-            $table->enum('is_active',['1','0'])->default('1');
+            $table->enum('is_active',['yes','no'])->default('yes');
 
 		});
 	}

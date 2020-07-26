@@ -56,7 +56,7 @@
                                             <td>{{ $shift->id }}</td>
                                             <td>{{ $shift->shift_name }}</td>
                                             <td>{{ $shift->slug }}</td>
-                                            <td>{{ $shift->is_actve == 0 ? 'Active' : 'Inactive' }}</td>
+                                            <td>{{ $shift->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
                                             <td>
                                                 <a href="{{ route('shifts.edit', $shift->id) }}"
                                                    class="btn btn-sm btn-primary">Edit</a>
