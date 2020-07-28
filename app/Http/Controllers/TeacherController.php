@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use Cassandra\Date;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Teacher;
+use App\Models\TeacherRank;
 
 class TeacherController extends Controller
 {
@@ -27,7 +29,9 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        return view('admin.teacher.create');
+        $ranks = TeacherRank::orderBy('id', 'ASC')->where('is_active','yes')->pluck('rank', 'id');
+        $departments = Department::orderBy('id', 'ASC')->where('is_active','yes')->pluck('department_name', 'id');
+        return view('admin.teacher.create', compact('ranks','departments'));
     }
 
     /**

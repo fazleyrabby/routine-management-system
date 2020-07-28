@@ -11,9 +11,9 @@
 {{--        <script src="{{asset ('assets/plugins/raphael/raphael-min.js') }}"></script>--}}
 {{--        <script src="{{asset ('assets/pages/dashboard.js') }}"></script>--}}
 
-
-        <script src="{{asset ('assets/js/app.js') }}"></script>
         @stack('script')
+        <script src="{{asset ('assets/js/app.js') }}"></script>
+
 
         </body>
     </html>

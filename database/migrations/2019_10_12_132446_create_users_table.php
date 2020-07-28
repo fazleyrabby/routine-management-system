@@ -15,20 +15,21 @@ class CreateUsersTable extends Migration {
 		Schema::create('users', function(Blueprint $table)
 		{
 			$table->bigIncrements('id');
-			$table->string('key')->nullable();
-			$table->string('firstname', 191)->nullable();
-			$table->string('lastname', 191)->nullable();
-			$table->date('date_of_birth')->nullable();
-			$table->string('username', 191)->unique();
-			$table->boolean('gender')->nullable()->comment('1=male,2=female');
-			$table->string('email', 191)->unique();
-			$table->dateTime('email_verified_at')->nullable();
-			$table->string('password', 191)->nullable();
-			$table->enum('role', array('superadmin','admin','teacher'));
+            $table->string('key')->nullable();
+            $table->string('firstname', 191)->nullable();
+            $table->string('lastname', 191)->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('username', 191)->unique();
+            $table->boolean('gender')->nullable()->comment('1=male,2=female');
+            $table->string('email', 191)->unique();
+            $table->dateTime('email_verified_at')->nullable();
+            $table->string('password', 191)->nullable();
+            $table->enum('role', array('superadmin','admin','subadmin','teacher'));
             $table->enum('is_active',['yes','no'])->default('yes');
-			$table->string('remember_token', 191)->nullable();
-			$table->string('photo', 191)->nullable();
-			$table->timestamps();
+            $table->string('remember_token', 191)->nullable();
+            $table->string('photo', 191)->nullable();
+            $table->string('contact')->nullable();
+            $table->timestamps();
 		});
 	}
 
