@@ -16,13 +16,11 @@ class CreateStudentsTable extends Migration {
 		{
 			$table->bigIncrements('id');
 			$table->integer('number_of_student');
-			$table->integer('batch')->nullable()->foreign('batch')->references('id')->on('batch')->unsigned();
-			$table->integer('current_shift')->nullable()->foreign('current_shift')->references('id')->on('shifts')->unsigned();
+            $table->integer('batch_id')->nullable()->foreign('batch_id')->references('id')->on('batches');
             $table->enum('is_active',['yes','no'])->default('yes');
 			$table->timestamps();
 		});
 	}
-
 
 	/**
 	 * Reverse the migrations.

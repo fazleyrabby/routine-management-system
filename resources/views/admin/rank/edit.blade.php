@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Section')
+@section('title', 'Rank')
 
 @section('stylesheets')
     <!-- DataTables -->
@@ -20,26 +20,36 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="mt-0 header-title mb-4">
-                                Section - Create
-                                <a href="{{ route('sections.index') }}" class="btn btn-sm btn-primary float-right">Section List</a>
+                                Rank - Edit
+                                <a href="{{ route('ranks.index') }}" class="btn btn-sm btn-primary float-right">Rank List</a>
                             </div>
-                            {!! Form::open(['route' =>'sections.store'])!!}
+                            {!! Form::open(['route' => ['ranks.update', $rank->id], "method"=>"put" ])!!}
 
-                            <div class="form-group row @if($errors->has('section_name')) has-error @endif">
+                            <div class="form-group row @if($errors->has('rank')) has-error @endif">
                                 <div class="col-md-2 align-self-center">
-                                    {!! Form::label('Section') !!}
+                                    {!! Form::label('rank Name') !!}
                                 </div>
                                 <div class="col-md-10">
-                                    {!! Form::text('section_name', null, ['class'=> 'form-control']) !!}
-                                    @if ($errors->has('section_name'))
+                                    {!! Form::text('rank', $rank->rank, ['class'=> 'form-control']) !!}
+                                    @if ($errors->has('rank'))
                                         <span class="help-block">
-                                    {!! $errors->first('section_name') !!}
-                                </span>
+                                            {!! $errors->first('rank') !!}
+                                        </span>
                                     @endif
                                 </div>
                             </div>
 
-                            {!! Form::submit('Create',['class' => 'btn btn-sm btn-primary'] ) !!}
+                            <div class="form-group row">
+                                <div class="col-md-2 align-self-center">
+                                    {!! Form::label('Status') !!}
+                                </div>
+                                <div class="col-md-10">
+                                    {!! Form::select('is_active', ['no'=> 'Inactive','yes' => 'Active'], $rank->is_active ,['class'=> 'form-control']) !!}
+                                </div>
+                            </div>
+
+
+                            {!! Form::submit('Update',['class' => 'btn btn-sm btn-warning'] ) !!}
 
                             {!! Form::close() !!}
 

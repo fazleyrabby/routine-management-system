@@ -21,6 +21,8 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::get('/', 'AdminController@index')->name('admin');
     Route::get('teachers/requests', 'TeacherController@requests')->name('teachers.requests');
     Route::resource('sessions', 'SessionController');
+    Route::resource('shift_sessions', 'ShiftSessionController');
+    Route::resource('yearly_sessions', 'YearlySessionController');
     Route::resource('shifts', 'ShiftController');
     Route::resource('rooms', 'RoomController');
     Route::resource('departments', 'DepartmentController');
@@ -29,6 +31,8 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::resource('batches', 'BatchController');
     Route::resource('sections', 'SectionController');
     Route::resource('users', 'UserController');
+    Route::resource('ranks', 'TeacherRankController');
+    Route::resource('students', 'StudentController');
     Route::resource('courses', 'CourseController');
     Route::resource('routine_committee', 'RoutineCommitteeController');
 });

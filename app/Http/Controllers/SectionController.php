@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Section;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class SectionController extends Controller
 {
@@ -13,7 +14,8 @@ class SectionController extends Controller
      */
     public function index()
     {
-        return view('admin.section.index');
+        $sections = Section::orderBy('id', 'DESC')->get();
+        return view('admin.section.index', compact('sections'));
     }
 
     /**
@@ -23,7 +25,7 @@ class SectionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.section.create');
     }
 
     /**
@@ -34,7 +36,22 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'section_name' => 'required|max:1|unique:sections'
+        ],
+            [
+                'section_name.required' => 'Enter Section',
+                'section_name.unique' => 'Section already exist',
+            ]);
+
+        $section = new Section();
+        $section->section_name = $request->section_name;
+        $section->slug = strtolower($request->section_name);
+        $section->is_active = 1;
+        $section->save();
+
+        Session::flash('message', 'Section created successfully');
+        return redirect()->route('sections.index');
     }
 
     /**
@@ -54,9 +71,9 @@ class SectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Section $section)
     {
-        //
+        return view('admin.section.edit', compact('section'));
     }
 
     /**
@@ -66,9 +83,23 @@ class SectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Section $section)
     {
-        //
+        $this->validate($request, [
+            'section_name' => 'required|max:1|unique:sections,section_name,' . $section->id
+        ],
+            [
+                'section_name.required' => 'Enter Section',
+                'section_name.unique' => 'Section already exist',
+            ]);
+
+        $section->section_name = $request->section_name;
+        $section->slug = strtolower($request->section_name);
+        $section->is_active = $request->is_active;
+        $section->save();
+
+        Session::flash('message', 'Section Updated successfully');
+        return redirect()->route('sections.index');
     }
 
     /**
@@ -77,8 +108,10 @@ class SectionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Section $section)
     {
-        //
+        $section->delete();
+        Session::flash('delete-message', 'Section deleted successfully');
+        return redirect()->route('sections.index');
     }
 }

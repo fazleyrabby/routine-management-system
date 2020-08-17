@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Session as SS;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class SessionController extends Controller
@@ -13,7 +15,8 @@ class SessionController extends Controller
      */
     public function index()
     {
-        return view('admin.session.index');
+        $sessions = SS::orderBy('id', 'DESC')->get();
+        return view('admin.session.index', compact('sessions'));
     }
 
     /**
@@ -23,7 +26,7 @@ class SessionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.session.create');
     }
 
     /**
@@ -34,7 +37,21 @@ class SessionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'session_name' => 'required|unique:sessions'
+        ],
+            [
+                'session_name.required' => 'Enter session',
+                'session_name.unique' => 'session already exist',
+            ]);
+
+        $session = new SS();
+        $session->session_name = $request->session_name;
+        $session->is_active = 1;
+        $session->save();
+
+        \Illuminate\Support\Facades\Session::flash('message', 'session created successfully');
+        return redirect()->route('sessions.index');
     }
 
     /**
@@ -54,9 +71,9 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(SS $session)
     {
-        //
+        return view('admin.session.edit', compact('session'));
     }
 
     /**
@@ -66,10 +83,24 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, SS $session)
     {
-        //
+        $this->validate($request, [
+            'session_name' => 'required|unique:sessions,session_name,' . $session->id
+        ],
+            [
+                'session_name.required' => 'Enter session',
+                'session_name.unique' => 'session already exist',
+            ]);
+
+        $session->session_name = $request->session_name;
+        $session->is_active = $request->is_active;
+        $session->save();
+
+        \Illuminate\Support\Facades\Session::flash('message', 'Session created successfully');
+        return redirect()->route('sessions.index');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -77,8 +108,10 @@ class SessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(SS $session)
     {
-        //
+        $session->delete();
+        Session::flash('delete-message', 'session deleted successfully');
+        return redirect()->route('sessions.index');
     }
 }

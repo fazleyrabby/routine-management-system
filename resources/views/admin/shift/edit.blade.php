@@ -21,7 +21,7 @@
                                     Shift - Edit
                                     <a href="{{ route('shifts.index') }}" class="btn btn-sm btn-primary float-right">Shift List</a>
                                 </div>
-                                {!! Form::open(['route' =>['shifts.update', $shift->id], 'method'=>'put'])!!}
+                                {!! Form::open(['route' => ['shifts.update', $shift->id], 'method'=>'put'])!!}
 
                                 <div class="form-group row @if($errors->has('shift_name')) has-error @endif">
                                     <div class="col-md-2 align-self-center">

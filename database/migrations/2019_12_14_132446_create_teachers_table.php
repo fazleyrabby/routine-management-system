@@ -15,7 +15,7 @@ class CreateTeachersTable extends Migration {
 		Schema::create('teachers', function(Blueprint $table)
 		{
 			$table->increments('id');
-			$table->integer('user_id')->nullable()->foreign('user_id')->references('id')->on('users');
+			$table->integer('user_id')->nullable()->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('rank_id')->nullable()->foreign('rank_id')->references('id')->on('teacher_ranks');
             $table->integer('department_id')->nullable()->foreign('department_id')->references('id')->on('department');
             $table->enum('is_active',['yes','no'])->default('yes');

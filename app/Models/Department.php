@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
-    protected $fillable = ['department_name', 'is_active'];
+    protected $guarded = [];
 
     public function teacher()
     {
         return $this->belongsToMany('App\Teacher');
+    }
+
+    public function batch()
+    {
+        return $this->belongsToMany('App\Batch');
     }
 
 }

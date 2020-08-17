@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Batch;
+use App\Models\YearlySession;
 use Illuminate\Http\Request;
-use App\Models\Student;
 
-class StudentController extends Controller
+class YearlySessionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with(['batch','batch.shift','batch.department'])->orderBy('id', 'DESC')->get();
-        return view('admin.student.index', compact('students'));
+        //
     }
 
     /**
@@ -26,9 +24,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-//        $batch = Batch::orderBy('id', 'ASC')->where('is_active','yes')->pluck('id', 'batch_no');
-//        return view('admin.student.create',compact('batch'));
-        return view('admin.student.create');
+        //
     }
 
     /**
@@ -45,10 +41,10 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\YearlySession  $yearlySession
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(YearlySession $yearlySession)
     {
         //
     }
@@ -56,10 +52,10 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\YearlySession  $yearlySession
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(YearlySession $yearlySession)
     {
         //
     }
@@ -68,10 +64,10 @@ class StudentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\YearlySession  $yearlySession
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, YearlySession $yearlySession)
     {
         //
     }
@@ -79,10 +75,10 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\YearlySession  $yearlySession
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(YearlySession $yearlySession)
     {
         //
     }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Teacher;
+use App\Models\TeacherRank;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class TeacherRankController extends Controller
 {
@@ -13,7 +16,8 @@ class TeacherRankController extends Controller
      */
     public function index()
     {
-        //
+        $ranks = TeacherRank::orderBy('id', 'DESC')->get();
+        return view('admin.rank.index', compact('ranks'));
     }
 
     /**
@@ -23,7 +27,7 @@ class TeacherRankController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.rank.create');
     }
 
     /**
@@ -34,7 +38,22 @@ class TeacherRankController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request, [
+            'rank' => 'required|unique:teacher_ranks'
+        ],
+            [
+                'rank.required' => 'Enter Rank',
+                'rank.unique' => 'Rank already exist',
+            ]);
+
+        $rank = new TeacherRank();
+        $rank->rank = $request->rank;
+        $rank->is_active = 1;
+        $rank->save();
+
+        Session::flash('message', 'Rank created successfully');
+        return redirect()->route('ranks.index');
     }
 
     /**
@@ -54,9 +73,9 @@ class TeacherRankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(TeacherRank $rank)
     {
-        //
+        return view('admin.rank.edit', compact('rank'));
     }
 
     /**
@@ -66,9 +85,22 @@ class TeacherRankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,TeacherRank $rank)
     {
-        //
+        $this->validate($request, [
+            'rank' => 'required|unique:teacher_ranks,rank,' . $rank->id
+        ],
+            [
+                'rank.required' => 'Enter rank name',
+                'rank.unique' => 'Rank already exist',
+            ]);
+
+        $rank->rank = $request->rank;
+        $rank->is_active = $request->is_active;
+        $rank->save();
+
+        Session::flash('message', 'Rank Updated successfully');
+        return redirect()->route('ranks.index');
     }
 
     /**
@@ -77,8 +109,10 @@ class TeacherRankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TeacherRank $rank)
     {
-        //
+        $rank->delete();
+        Session::flash('delete-message', 'Rank deleted successfully');
+        return redirect()->route('ranks.index');
     }
 }

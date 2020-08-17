@@ -16,8 +16,6 @@ class CreateSessionsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('session_name', 45)->nullable()->comment('Summer, Spring ..etc');
-			$table->date('session_start')->nullable()->comment('January');
-			$table->date('session_end')->nullable();
 			$table->string('session_code', 45)->nullable();
 			$table->timestamps();
             $table->enum('is_active',['yes','no'])->default('yes');

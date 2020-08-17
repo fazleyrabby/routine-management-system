@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Shift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -48,7 +47,6 @@ class ShiftController extends Controller
         $shift = new Shift();
         $shift->shift_name = $request->shift_name;
         $shift->slug = strtoupper(substr($shift->shift_name, 0, 1));
-        $shift->is_active = 1;
         $shift->save();
 
         Session::flash('message', 'Shift created successfully');

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Session')
+@section('title', 'rank')
 
 @section('stylesheets')
     <!-- DataTables -->
@@ -18,8 +18,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="mt-0 header-title mb-4">
-                                Session - List
-                                <a href="{{ route('sessions.create') }}" class="btn btn-sm btn-primary float-right">Add New</a>
+                                rank - List
+                                <a href="{{ route('ranks.create') }}" class="btn btn-sm btn-primary float-right">Add New</a>
                             </div>
                             @if (Session::has('message'))
                                 <div class="alert-dismissable alert alert-success">
@@ -43,7 +43,7 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Session</th>
+                                    <th>Rank Name</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -52,31 +52,31 @@
 
                                 <tbody>
 
-                                @foreach($sessions as $session)
+                                @foreach($ranks as $rank)
                                     <tr>
-                                        <td>{{ $session->id }}</td>
-                                        <td>{{ $session->session_name }}</td>
-                                        <td>{{ $session->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
+                                        <td>{{ $rank->id }}</td>
+                                        <td>{{ $rank->rank }}</td>
+                                        <td>{{ $rank->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
                                         </td>
 
                                         <td>
-                                            <a href="{{ route('sessions.edit', $session->id) }}"
+                                            <a href="{{ route('ranks.edit', $rank->id) }}"
                                                class="btn btn-sm btn-primary">Edit</a>
 
-                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{$session->id}}">Delete</button>
+                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{$rank->id}}">Delete</button>
                                         </td>
                                     </tr>
-                                    <div class="modal fade bs-example-modal-center{{$session->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <div class="modal fade bs-example-modal-center{{$rank->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5>Are you sure? You want to delete this?</h5>
                                                 </div>
                                                 <div class="modal-body">
-                                                    {!! Form::open(['route' => ['sessions.destroy', $session->id ], 'method' => 'delete', 'style' => 'display:inline']) !!}
+                                                    {!! Form::open(['route' => ['ranks.destroy', $rank->id ], 'method' => 'delete', 'style' => 'display:inline']) !!}
                                                     {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
                                                     {!! Form::close() !!}
-                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{$session->id}}"> No </button>
+                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{$rank->id}}"> No </button>
                                                 </div>
                                             </div>
                                         </div>

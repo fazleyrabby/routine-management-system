@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
+use App\Models\Shift;
 use Illuminate\Http\Request;
+use App\Models\Batch;
+use Illuminate\Support\Facades\Session;
 
 class BatchController extends Controller
 {
@@ -13,7 +17,8 @@ class BatchController extends Controller
      */
     public function index()
     {
-        return view('admin.batch.index');
+        $batches = Batch::orderBy('id', 'DESC')->get();
+        return view('admin.batch.index', compact('batches'));
     }
 
     /**
@@ -23,7 +28,9 @@ class BatchController extends Controller
      */
     public function create()
     {
-        //
+        $departments = Department::orderBy('id', 'ASC')->where('is_active','yes')->pluck('department_name', 'id');
+        $shifts = Shift::orderBy('id', 'ASC')->where('is_active','yes')->pluck('shift_name', 'id');
+        return view('admin.batch.create',compact('departments','shifts'));
     }
 
     /**
@@ -34,7 +41,37 @@ class BatchController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $existBatch = Batch::where([
+            ['batch_no',$request->batch_no],
+            ['department_id',$request->department_id],
+            ['shift_id',$request->shift_id]
+        ])->first();
+
+        $this->validate($request, [
+            'batch_no' => 'required',
+            'shift_id' => 'required',
+            'department_id' => 'required',
+        ],
+            [
+                'batch_no.required' => 'Enter batch',
+                'shift_id.required' => 'Enter Shift',
+                'department_id.required' => 'Enter Department',
+            ]);
+
+        $batch = new Batch();
+        $batch->batch_no = $request->batch_no;
+        $batch->department_id = $request->department_id;
+        $batch->shift_id = $request->shift_id;
+
+        if ($existBatch){
+            Session::flash('error', 'Batch already assigned');
+            return redirect()->route('batches.create');
+        }else{
+            $batch->save();
+            Session::flash('message', 'Batch assigned successfully');
+            return redirect()->route('batches.index');
+        }
+
     }
 
     /**
@@ -45,7 +82,7 @@ class BatchController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -54,9 +91,11 @@ class BatchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Batch $batch)
     {
-        //
+        $departments = Department::orderBy('id', 'ASC')->where('is_active','yes')->pluck('department_name', 'id');
+        $shifts = Shift::orderBy('id', 'ASC')->where('is_active','yes')->pluck('shift_name', 'id');
+        return view('admin.batch.edit', compact('batch','departments','shifts'));
     }
 
     /**
@@ -66,9 +105,39 @@ class BatchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Batch $batch)
     {
-        //
+        $existBatch = Batch::where([
+            ['id','!=',$batch->id],
+            ['batch_no','=',$request->batch_no],
+            ['department_id',$request->department_id],
+            ['shift_id',$request->shift_id]
+        ])->first();
+
+        $this->validate($request, [
+            'batch_no' => 'required',
+            'shift_id' => 'required',
+            'department_id' => 'required',
+        ],
+            [
+                'batch_no.required' => 'Enter batch',
+                'shift_id.required' => 'Enter Shift',
+                'department_id.required' => 'Enter Department',
+            ]);
+
+        $batch->batch_no = $request->batch_no;
+        $batch->department_id = $request->department_id;
+        $batch->shift_id = $request->shift_id;
+        $batch->is_active = $request->is_active;
+
+        if ($existBatch){
+            Session::flash('error', 'Batch already assigned');
+            return redirect()->route('batches.edit', $batch->id);
+        }else{
+            $batch->save();
+            Session::flash('message', 'Batch updated successfully');
+            return redirect()->route('batches.index');
+        }
     }
 
     /**
@@ -77,8 +146,10 @@ class BatchController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Batch $batch)
     {
-        //
+        $batch->delete();
+        Session::flash('delete-message', 'Batch deleted successfully');
+        return redirect()->route('batches.index');
     }
 }

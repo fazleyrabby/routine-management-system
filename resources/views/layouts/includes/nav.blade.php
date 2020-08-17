@@ -330,7 +330,21 @@
                             </li>
                         </ul>
                     </li>
-
+                    <li class="has-submenu">
+                        <a href="#">Teacher Rank</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('ranks.index') }}">
+                                    View All
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('ranks.create') }}">
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
 
                     <li class="has-submenu">
@@ -352,15 +366,41 @@
                     <li class="has-submenu">
                         <a href="#">Sessions</a>
                         <ul class="submenu">
+
                             <li>
-                                <a href="#">
+                                <a href="{{ route('sessions.index') }}">
                                     View all
                                 </a>
                             </li>
+
                             <li>
-                                <a href="#">
+                                <a href="{{ route('sessions.create') }}">
                                     Add New
                                 </a>
+                            </li>
+
+                            <li class="has-submenu">
+                                <a href="#">Shift-Session</a>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="{{ route('shift_sessions.index') }}">Show all</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('shift_sessions.create') }}">Assign Session</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="has-submenu">
+                                <a href="#">Yearly-Session</a>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="{{ route('yearly_sessions.index') }}">Show all</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('yearly_sessions.create') }}">Assign New Year</a>
+                                    </li>
+                                </ul>
                             </li>
                         </ul>
                     </li>
@@ -375,6 +415,22 @@
                             </li>
                             <li>
                                 <a href="{{ route('sections.create') }}">
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="has-submenu">
+                        <a href="#">Students</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('students.index') }}">
+                                    View all
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('students.create') }}">
                                     Add New
                                 </a>
                             </li>

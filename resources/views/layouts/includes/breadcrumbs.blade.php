@@ -6,9 +6,11 @@
                     <ol class="breadcrumb bg-white p-3">
                         @php $segments = ''; @endphp
                         @foreach(Request::segments() as $segment)
-                            @php $segments .= '/'.$segment; @endphp
+                            @php
+                                $slug = str_replace('_',' ',$segment);
+                                $segments .= '/'.$segment; @endphp
                             <li>
-                                <a href="{{ $segments }}">{{ ucfirst($segment) }}</a>
+                                <a href="{{ $segments }}">{{ ucfirst($slug) }}</a>
                             </li>
                         @endforeach
                     </ol>

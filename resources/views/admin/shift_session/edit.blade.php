@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Section')
+@section('title', 'Shift Session')
 
 @section('stylesheets')
     <!-- DataTables -->
@@ -19,32 +19,42 @@
                 <div class="col-xl-6 offset-xl-3">
                     <div class="card">
                         <div class="card-body">
+                            @if (Session::has('error'))
+                                <div class="alert-dismissable alert alert-success">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x
+                                    </button>
+                                    {{ Session('error') }}
+                                </div>
+                            @endif
                             <div class="mt-0 header-title mb-4">
-                                Section - Update
-                                <a href="{{ route('sections.index') }}" class="btn btn-sm btn-primary float-right">Section List</a>
+                                Session - Update
+                                <a href="{{ route('shift_sessions.index') }}" class="btn btn-sm btn-primary float-right">Session List</a>
                             </div>
-                            {!! Form::open(['route' => ['sections.update', $section->id], "method"=>"put" ])!!}
+                            {!! Form::open(['route' => ['shift_sessions.update', $shiftSession->id], "method"=>"put" ])!!}
 
-                            <div class="form-group row @if($errors->has('section_name')) has-error @endif">
+                            <div class="form-group row">
                                 <div class="col-md-2 align-self-center">
-                                    {!! Form::label('Section') !!}
+                                    {!! Form::label('Shift') !!}
                                 </div>
                                 <div class="col-md-10">
-                                    {!! Form::text('section_name', $section->section_name, ['class'=> 'form-control']) !!}
-                                    @if ($errors->has('section_name'))
-                                        <span class="help-block">
-                                    {!! $errors->first('section_name') !!}
-                                </span>
-                                    @endif
+                                    {!! Form::select('shift_id', $shifts, $shiftSession->shift_id ,['class'=> 'form-control']) !!}
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-md-2 align-self-center">
+                                    {!! Form::label('Session') !!}
+                                </div>
+                                <div class="col-md-10">
+                                    {!! Form::select('session_id', $sessions, $shiftSession->session_id ,['class'=> 'form-control']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 align-self-center">
                                     {!! Form::label('Status') !!}
                                 </div>
                                 <div class="col-md-10">
-                                    {!! Form::select('is_active', ['no'=> 'Inactive','yes' => 'Active'], $section->is_active ,['class'=> 'form-control']) !!}
+                                    {!! Form::select('is_active', ['no'=> 'Inactive','yes' => 'Active'], $shiftSession->is_active ,['class'=> 'form-control']) !!}
                                 </div>
                             </div>
 

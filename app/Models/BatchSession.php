@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Section extends Model
+class BatchSession extends Model
 {
-    protected $guarded = [];
+    protected  $guarded = [];
 }

@@ -26,24 +26,24 @@
                             {!! Form::open(['route' =>'teachers.store', 'enctype'=> 'multipart/form-data'])!!}
                             <div class="row">
                                 <div class="col-md-4">
-                                    <div class="form-group @if($errors->has('first_name')) has-error @endif">
+                                    <div class="form-group @if($errors->has('firstname')) has-error @endif">
                                         {!! Form::label('First Name') !!}
-                                        {!! Form::text('first_name', null, ['class'=> 'form-control']) !!}
-                                        @if ($errors->has('first_name'))
+                                        {!! Form::text('firstname', null, ['class'=> 'form-control']) !!}
+                                        @if ($errors->has('firstname'))
                                             <span class="help-block">
-                                            {!! $errors->first('first_name') !!}
+                                            {!! $errors->first('firstname') !!}
                                         </span>
                                         @endif
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <div class="form-group @if($errors->has('last_name')) has-error @endif">
+                                    <div class="form-group @if($errors->has('lastname')) has-error @endif">
                                         {!! Form::label('Last Name') !!}
-                                        {!! Form::text('last_name', null, ['class'=> 'form-control']) !!}
-                                        @if ($errors->has('last_name'))
+                                        {!! Form::text('lastname', null, ['class'=> 'form-control']) !!}
+                                        @if ($errors->has('lastname'))
                                             <span class="help-block">
-                                            {!! $errors->first('last_name') !!}
+                                            {!! $errors->first('lastname') !!}
                                         </span>
                                         @endif
                                     </div>
@@ -66,12 +66,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group @if($errors->has('date_of_birth')) has-error @endif">
                                         {!! Form::label('Date of Birth') !!}
-                                        {!! Form::text('date_of_birth', null, ['class'=> 'form-control']) !!}
-                                        @if ($errors->has('date_of_birth'))
-                                            <span class="help-block">
-                                            {!! $errors->first('date_of_birth') !!}
-                                        </span>
-                                        @endif
+                                        {!! Form::date('date_of_birth', null, ['class'=> 'form-control','id'=>'example-date-input2']) !!}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -116,7 +111,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('Department') !!}
-                                        {!! Form::select('department', $departments, null ,['class'=> 'form-control']) !!}
+                                        {!! Form::select('department_id', $departments, null ,['class'=> 'form-control']) !!}
                                     </div>
                                 </div>
 
@@ -126,7 +121,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('Rank') !!}
-                                        {!! Form::select('rank', $ranks, null ,['class'=> 'form-control']) !!}
+                                        {!! Form::select('rank_id', $ranks, null ,['class'=> 'form-control']) !!}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
