@@ -43,6 +43,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Teacher Name</th>
+                                    <th>Photo</th>
                                     <th>Department</th>
                                     <th>Rank</th>
                                     <th>Email</th>
@@ -60,6 +61,7 @@
                                     <tr>
                                         <td>{{ $teacher->id }}</td>
                                         <td>{{ $teacher->user->firstname." ".$teacher->user->lastname }}</td>
+                                        <td><img width="100" src={{ asset('storage/uploads/' . $teacher->user->photo)  }} alt=""></td>
                                         <td>{{ $teacher->department->department_name }}</td>
                                         <td>{{ $teacher->rank->rank }}</td>
                                         <td>{{ $teacher->user->email }}</td>

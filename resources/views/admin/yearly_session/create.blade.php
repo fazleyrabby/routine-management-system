@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Student')
+@section('title', 'Yearly Session')
 
 @section('stylesheets')
     <!-- DataTables -->
@@ -27,43 +27,30 @@
                                 </div>
                             @endif
                             <div class="mt-0 header-title mb-4">
-                                Student - Create
-                                <a href="{{ route('students.index') }}" class="btn btn-sm btn-primary float-right">Student List</a>
+                                Yearly Session - Create
+                                <a href="{{ route('students.index') }}" class="btn btn-sm btn-primary float-right">Yearly Session List</a>
                             </div>
-{{--                            {!! Form::open(['route' =>'students.update'])!!}--}}
-
-                                {!! Form::open(['route' =>['students.update', $student->id], 'method'=>'put'])!!}
+                            {!! Form::open(['route' =>'students.store'])!!}
 
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         {!! Form::label('Batch') !!}
                                         {{--                                        {!! Form::select('batch_id', $batches, null ,['class'=> 'form-control']) !!}--}}
-                                        <select name="batch_id" id="" class="form-control">
-                                            @foreach($batches as $batch)
-                                                <option  {{ $student->batch_id == $batch->id ? "selected" : "" }} value={{ $batch->id }}> {{ $batch->department->department_name. '-' . $batch->batch_no. '-' . $batch->shift->slug}}</option>
-                                            @endforeach
-                                        </select>
+{{--                                        <select name="batch_id" id="" class="form-control">--}}
+{{--                                            @foreach($batches as $batch)--}}
+{{--                                                <option value={{ $batch->id }} > {{ $batch->department->department_name. '-' . $batch->batch_no. '-' . $batch->shift->slug}}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
+
+                                        {!! Form::select('year', $batches, null ,['class'=> 'form-control']) !!}
+
 
                                         @if ($errors->has('batch_id'))
                                             <span class="help-block">
                                             {!! $errors->first('batch_id') !!}
                                         </span>
                                         @endif
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        {!! Form::label('Total Student Number') !!}
-                                        {!! Form::number('number_of_student', $student->number_of_student ,['class'=> 'form-control']) !!}
-
-                                        @if ($errors->has('number_of_student'))
-                                            <span class="help-block">
-                                            {!! $errors->first('number_of_student') !!}
-                                        </span>
-                                        @endif
-
                                     </div>
                                 </div>
                             </div>

@@ -19,4 +19,8 @@ class ShiftSession extends Model
     {
         return $this->belongsTo('App\Models\Session');
     }
+
+    public function yearly_session(){
+        return $this->belongsTo('App\Models\YearlySession');
+    }
 }

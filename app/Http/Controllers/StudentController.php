@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Batch;
 use Illuminate\Http\Request;
 use App\Models\Student;
+use Illuminate\Support\Facades\Session;
 
 class StudentController extends Controller
 {
@@ -26,9 +27,25 @@ class StudentController extends Controller
      */
     public function create()
     {
-//        $batch = Batch::orderBy('id', 'ASC')->where('is_active','yes')->pluck('id', 'batch_no');
-//        return view('admin.student.create',compact('batch'));
-        return view('admin.student.create');
+        $batches = Batch::with(['shift','department'])->get();
+
+
+
+
+//        $batches=Batch::with(array('shift'=>function($query){
+//            $query->select('id','shift_name');
+//        }))->with(array('department'=>function($query){
+//            $query->select('id','department_name');
+//        }))->get();
+
+
+
+
+
+//        dd($batches);
+
+        return view('admin.student.create',compact('batches'));
+//        return view('admin.student.create');
     }
 
     /**
@@ -39,7 +56,26 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//        die(json_encode($request->all()));
+        $this->validate($request, [
+            'number_of_student' => 'required',
+            'batch_id' => 'required|unique:students'
+        ],
+            [
+                'batch_id.unique' => 'Data already exists for this batch',
+                'batch_id.required' => 'Enter Batch',
+                'number_of_student.required' => 'Enter Number of Student',
+            ]);
+
+
+
+        $student = new Student();
+        $student->number_of_student = $request->number_of_student;
+        $student->batch_id = $request->batch_id;
+        $student->save();
+
+        Session::flash('message', 'Student assigned successfully');
+        return redirect()->route('students.index');
     }
 
     /**
@@ -59,9 +95,10 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Student $student)
     {
-        //
+        $batches = Batch::with(['shift','department'])->get();
+        return view('admin.student.edit', compact('batches','student'));
     }
 
     /**
@@ -71,9 +108,24 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Student $student)
     {
-        //
+
+        $this->validate($request, [
+            'number_of_student' => 'required',
+            'batch_id' => 'required|unique:students,batch_id,' . $student->id
+        ],
+            [
+                'number_of_student.required' => 'Enter Section',
+                'batch_id.unique' => 'Data already exist for this batch',
+            ]);
+
+        $student->number_of_student = $request->number_of_student;
+        $student->batch_id = $request->batch_id;
+        $student->save();
+
+        Session::flash('message', 'Student Number updated successfully');
+        return redirect()->route('students.index');
     }
 
     /**
@@ -82,8 +134,10 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Student $student)
     {
-        //
+        $student->delete();
+        Session::flash('delete-message', 'Number of student deleted successfully');
+        return redirect()->route('students.index');
     }
 }

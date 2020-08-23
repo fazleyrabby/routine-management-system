@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\YearlySession;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class YearlySessionController extends Controller
 {
@@ -14,7 +15,8 @@ class YearlySessionController extends Controller
      */
     public function index()
     {
-        //
+        $yearly_sessions = YearlySession::with('shift_session')->orderBy('id', 'DESC')->get();
+        return view('admin.yearly_session.index', compact('yearly_sessions'));
     }
 
     /**

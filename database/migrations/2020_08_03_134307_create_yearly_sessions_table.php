@@ -16,7 +16,7 @@ class CreateYearlySessionsTable extends Migration
         Schema::create('yearly_sessions', function (Blueprint $table) {
             $table->id();
             $table->integer('shift_session_id')->nullable()->foreign('shift_session_id')->references('id')->on('shift_sessions');
-            $table->date('year')->nullable();
+            $table->year('year')->nullable();
             $table->timestamps();
         });
     }

@@ -56,6 +56,8 @@ class TeacherController extends Controller
                 'email.required' => 'Enter email',
             ]);
 
+
+
         $teacher = new Teacher();
         $user = new User();
         $user->firstname = $request->firstname;
@@ -72,7 +74,28 @@ class TeacherController extends Controller
         $teacher->rank_id = $request->rank_id;
         $teacher->join_date = date('Y-m-d', strtotime($request->join_date));
 
+
+        if ($request->photo){
+            $image_url = $request->photo;
+            //Get file with extension
+            $fileNameWithExt = $image_url->getClientOriginalName();
+
+            //Get just file name
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+
+            //Get file extension
+            $fileExt = $image_url->getClientOriginalExtension();
+
+            //Get file name to store
+            $fileNameToStore = $filename .'_'. $fileExt;
+
+            $user->photo = $fileNameToStore;
+
+            $image_url->storeAs('public/uploads', $fileNameToStore);
+        }
+
         $user->save();
+
         User::find($user->id)->teacher()->save($teacher);
 
         Session::flash('message', 'Teacher added successfully');
@@ -138,6 +161,26 @@ class TeacherController extends Controller
         $teacher->department_id = $request->department_id;
         $teacher->rank_id = $request->rank_id;
         $teacher->join_date = date('Y-m-d', strtotime($request->join_date));
+
+
+        if ($request->photo){
+            $image_url = $request->photo;
+            //Get file with extension
+            $fileNameWithExt = $image_url->getClientOriginalName();
+
+            //Get just file name
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+
+            //Get file extension
+            $fileExt = $image_url->getClientOriginalExtension();
+
+            //Get file name to store
+            $fileNameToStore = $filename .'_'. $fileExt;
+
+            $user->photo = $fileNameToStore;
+
+            $image_url->storeAs('public/uploads', $fileNameToStore);
+        }
 
         $user->save();
         User::find($teacher->user_id)->teacher()->save($teacher);

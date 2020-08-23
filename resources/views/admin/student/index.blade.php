@@ -49,7 +49,7 @@
                                 </thead>
 
                                 <tbody>
-                                {{ $students }}
+{{--                                {{ $students }}--}}
                                 @foreach($students as $student)
 
                                     <tr>
