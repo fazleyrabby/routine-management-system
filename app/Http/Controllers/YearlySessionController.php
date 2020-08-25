@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\YearlySession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use App\Models\ShiftSession;
+use Illuminate\Support\Facades\DB;
 
 class YearlySessionController extends Controller
 {
@@ -15,8 +17,13 @@ class YearlySessionController extends Controller
      */
     public function index()
     {
-        $yearly_sessions = YearlySession::with('shift_session')->orderBy('id', 'DESC')->get();
-        return view('admin.yearly_session.index', compact('yearly_sessions'));
+        $shift_sessions = ShiftSession::groupBy('shift_id')->with(['session','shift'])->select('shift_id', DB::raw('count(*) as total'))->get();
+
+        dd($shift_sessions);
+
+        $yearly_sessions = YearlySession::groupBy('year')->select('year', DB::raw('count(*) as total'))->get();
+
+        return view('admin.yearly_session.index', compact('yearly_sessions','shift_sessions'));
     }
 
     /**
@@ -26,7 +33,7 @@ class YearlySessionController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.yearly_session.create');
     }
 
     /**
@@ -37,7 +44,64 @@ class YearlySessionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sessions = ShiftSession::where('is_active','yes')->pluck('id');
+        $existSession = YearlySession::where('year',$request->year)->count();
+
+        if ($existSession == 0){
+            if ($sessions->count() > 0){
+                foreach($sessions as $session){
+                    $data[] = [
+                        'shift_session_id' => $session,
+                        'year' => $request->year,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ];
+                }
+            }
+            YearlySession::insert($data);
+            Session::flash('error', 'Yearly Sessions Assigned successfully');
+            return redirect()->route('yearly_sessions.create');
+        }
+        else{
+            Session::flash('error', 'This year already assigned for sessions');
+            return redirect()->route('yearly_sessions.create');
+        }
+
+
+
+
+
+
+
+
+
+
+
+//        echo (json_encode($request->year));
+
+
+//        $this->validate($request, [
+//            'shift_id' => 'required',
+//            'session_id' => 'required'
+//        ],
+//            [
+//                'shift_id.required' => 'Select Shift',
+//                'session_id.required' => 'Select Session',
+//            ]);
+//
+//        $shift_session = new ShiftSession();
+//        $shift_session->shift_id = $request->shift_id;
+//        $shift_session->session_id = $request->session_id;
+//
+//        if ($existShift){
+//            Session::flash('error', 'Shift wise session already assigned');
+//            return redirect()->route('shift_sessions.create');
+//        }
+//        else{
+//            $shift_session->save();
+//            Session::flash('message', 'Shift wise session assigned successfully');
+//            return redirect()->route('shift_sessions.index');
+//        }
     }
 
     /**

@@ -21,18 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="68c1187a-e521-4096-89c5-64b84bc2cc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TeacherController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TeacherController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/YearlySessionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/YearlySessionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/BatchSession.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/BatchSession.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/ShiftSession.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ShiftSession.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_03_134307_create_yearly_sessions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_03_134307_create_yearly_sessions_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/student/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/student/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/student/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/student/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/student/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/student/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/teacher/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/teacher/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/teacher/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/teacher/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/teacher/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/teacher/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/yearly_session/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/yearly_session/create.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,6 +213,9 @@
       <workItem from="1598099757880" duration="4726000" />
       <workItem from="1598155199617" duration="5399000" />
       <workItem from="1598191844479" duration="1345000" />
+      <workItem from="1598272738029" duration="4534000" />
+      <workItem from="1598334945369" duration="402000" />
+      <workItem from="1598360810047" duration="2498000" />
     </task>
     <servers />
   </component>
@@ -245,11 +239,11 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2690" y="412" key="#Composer/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1595782108011" />
-    <state x="2544" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1598100530511">
+    <state x="2544" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1598275525768">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1597041310547" />
-    <state x="2544" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1598100530511" />
+    <state x="2544" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1598275525768" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1595998400214" />
     <state x="2112" y="160" key="SettingsEditor" timestamp="1598159883226">
       <screen x="1920" y="0" width="1920" height="1040" />
@@ -268,6 +262,10 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2536" y="240" key="run.anything.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1596875824018" />
+    <state x="2543" y="225" key="search.everywhere.popup" timestamp="1598335288917">
+      <screen x="1920" y="0" width="1920" height="1040" />
+    </state>
+    <state x="2543" y="225" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1598335288917" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

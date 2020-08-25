@@ -28,34 +28,31 @@
                             @endif
                             <div class="mt-0 header-title mb-4">
                                 Yearly Session - Create
-                                <a href="{{ route('students.index') }}" class="btn btn-sm btn-primary float-right">Yearly Session List</a>
+                                <a href="{{ route('yearly_sessions.index') }}" class="btn btn-sm btn-primary float-right">Yearly Session List</a>
                             </div>
-                            {!! Form::open(['route' =>'students.store'])!!}
+                            {!! Form::open(['route' =>'yearly_sessions.store'])!!}
 
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        {!! Form::label('Batch') !!}
-                                        {{--                                        {!! Form::select('batch_id', $batches, null ,['class'=> 'form-control']) !!}--}}
-{{--                                        <select name="batch_id" id="" class="form-control">--}}
-{{--                                            @foreach($batches as $batch)--}}
-{{--                                                <option value={{ $batch->id }} > {{ $batch->department->department_name. '-' . $batch->batch_no. '-' . $batch->shift->slug}}</option>--}}
-{{--                                            @endforeach--}}
-{{--                                        </select>--}}
+                                        {!! Form::label('Year') !!}
 
-                                        {!! Form::select('year', $batches, null ,['class'=> 'form-control']) !!}
-
+                                        <select name="year" id="" class="form-control">
+                                            @for($i=date("Y");$i < 2100; $i++)
+                                                <option value={{ $i }}>{{ $i }}</option>
+                                            @endfor
+                                        </select>
 
                                         @if ($errors->has('batch_id'))
                                             <span class="help-block">
-                                            {!! $errors->first('batch_id') !!}
+                                            {!! $errors->first('year') !!}
                                         </span>
                                         @endif
                                     </div>
                                 </div>
                             </div>
 
-                            {!! Form::submit('Create',['class' => 'btn btn-sm btn-primary'] ) !!}
+                            {!! Form::submit('Generate',['class' => 'btn btn-sm btn-primary'] ) !!}
 
                             {!! Form::close() !!}
 

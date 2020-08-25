@@ -76,6 +76,7 @@ class TeacherController extends Controller
 
 
         if ($request->photo){
+
             $image_url = $request->photo;
             //Get file with extension
             $fileNameWithExt = $image_url->getClientOriginalName();
