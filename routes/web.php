@@ -23,6 +23,8 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::resource('sessions', 'SessionController');
     Route::resource('shift_sessions', 'ShiftSessionController');
     Route::resource('yearly_sessions', 'YearlySessionController');
+//    Route::get('yearly_sessions/delete/{}', 'YearlySessionController@index')->name('admin');
+    Route::delete('yearly_session/{year}','YearlySessionController@destroy')->name('yearly_session.destroy');
     Route::resource('shifts', 'ShiftController');
     Route::resource('rooms', 'RoomController');
     Route::resource('departments', 'DepartmentController');
@@ -33,8 +35,16 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::resource('users', 'UserController');
     Route::resource('ranks', 'TeacherRankController');
     Route::resource('students', 'StudentController');
+    Route::get('theory_section/{id}', 'StudentController@theory_section')->name('theory_section');
+    Route::post('theory_section_store', 'StudentController@theory_section_store')->name('theory_section_store');
+    Route::post('lab_section', 'StudentController@lab_section')->name('lab_section');
+    Route::get('lab_section/{id}', 'StudentController@lab_section')->name('lab_section');
+    Route::resource('section_students', 'SectionStudentController');
     Route::resource('courses', 'CourseController');
+    Route::resource('assign_courses', 'AssignCourseController');
     Route::resource('routine_committee', 'RoutineCommitteeController');
+    Route::resource('time_slots', 'TimeSlotController');
+    Route::resource('full_routine', 'FullRoutineController');
 });
 
 #============================ *Logout Route* ============================#

@@ -17,9 +17,21 @@ class YearlySessionController extends Controller
      */
     public function index()
     {
-        $shift_sessions = ShiftSession::groupBy('shift_id')->with(['session','shift'])->select('shift_id', DB::raw('count(*) as total'))->get();
+//        $shift_sessions = ShiftSession::with(['session','shift'])
+//            ->select(DB::raw('shift_id','GROUP_CONCAT(sessions.session_name)'))
+//            ->groupBy('shift_id')
+//            ->get();
 
-        dd($shift_sessions);
+
+        $shift_sessions = DB::table('shift_sessions')
+                          ->leftJoin('shifts', 'shifts.id', '=', 'shift_sessions.shift_id')
+                          ->leftJoin('sessions', 'sessions.id', '=', 'shift_sessions.session_id')
+                          ->select('shift_name',DB::raw('group_concat(sessions.session_name) as session_names'))
+                          ->groupBy('shift_id')->get();
+
+//        $shift_sessions = ShiftSession::groupBy('shift_id')->with(['session','shift'])->select('shift_id',DB::raw(group_concat(session_name))->get();
+
+//        dd($shift_sessions);
 
         $yearly_sessions = YearlySession::groupBy('year')->select('year', DB::raw('count(*) as total'))->get();
 
@@ -47,6 +59,8 @@ class YearlySessionController extends Controller
         $sessions = ShiftSession::where('is_active','yes')->pluck('id');
         $existSession = YearlySession::where('year',$request->year)->count();
 
+
+
         if ($existSession == 0){
             if ($sessions->count() > 0){
                 foreach($sessions as $session){
@@ -60,7 +74,7 @@ class YearlySessionController extends Controller
             }
             YearlySession::insert($data);
             Session::flash('error', 'Yearly Sessions Assigned successfully');
-            return redirect()->route('yearly_sessions.create');
+            return redirect()->route('yearly_sessions.index');
         }
         else{
             Session::flash('error', 'This year already assigned for sessions');
@@ -123,7 +137,7 @@ class YearlySessionController extends Controller
      */
     public function edit(YearlySession $yearlySession)
     {
-        //
+
     }
 
     /**
@@ -144,8 +158,14 @@ class YearlySessionController extends Controller
      * @param  \App\Models\YearlySession  $yearlySession
      * @return \Illuminate\Http\Response
      */
-    public function destroy(YearlySession $yearlySession)
+
+
+    public function destroy($year)
     {
-        //
+//        $shift_session = ShiftSession::find($shiftSession->id);
+//        $shift_session->delete();
+        YearlySession::where('year',$year)->delete();
+        Session::flash('delete-message', 'Yearly Session deleted successfully');
+        return redirect()->route('yearly_sessions.index');
     }
 }

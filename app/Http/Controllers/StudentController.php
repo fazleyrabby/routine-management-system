@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Batch;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use Illuminate\Support\Facades\Session;
+use App\Models\SectionStudent;
 
 class StudentController extends Controller
 {
@@ -29,22 +31,9 @@ class StudentController extends Controller
     {
         $batches = Batch::with(['shift','department'])->get();
 
+        $sections = Section::where('is_active','yes')->get();
 
-
-
-//        $batches=Batch::with(array('shift'=>function($query){
-//            $query->select('id','shift_name');
-//        }))->with(array('department'=>function($query){
-//            $query->select('id','department_name');
-//        }))->get();
-
-
-
-
-
-//        dd($batches);
-
-        return view('admin.student.create',compact('batches'));
+        return view('admin.student.create',compact('batches','sections'));
 //        return view('admin.student.create');
     }
 
@@ -140,4 +129,77 @@ class StudentController extends Controller
         Session::flash('delete-message', 'Number of student deleted successfully');
         return redirect()->route('students.index');
     }
+
+
+    public function theory_section($id){
+        $sections = Section::where('type','theory')->get();
+        $students = Student::with(['batch','batch.shift','batch.department'])->orderBy('id', 'DESC')->where('students.id', $id)->get();
+        $student = $students[0];
+        return view('admin.student.theory_section',compact('sections','student'));
+    }
+
+    public function theory_section_store(Request $request){
+
+        $total_student = 0;
+
+        foreach ($request->student_section as $student_section){
+            $total_student += $student_section['student'];
+        }
+
+        if ($total_student == intval($request->total_students)) {
+            foreach($request->student_section as $key => $student_section){
+                    $data[] = [
+                        'students_id' => $request->students_id,
+                        'section_id' => $student_section['section'],
+                        'students' => $student_section['student'],
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ];
+                }
+            SectionStudent::insert($data);
+            Session::flash('message', 'Section Assigned');
+            return redirect()->route('theory_section',$request->students_id);
+        }else{
+            Session::flash('error', 'Total Student number not matched');
+            return redirect()->route('theory_section',$request->students_id);
+        }
+
+    }
+
+    public function lab_section($id){
+        $sections = Section::where('type','lab')->get();
+        $students = Student::with(['batch','batch.shift','batch.department'])->orderBy('id', 'DESC')->where('students.id', $id)->get();
+        $student = $students[0];
+        return view('admin.student.lab_section',compact('sections','student'));
+    }
+
+    public function lab_section_store(Request $request){
+
+        $total_student = 0;
+
+        foreach ($request->student_section as $student_section){
+            $total_student += $student_section['student'];
+        }
+
+        if ($total_student == intval($request->total_students)) {
+            foreach($request->student_section as $key => $student_section){
+                $data[] = [
+                    'students_id' => $request->students_id,
+                    'section_id' => $student_section['section'],
+                    'students' => $student_section['student'],
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ];
+            }
+            SectionStudent::insert($data);
+            Session::flash('message', 'Section Assigned');
+//            return redirect()->route('theory_section',$request->students_id);
+            return redirect()->route('admin.student.index');
+        }else{
+            Session::flash('error', 'Total Student number not matched');
+            return redirect()->route('theory_section',$request->students_id);
+        }
+
+    }
+
 }

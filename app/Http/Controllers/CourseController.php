@@ -93,6 +93,9 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
+
+//        dd($request->all());
+
         $this->validate($request, [
             'course_name' => 'required|unique:courses,course_name,' . $course->id,
             'course_code' => 'required|unique:courses,course_code,' . $course->id,
@@ -109,10 +112,11 @@ class CourseController extends Controller
         $course->course_name = $request->course_name;
         $course->course_code = $request->course_code;
         $course->credit = $request->credit;
+        $course->course_type = $request->course_type;
         $course->is_active = $request->is_active;
         $course->save();
 
-        Session::flash('message', 'Course created successfully');
+        Session::flash('message', 'Course updated successfully');
         return redirect()->route('courses.index');
     }
 

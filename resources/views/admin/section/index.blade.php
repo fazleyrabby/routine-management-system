@@ -44,8 +44,10 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Section</th>
+                                    <th>Parent Section</th>
                                     <th>Slug</th>
                                     <th>Status</th>
+                                    <th>Type</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -57,8 +59,11 @@
                                     <tr>
                                         <td>{{ $section->id }}</td>
                                         <td>{{ $section->section_name }}</td>
+                                        <td>{{ (empty($section->sub)) ? "-" : $section->sub }}</td>
                                         <td>{{ $section->slug }}</td>
-                                        <td>{{ $section->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
+                                        <td>{{ $section->type == 'lab' ? 'Lab' : 'Theory' }}</td>
+
+                                        <td>{{ $section->is_active == 'yes' ? "Active" : "Inactive" }}</td>
                                         </td>
 
                                         <td>

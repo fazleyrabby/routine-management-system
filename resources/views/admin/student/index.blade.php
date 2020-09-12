@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'student')
+@section('title', 'Batch-Student')
 
 @section('stylesheets')
     <!-- DataTables -->
@@ -18,7 +18,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="mt-0 header-title mb-4">
-                                student - List
+                                Batch wise Student - List
                                 <a href="{{ route('students.create') }}" class="btn btn-sm btn-primary float-right">Add
                                     New</a>
                             </div>
@@ -44,6 +44,7 @@
                                     <th>#</th>
                                     <th>Batch</th>
                                     <th>Number of student</th>
+                                    <th>Assign students Section</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -56,6 +57,10 @@
                                         <td>{{ $student->id }}</td>
                                         <td>{{ $student->batch->department->department_name ."-". $student->batch->batch_no ."-".$student->batch->shift->slug  }}</td>
                                         <td>{{ $student->number_of_student }}</td>
+                                        <td>
+                                            <a href="{{ route('theory_section', $student->id) }}" class="btn btn-sm btn-primary">Theory Section</a>
+                                            <a href="{{ route('lab_section', $student->id) }}" class="btn btn-sm btn-primary">Lab Section</a>
+                                        </td>
 {{--                                        <td>{{ $student->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>--}}
                                         <td>
                                             <a href="{{ route('students.edit', $student->id) }}"

@@ -25,6 +25,15 @@
                             </div>
                             {!! Form::open(['route' =>'sections.store'])!!}
 
+                            <div class="form-group row">
+                                <div class="col-md-2 align-self-center">
+                                    {!! Form::label('Parent') !!}
+                                </div>
+                                <div class="col-md-10">
+                                    {!! Form::select('parent', $sections, null ,['class'=> 'form-control']) !!}
+                                </div>
+                            </div>
+
                             <div class="form-group row @if($errors->has('section_name')) has-error @endif">
                                 <div class="col-md-2 align-self-center">
                                     {!! Form::label('Section') !!}
@@ -38,6 +47,21 @@
                                     @endif
                                 </div>
                             </div>
+
+                            <div class="form-group row @if($errors->has('type')) has-error @endif">
+                                <div class="col-md-2 align-self-center">
+                                    {!! Form::label('Section Type') !!}
+                                </div>
+                                <div class="col-md-10">
+                                    {!! Form::select('type', ['theory' => 'Theory','lab' => 'Lab'], null ,['class'=> 'form-control']) !!}
+                                    @if ($errors->has('type'))
+                                        <span class="help-block">
+                                    {!! $errors->first('type') !!}
+                                </span>
+                                    @endif
+                                </div>
+                            </div>
+
 
                             {!! Form::submit('Create',['class' => 'btn btn-sm btn-primary'] ) !!}
 

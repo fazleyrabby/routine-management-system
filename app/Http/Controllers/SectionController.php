@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class SectionController extends Controller
 {
@@ -14,7 +15,16 @@ class SectionController extends Controller
      */
     public function index()
     {
-        $sections = Section::orderBy('id', 'DESC')->get();
+//        $sections = Section::orderBy('id', 'DESC')->get();
+
+//        $sections = DB::table('sections')
+//            ->select(['sections.*', 'sub.section_name'])
+//            ->leftJoin('sections as sub', 'sub.parent', '=', 'sections.id')
+//            ->get();
+        $sections = Section::select(['sections.*', 'sub.section_name as sub'])
+            ->leftJoin('sections as sub', 'sub.id', '=', 'sections.parent')
+            ->get();
+//        dd($sections);
         return view('admin.section.index', compact('sections'));
     }
 
@@ -25,7 +35,8 @@ class SectionController extends Controller
      */
     public function create()
     {
-        return view('admin.section.create');
+        $sections = Section::orderBy('section_name', 'ASC')->where('parent',0)->pluck('section_name','id');
+        return view('admin.section.create',compact('sections'));
     }
 
     /**
@@ -37,7 +48,7 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'section_name' => 'required|max:1|unique:sections'
+            'section_name' => 'required|max:2|unique:sections'
         ],
             [
                 'section_name.required' => 'Enter Section',
@@ -46,6 +57,8 @@ class SectionController extends Controller
 
         $section = new Section();
         $section->section_name = $request->section_name;
+        $section->parent = $request->parent;
+        $section->type = $request->type;
         $section->slug = strtolower($request->section_name);
         $section->is_active = 1;
         $section->save();
@@ -73,7 +86,8 @@ class SectionController extends Controller
      */
     public function edit(Section $section)
     {
-        return view('admin.section.edit', compact('section'));
+        $parent = Section::orderBy('section_name', 'ASC')->where('parent',0)->pluck('section_name','id');
+        return view('admin.section.edit', compact('section','parent'));
     }
 
     /**
@@ -86,7 +100,7 @@ class SectionController extends Controller
     public function update(Request $request, Section $section)
     {
         $this->validate($request, [
-            'section_name' => 'required|max:1|unique:sections,section_name,' . $section->id
+            'section_name' => 'required|max:2|unique:sections,section_name,' . $section->id
         ],
             [
                 'section_name.required' => 'Enter Section',
@@ -94,6 +108,8 @@ class SectionController extends Controller
             ]);
 
         $section->section_name = $request->section_name;
+        $section->parent = $request->parent;
+        $section->type = $request->type;
         $section->slug = strtolower($request->section_name);
         $section->is_active = $request->is_active;
         $section->save();
@@ -114,4 +130,5 @@ class SectionController extends Controller
         Session::flash('delete-message', 'Section deleted successfully');
         return redirect()->route('sections.index');
     }
+
 }

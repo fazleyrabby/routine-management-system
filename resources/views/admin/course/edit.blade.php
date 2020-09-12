@@ -23,7 +23,8 @@
                                 Course - Create
                                 <a href="{{ route('courses.index') }}" class="btn btn-sm btn-primary float-right">Course List</a>
                             </div>
-                            {!! Form::open(['route' =>'courses.store'])!!}
+
+                            {!! Form::open(['route' =>['courses.update', $course->id], 'method'=>'put'])!!}
 
                             <div class="form-group row @if($errors->has('course_name')) has-error @endif">
                                 <div class="col-md-2 align-self-center">

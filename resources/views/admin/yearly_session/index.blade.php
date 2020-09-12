@@ -17,10 +17,7 @@
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="mt-0 header-title mb-4">
-                                Yearly Session - List
-                                <a href="{{ route('yearly_sessions.create') }}" class="btn btn-sm btn-primary float-right">Add New</a>
-                            </div>
+
                             @if (Session::has('message'))
                                 <div class="alert-dismissable alert alert-success">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x
@@ -37,6 +34,32 @@
                             @endif
 
 
+
+                            <div class="header-title mb-4">Years generated for these sessions below:</div>
+                            <table class="table table-striped table-bordered dt-responsive nowrap">
+                                <thead>
+                                <tr>
+                                    <th>Shift</th>
+                                    <th>Sessions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($shift_sessions as $shift_sessions)
+                                    <tr>
+                                        <td>{{ $shift_sessions->shift_name }}</td>
+                                        <td>{{ $shift_sessions->session_names }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
+                            <div class="mt-0 header-title mb-4">
+                                Yearly Session - List
+                                <a href="{{ route('yearly_sessions.create') }}" class="btn btn-sm btn-primary float-right">Add New</a>
+                            </div>
+
+
+
                             <table id="datatable-buttons"
                                    class="table table-striped table-bordered dt-responsive nowrap"
                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -47,12 +70,6 @@
                                     <th>Action</th>
                                 </tr>
                                 </thead>
-
-                                Years generated for these sessions below:
-                                @foreach($shift_sessions as $shift_sessions)
-                                    {{ $shift_sessions->shift->shift_name }}
-                                    {{ $shift_sessions->session->session_name }}
-                                @endforeach
                                 <tbody>
                                 @php $i = 1; @endphp
                                 @foreach($yearly_sessions as $yearly_session)
@@ -70,7 +87,7 @@
                                                     <h5>Do you want to delete all sessions of <strong>{{ $yearly_session->year }} </strong>?</h5>
                                                 </div>
                                                 <div class="modal-body">
-                                                    {!! Form::open(['route' => ['yearly_sessions.destroy', $yearly_session->year ], 'method' => 'delete', 'style' => 'display:inline']) !!}
+                                                    {!! Form::open(['route' => ['yearly_session.destroy', $yearly_session->year ], 'method' => 'delete', 'style' => 'display:inline']) !!}
                                                     {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
                                                     {!! Form::close() !!}
                                                     <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{ $yearly_session->year }}"> No </button>

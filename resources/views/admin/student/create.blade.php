@@ -66,22 +66,42 @@
                                 </div>
 
 
-
-
 {{--                                <div class="col-md-12">--}}
 {{--                                    <div class="form-group">--}}
-{{--                                        {!! Form::label('Shift') !!}--}}
-{{--                                        {!! Form::select('shift_id', $shift, null ,['class'=> 'form-control']) !!}--}}
+{{--                                        @foreach($sections as $section)--}}
+{{--                                            <input type="hidden" id="{{ $section->slug }}" name="section[]" value={{ $section->id }}>--}}
+
+{{--                                            <label for="{{ $section->slug }}">{{ $section->section_name }}</label>--}}
+{{--                                            <input type="number" name="number_of_student" class="form-control-sm" value="{{ $section->slug == 'a' ? 50 : 0 }}">--}}
+
+
+{{--                                            <br>--}}
+
+
+{{--                                        @endforeach--}}
+
+{{--                                        @if ($errors->has('number_of_student'))--}}
+{{--                                            <span class="help-block">--}}
+{{--                                            {!! $errors->first('number_of_student') !!}--}}
+
+{{--                                            </span>--}}
+{{--                                        @endif--}}
 {{--                                    </div>--}}
 {{--                                </div>--}}
+                            </div>
+
+
+                                {!! Form::submit('Create',['class' => 'btn btn-sm btn-primary'] ) !!}
+
+                                {!! Form::close() !!}
 
                             </div>
 
-                            {!! Form::submit('Create',['class' => 'btn btn-sm btn-primary'] ) !!}
 
-                            {!! Form::close() !!}
 
                         </div>
+
+
                     </div>
                 </div>
 

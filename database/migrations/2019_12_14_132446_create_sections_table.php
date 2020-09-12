@@ -16,7 +16,9 @@ class CreateSectionsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('section_name', 45)->nullable()->comment('A,B,C..etc');
+			$table->integer('parent')->default(0);
 			$table->string('slug', 45)->nullable();
+            $table->enum('type',['theory','lab'])->default('theory');
 			$table->timestamps();
             $table->enum('is_active',['yes','no'])->default('yes');
 		});

@@ -8,6 +8,8 @@ class YearlySession extends Model
 {
     protected $table = 'yearly_sessions';
 
+    protected $guarded = [];
+
     public function shift_session()
     {
         return $this->belongsToMany('App\Models\Shift');

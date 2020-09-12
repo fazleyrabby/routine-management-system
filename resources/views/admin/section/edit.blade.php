@@ -25,6 +25,15 @@
                             </div>
                             {!! Form::open(['route' => ['sections.update', $section->id], "method"=>"put" ])!!}
 
+                            <div class="form-group row">
+                                <div class="col-md-2 align-self-center">
+                                    {!! Form::label('Parent') !!}
+                                </div>
+                                <div class="col-md-10">
+                                    {!! Form::select('parent', $parent, $section->parent ,['class'=> 'form-control']) !!}
+                                </div>
+                            </div>
+
                             <div class="form-group row @if($errors->has('section_name')) has-error @endif">
                                 <div class="col-md-2 align-self-center">
                                     {!! Form::label('Section') !!}
@@ -34,6 +43,20 @@
                                     @if ($errors->has('section_name'))
                                         <span class="help-block">
                                     {!! $errors->first('section_name') !!}
+                                </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group row @if($errors->has('type')) has-error @endif">
+                                <div class="col-md-2 align-self-center">
+                                    {!! Form::label('Section Type') !!}
+                                </div>
+                                <div class="col-md-10">
+                                    {!! Form::select('type', ['theory' => 'Theory','lab' => 'Lab'], $section->type ,['class'=> 'form-control']) !!}
+                                    @if ($errors->has('type'))
+                                        <span class="help-block">
+                                    {!! $errors->first('type') !!}
                                 </span>
                                     @endif
                                 </div>
