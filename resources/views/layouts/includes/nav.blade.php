@@ -471,14 +471,14 @@
                         <ul class="submenu">
                             <li>
                                 <a href="{{ route('students.index') }}">
-                                    View all
+                                    Batch wise list
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ route('students.create') }}">
-                                    Add New
-                                </a>
-                            </li>
+{{--                            <li>--}}
+{{--                                <a href="{{ route('theory_section') }}">--}}
+{{--                                    Add New--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
 
 {{--                            <li class="has-submenu">--}}
 {{--                                <a href="#">Section - Students</a>--}}
@@ -498,6 +498,21 @@
                         </ul>
                     </li>
 
+                    <li class="has-submenu">
+                        <a href="#">Time Slot</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('time_slots.index') }}">
+                                    View All
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('time_slots.create') }}">
+                                    Add New
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
 
                     <li class="has-submenu">
@@ -517,37 +532,23 @@
                     </li>
 
 
-                    <li class="has-submenu">
-                        <a href="#">Time Slot</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="{{ route('time_slots.index') }}">
-                                    View All
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('time_slots.create') }}">
-                                    Add New
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
 
-                    <li class="has-submenu">
-                        <a href="#">Full Routine</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="{{ route('full_routine.index') }}">
-                                    View All
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('full_routine.create') }}">
-                                    Add New
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+
+{{--                    <li class="has-submenu">--}}
+{{--                        <a href="#">Full Routine</a>--}}
+{{--                        <ul class="submenu">--}}
+{{--                            <li>--}}
+{{--                                <a href="{{ route('full_routine.index') }}">--}}
+{{--                                    View All--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <a href="{{ route('full_routine.create') }}">--}}
+{{--                                    Add New--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
 
                 </ul>
                 <!-- End navigation menu -->

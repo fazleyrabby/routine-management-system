@@ -107,7 +107,6 @@
                                         </span>
                                         @endif
 
-                                        {{ asset('storage/galleries/' . $gallery->image_url) }}
                                     </div>
                                 </div>
                                 <div class="col-md-4">

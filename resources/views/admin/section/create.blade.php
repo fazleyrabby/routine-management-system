@@ -30,7 +30,7 @@
                                     {!! Form::label('Parent') !!}
                                 </div>
                                 <div class="col-md-10">
-                                    {!! Form::select('parent', $sections, null ,['class'=> 'form-control']) !!}
+                                    {!! Form::select('parent', $sections,  null, ['class'=> 'form-control']) !!}
                                 </div>
                             </div>
 

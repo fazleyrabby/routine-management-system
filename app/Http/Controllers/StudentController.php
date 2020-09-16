@@ -6,8 +6,12 @@ use App\Models\Batch;
 use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Models\Student;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Models\SectionStudent;
+use App\Models\YearlySession;
+use App\Models\Shift;
+use App\Models\StudentsLog;
 
 class StudentController extends Controller
 {
@@ -18,8 +22,10 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::with(['batch','batch.shift','batch.department'])->orderBy('id', 'DESC')->get();
-        return view('admin.student.index', compact('students'));
+        $students = Student::with(['batch','batch.shift','batch.department','section_student','yearly_session','yearly_session.shift_session','yearly_session.shift_session.session','section_student','section_student.section'])->get();
+        $shifts = Shift::all();
+
+        return view('admin.student.index', compact('students','shifts'));
     }
 
     /**
@@ -27,14 +33,22 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($shift_id)
     {
-        $batches = Batch::with(['shift','department'])->get();
+
+        $batches = Batch::with(['shift','department'])->where('shift_id',$shift_id)->get();
+
+
+        $sessions = YearlySession::select('yearly_sessions.id','session_name','year')
+                            ->leftJoin('shift_sessions', 'shift_sessions.id', '=', 'yearly_sessions.shift_session_id')
+                            ->leftJoin('shifts', 'shifts.id', '=', 'shift_sessions.shift_id')
+                            ->leftJoin('sessions', 'sessions.id', '=', 'shift_sessions.session_id')
+                            ->where('shifts.id',$shift_id)
+                            ->get();
 
         $sections = Section::where('is_active','yes')->get();
 
-        return view('admin.student.create',compact('batches','sections'));
-//        return view('admin.student.create');
+        return view('admin.student.create',compact('batches','sections','sessions'));
     }
 
     /**
@@ -45,24 +59,31 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-//        die(json_encode($request->all()));
-        $this->validate($request, [
-            'number_of_student' => 'required',
-            'batch_id' => 'required|unique:students'
-        ],
-            [
-                'batch_id.unique' => 'Data already exists for this batch',
-                'batch_id.required' => 'Enter Batch',
-                'number_of_student.required' => 'Enter Number of Student',
-            ]);
+//        $this->validate($request, [
+//            'number_of_student' => 'required',
+////            'batch_id' => 'required|unique:students'
+//            'batch_id' => 'required|unique:students,batch_id,' . $request->batch_id . ',id,yearly_session_id,' . $request->yearly_session_id
+//        ],
+//            [
+//                'batch_id.unique' => 'Data already exists for this batch',
+//                'batch_id.required' => 'Enter Batch',
+//                'number_of_student.required' => 'Enter Number of Student',
+//            ]);
 
+            $existStudentId = Student::where('batch_id',$request->batch_id)->pluck('id')->first();
 
+            $student = new Student();
+            $students_log = new StudentsLog();
+            $students_log->number_of_student = $student->number_of_student = $request->number_of_student;
+            $students_log->batch_id = $student->batch_id = $request->batch_id;
+            $students_log->yearly_session_id = $student->yearly_session_id = $request->yearly_session_id;
+            $students_log->save();
 
-        $student = new Student();
-        $student->number_of_student = $request->number_of_student;
-        $student->batch_id = $request->batch_id;
+            if (!empty($existStudentId)){
+                Student::findOrFail($existStudentId)->delete();
+            }
+
         $student->save();
-
         Session::flash('message', 'Student assigned successfully');
         return redirect()->route('students.index');
     }
@@ -86,8 +107,19 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        $batches = Batch::with(['shift','department'])->get();
-        return view('admin.student.edit', compact('batches','student'));
+
+        $shift = Shift::select('shifts.id')->leftJoin('batch', 'batch.shift_id', '=', 'shifts.id')->where('batch.id',$student->batch_id)->pluck('id')->first();
+
+        $batches = Batch::with(['shift','department'])->where('shift_id',$shift)->get();
+
+        $sessions = YearlySession::select('yearly_sessions.id as id','session_name','year')
+            ->leftJoin('shift_sessions', 'shift_sessions.id', '=', 'yearly_sessions.shift_session_id')
+            ->leftJoin('shifts', 'shifts.id', '=', 'shift_sessions.shift_id')
+            ->leftJoin('sessions', 'sessions.id', '=', 'shift_sessions.session_id')
+            ->where('shifts.id',$shift)
+            ->get();
+
+        return view('admin.student.edit', compact('batches','student','sessions'));
     }
 
     /**
@@ -97,11 +129,12 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, Student $student, StudentsLog $students_log)
     {
 
         $this->validate($request, [
             'number_of_student' => 'required',
+//            'batch_id' => 'required|unique:students,batch_id,' . $student->id
             'batch_id' => 'required|unique:students,batch_id,' . $student->id
         ],
             [
@@ -109,9 +142,12 @@ class StudentController extends Controller
                 'batch_id.unique' => 'Data already exist for this batch',
             ]);
 
-        $student->number_of_student = $request->number_of_student;
-        $student->batch_id = $request->batch_id;
+        $students_log->number_of_student = $student->number_of_student = $request->number_of_student;
+        $students_log->batch_id = $student->batch_id = $request->batch_id;
+        $students_log->yearly_session_id = $student->yearly_session_id = $request->yearly_session_id;
+
         $student->save();
+        $students_log->save();
 
         Session::flash('message', 'Student Number updated successfully');
         return redirect()->route('students.index');
@@ -133,8 +169,10 @@ class StudentController extends Controller
 
     public function theory_section($id){
         $sections = Section::where('type','theory')->get();
-        $students = Student::with(['batch','batch.shift','batch.department'])->orderBy('id', 'DESC')->where('students.id', $id)->get();
-        $student = $students[0];
+        $student = Student::with(['batch','batch.shift','batch.department','section_student'])->orderBy('id', 'DESC')->where('students.id', $id)->get()->first();
+//        $student = $student[0];
+//        $section_student = SectionStudent::where('student_id',$student->id)->get();
+
         return view('admin.student.theory_section',compact('sections','student'));
     }
 
@@ -149,57 +187,81 @@ class StudentController extends Controller
         if ($total_student == intval($request->total_students)) {
             foreach($request->student_section as $key => $student_section){
                     $data[] = [
-                        'students_id' => $request->students_id,
+                        'student_id' => $request->student_id,
                         'section_id' => $student_section['section'],
                         'students' => $student_section['student'],
+                        'section_type' => "theory",
                         'created_at' => now(),
                         'updated_at' => now()
                     ];
                 }
+
+            SectionStudent::where([
+                ['student_id',$request->student_id],
+                ['section_type','theory']
+            ])->delete();
             SectionStudent::insert($data);
             Session::flash('message', 'Section Assigned');
-            return redirect()->route('theory_section',$request->students_id);
+            return redirect()->route('students.index');
         }else{
             Session::flash('error', 'Total Student number not matched');
-            return redirect()->route('theory_section',$request->students_id);
+            return redirect()->route('theory_section',$request->student_id);
         }
 
     }
 
     public function lab_section($id){
         $sections = Section::where('type','lab')->get();
-        $students = Student::with(['batch','batch.shift','batch.department'])->orderBy('id', 'DESC')->where('students.id', $id)->get();
-        $student = $students[0];
+        $student = Student::with(['batch','batch.shift','batch.department','section_student','section_student.section'])->orderBy('id', 'DESC')->whereRaw('students.id='.$id)->get()->first();
         return view('admin.student.lab_section',compact('sections','student'));
     }
 
     public function lab_section_store(Request $request){
-
         $total_student = 0;
-
         foreach ($request->student_section as $student_section){
             $total_student += $student_section['student'];
         }
-
-        if ($total_student == intval($request->total_students)) {
             foreach($request->student_section as $key => $student_section){
                 $data[] = [
-                    'students_id' => $request->students_id,
+                    'student_id' => $request->student_id,
                     'section_id' => $student_section['section'],
                     'students' => $student_section['student'],
+                    'section_type' => "lab",
                     'created_at' => now(),
                     'updated_at' => now()
                 ];
             }
+            SectionStudent::where([
+                ['student_id',$request->student_id],
+                ['section_type','lab']
+            ])->delete();
             SectionStudent::insert($data);
             Session::flash('message', 'Section Assigned');
-//            return redirect()->route('theory_section',$request->students_id);
-            return redirect()->route('admin.student.index');
-        }else{
-            Session::flash('error', 'Total Student number not matched');
-            return redirect()->route('theory_section',$request->students_id);
-        }
-
+            return redirect()->route('students.index');
     }
-
 }
+
+
+//public function lab_section($id){
+//    $sections = Section::where('type','lab')->get();
+//
+//    $student = Student::with(['batch','batch.shift','batch.department','section_student','section_student.section'])->orderBy('id', 'DESC')->whereRaw('students.id='.$id)->get()->first();
+//
+//
+////        $student = Student::select('students.*','batch.batch_no','departments.department_name','sections.section_name','shifts.shift_name','section_students.students','section_students.section_type')
+////            ->leftJoin('batch', 'batch.id', '=', 'students.batch_id')
+////            ->leftJoin('shifts', 'shifts.id', '=', 'batch.shift_id')
+////            ->leftJoin('departments', 'departments.id', '=', 'batch.department_id')
+////            ->leftJoin('section_students', 'section_students.student_id', '=', 'students.id')
+////            ->leftJoin('sections', 'sections.id', '=', 'section_students.section_id')
+////            ->where('students.id', $id)
+////            ->where('section_students.section_type', 'theory')
+////            ->get();
+//
+//
+////        $section_student = SectionStudent::with('section')->orderBy('id', 'DESC')->where('section_students.student_id', $id)->get();
+//
+////        dd($student);
+//
+//    return view('admin.student.lab_section',compact('sections','student'));
+//}

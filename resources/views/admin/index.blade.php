@@ -14,7 +14,7 @@
                             <div class="mini-stat-desc">
                                 <div class="text-white">
                                     <h6 class="text-uppercase mt-0 text-white-50">Teachers</h6>
-                                    <h3 class="mb-3 mt-0">10</h3>
+                                    <h3 class="mb-3 mt-0">{{ $data['teacher'] }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                             <div class="mini-stat-desc">
                                 <div class="text-white">
                                     <h6 class="text-uppercase mt-0 text-white-50">Students</h6>
-                                    <h3 class="mb-3 mt-0">10</h3>
+                                    <h3 class="mb-3 mt-0">{{ $data['student'] }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                             <div class="mini-stat-desc">
                                 <div class="text-white">
                                     <h6 class="text-uppercase mt-0 text-white-50">Courses</h6>
-                                    <h3 class="mb-3 mt-0">10</h3>
+                                    <h3 class="mb-3 mt-0">{{ $data['course'] }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                             <div class="mini-stat-desc">
                                 <div class="text-white">
                                     <h6 class="text-uppercase mt-0 text-white-50">Batches</h6>
-                                    <h3 class="mb-3 mt-0">10</h3>
+                                    <h3 class="mb-3 mt-0">{{ $data['batch'] }}</h3>
                                 </div>
                             </div>
                         </div>
@@ -125,302 +125,45 @@
                 </div>
             </div> --}}
             <!-- end row -->
-
-                <div class="row">
-                    <div class="col-xl-4">
-                        <div class="card m-b-20">
-                            <div class="card-body">
-                                <h4 class="mt-0 header-title mb-3">Inbox</h4>
-                                <div class="inbox-wid">
-                                    <a href="#" class="text-dark">
-                                        <div class="inbox-item">
-                                            <div class="inbox-item-img float-left mr-3"><img src="assets/images/users/user-1.jpg" class="thumb-md rounded-circle" alt=""></div>
-                                            <h6 class="inbox-item-author mt-0 mb-1">Irene</h6>
-                                            <p class="inbox-item-text text-muted mb-0">Hey! there I'm available...</p>
-                                            <p class="inbox-item-date text-muted">13:40 PM</p>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="text-dark">
-                                        <div class="inbox-item">
-                                            <div class="inbox-item-img float-left mr-3"><img src="assets/images/users/user-2.jpg" class="thumb-md rounded-circle" alt=""></div>
-                                            <h6 class="inbox-item-author mt-0 mb-1">Jennifer</h6>
-                                            <p class="inbox-item-text text-muted mb-0">I've finished it! See you so...</p>
-                                            <p class="inbox-item-date text-muted">13:34 PM</p>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="text-dark">
-                                        <div class="inbox-item">
-                                            <div class="inbox-item-img float-left mr-3"><img src="assets/images/users/user-3.jpg" class="thumb-md rounded-circle" alt=""></div>
-                                            <h6 class="inbox-item-author mt-0 mb-1">Richard</h6>
-                                            <p class="inbox-item-text text-muted mb-0">This theme is awesome!</p>
-                                            <p class="inbox-item-date text-muted">13:17 PM</p>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="text-dark">
-                                        <div class="inbox-item">
-                                            <div class="inbox-item-img float-left mr-3"><img src="assets/images/users/user-4.jpg" class="thumb-md rounded-circle" alt=""></div>
-                                            <h6 class="inbox-item-author mt-0 mb-1">Martin</h6>
-                                            <p class="inbox-item-text text-muted mb-0">Nice to meet you</p>
-                                            <p class="inbox-item-date text-muted">12:20 PM</p>
-                                        </div>
-                                    </a>
-                                    <a href="#" class="text-dark">
-                                        <div class="inbox-item">
-                                            <div class="inbox-item-img float-left mr-3"><img src="assets/images/users/user-5.jpg" class="thumb-md rounded-circle" alt=""></div>
-                                            <h6 class="inbox-item-author mt-0 mb-1">Sean</h6>
-                                            <p class="inbox-item-text text-muted mb-0">Hey! there I'm available...</p>
-                                            <p class="inbox-item-date text-muted">11:47 AM</p>
-                                        </div>
-                                    </a>
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="mt-0 header-title mb-5">Recent Activity Feed</h4>
-                                <div>
-                                    <ul class="nav nav-pills nav-justified recent-activity-tab mb-4" id="recent-activity-tab" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="activity1-tab" data-toggle="pill" href="#activity1" role="tab" aria-controls="activity1" aria-selected="true">21 Sep</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="activity2-tab" data-toggle="pill" href="#activity2" role="tab" aria-controls="activity2" aria-selected="false">22 Sep</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="activity3-tab" data-toggle="pill" href="#activity3" role="tab" aria-controls="activity3" aria-selected="false">23 Sep</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="activity4-tab" data-toggle="pill" href="#activity4" role="tab" aria-controls="activity4" aria-selected="false">24 Sep</a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane show active" id="activity1" role="tabpanel" aria-labelledby="activity1-tab">
-                                            <div class="p-3">
-                                                <div class="text-muted">
-                                                    <p>21 Sep, 2018</p>
-                                                    <h6 class="text-dark">Responded to need “Volunteer Activities”</h6>
-                                                    <p>Aenean vulputate eleifend tellus</p>
-                                                    <p>Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus Nullam quis ante.</p>
-                                                    <a href="#" class="text-primary">Read More...</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="activity2" role="tabpanel" aria-labelledby="activity2-tab">
-                                            <div class="p-3">
-                                                <div class="text-muted">
-                                                    <p>22 Sep, 2018</p>
-                                                    <h6 class="text-dark">Added an interest “Volunteer Activities”</h6>
-                                                    <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet consectetur velit sed quia non tempora incidunt.</p>
-                                                    <p>Ut enim ad minima veniam quis nostrum</p>
-                                                    <a href="#" class="text-primary">Read More...</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="activity3" role="tabpanel" aria-labelledby="activity3-tab">
-                                            <div class="p-3">
-                                                <div class="text-muted">
-                                                    <p>23 Sep, 2018</p>
-                                                    <h6 class="text-dark">Joined the group “Boardsmanship Forum”</h6>
-                                                    <p>Nemo enim voluptatem quia voluptas</p>
-                                                    <p>Donec pede justo fringilla vel aliquet nec vulputate eget arcu. In enim justo rhoncus ut imperdiet a venenatis vitae. </p>
-                                                    <a href="#" class="text-primary">Read More...</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane" id="activity4" role="tabpanel" aria-labelledby="activity4-tab">
-                                            <div class="p-3">
-                                                <div class="text-muted">
-                                                    <p>24 Sep, 2018</p>
-                                                    <h6 class="text-dark">Attending the event “Some New Event”</h6>
-                                                    <p>At vero eos et accusamus et iusto odio</p>
-                                                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium </p>
-                                                    <a href="#" class="text-primary">Read More...</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="mt-0 header-title mb-4">Top product sales</h4>
-                                <div class="table-responsive">
-                                    <table class="table table-hover mb-0">
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <h6 class="mt-0">Computers</h6>
-                                                <p class="text-muted mb-0">The languages only differ</p>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <span class="peity-pie" data-peity='{ "fill": ["#1b82ec", "#f2f2f2"]}' data-width="54" data-height="54">70/100</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h6 class="mt-0">70%</h6>
-                                                <p class="text-muted mb-0">Sales</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h6 class="mt-0">Laptops</h6>
-                                                <p class="text-muted mb-0">Maecenas tempus tellus</p>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <span class="peity-donut" data-peity='{ "fill": ["#f5b225", "#f2f2f2"], "innerRadius": 20, "radius": 32 }' data-width="54" data-height="54">9,4</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h6 class="mt-0">84%</h6>
-                                                <p class="text-muted mb-0">Sales</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h6 class="mt-0">Ipad</h6>
-                                                <p class="text-muted mb-0">Donec pede justo</p>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <span class="peity-pie" data-peity='{ "fill": ["#1b82ec", "#f2f2f2"]}' data-width="54" data-height="54">62/100</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h6 class="mt-0">62%</h6>
-                                                <p class="text-muted mb-0">Sales</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <h6 class="mt-0">Mobile</h6>
-                                                <p class="text-muted mb-0">Aenean leo ligula</p>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <span class="peity-donut" data-peity='{ "fill": ["#f5b225", "#f2f2f2"], "innerRadius": 20, "radius": 32 }' data-width="54" data-height="54">20,4</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h6 class="mt-0">89%</h6>
-                                                <p class="text-muted mb-0">Sales</p>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
                 <!-- end row -->
 
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="mt-0 header-title mb-4">Latest Trasaction</h4>
+                                <h4 class="mt-0 header-title mb-4">Teachers</h4>
                                 <div class="table-responsive">
-                                    <table class="table table-hover mb-0">
+                                    <table id="datatable-buttons"
+                                           class="table table-striped table-bordered dt-responsive nowrap"
+                                           style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                         <tr>
-                                            <th scope="col">(#) Id</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Amount</th>
-                                            <th scope="col" colspan="2">Status</th>
+                                            <th>#</th>
+                                            <th>Teacher Name</th>
+                                            <th>Department</th>
+                                            <th>Rank</th>
+                                            <th>Email</th>
+                                            <th>Join Date</th>
+                                            <th>Contact</th>
+                                            <th>Status</th>
                                         </tr>
                                         </thead>
+
+
                                         <tbody>
-                                        <tr>
-                                            <th scope="row">#15236</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-2.jpg" alt="" class="thumb-md rounded-circle mr-2"> Jeanette James
-                                                </div>
-                                            </td>
-                                            <td>14/8/2018</td>
-                                            <td>$104</td>
-                                            <td><span class="badge badge-success">Delivered</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#15237</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-3.jpg" alt="" class="thumb-md rounded-circle mr-2"> Christopher Taylor
-                                                </div>
-                                            </td>
-                                            <td>15/8/2018</td>
-                                            <td>$112</td>
-                                            <td><span class="badge badge-warning">Pending</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#15238</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-4.jpg" alt="" class="thumb-md rounded-circle mr-2"> Edward Vazquez
-                                                </div>
-                                            </td>
-                                            <td>15/8/2018</td>
-                                            <td>$116</td>
-                                            <td><span class="badge badge-success">Delivered</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#15239</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-5.jpg" alt="" class="thumb-md rounded-circle mr-2"> Michael Flannery
-                                                </div>
-                                            </td>
-                                            <td>16/8/2018</td>
-                                            <td>$109</td>
-                                            <td><span class="badge badge-primary">Cancel</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#15240</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-6.jpg" alt="" class="thumb-md rounded-circle mr-2"> Jamie Fishbourne
-                                                </div>
-                                            </td>
-                                            <td>17/8/2018</td>
-                                            <td>$120</td>
-                                            <td><span class="badge badge-success">Delivered</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        @foreach($teachers as $teacher)
+                                            <tr>
+                                                <td>{{ $teacher->id }}</td>
+                                                <td>{{ $teacher->user->firstname." ".$teacher->user->lastname }}</td>
+                                                <td>{{ $teacher->department->department_name }}</td>
+                                                <td>{{ $teacher->rank->rank }}</td>
+                                                <td>{{ $teacher->user->email }}</td>
+                                                <td>{{ $teacher->join_date }}</td>
+                                                <td>{{ ucwords($teacher->user->contact) }}</td>
+                                                <td>{{ $teacher->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
+                                            </tr>
+
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -430,109 +173,33 @@
                     <div class="col-xl-6">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="mt-0 header-title mb-4">Latest Order</h4>
+                                <h4 class="mt-0 header-title mb-4">Rooms</h4>
                                 <div class="table-responsive order-table">
-                                    <table class="table table-hover mb-0">
+                                    <table id="datatable-buttons"
+                                           class="table table-striped table-bordered dt-responsive nowrap"
+                                           style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                         <tr>
-                                            <th scope="col">(#) Id</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Date/Time</th>
-                                            <th scope="col">Amount</th>
-                                            <th scope="col" colspan="2">Status</th>
+                                            <th>#</th>
+                                            <th>Building</th>
+                                            <th>Room No</th>
+                                            <th>Room Type</th>
+                                            <th>Status</th>
                                         </tr>
                                         </thead>
+
+
                                         <tbody>
-                                        <tr>
-                                            <th scope="row">#14562</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-4.jpg" alt="" class="thumb-md rounded-circle mr-2"> Matthew Drapeau
-                                                </div>
-                                            </td>
-                                            <td>17/8/2018
-                                                <p class="font-13 text-muted mb-0">8:26AM</p>
-                                            </td>
-                                            <td>$104</td>
-                                            <td><span class="badge badge-success badge-pill"><i class="mdi mdi-checkbox-blank-circle text-success"></i> Delivered</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#14563</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-5.jpg" alt="" class="thumb-md rounded-circle mr-2"> Ralph Shockey
-                                                </div>
-                                            </td>
-                                            <td>18/8/2018
-                                                <p class="font-13 text-muted mb-0">10:18AM</p>
-                                            </td>
-                                            <td>$112</td>
-                                            <td><span class="badge badge-warning badge-pill"><i class="mdi mdi-checkbox-blank-circle text-warning"></i> Pending</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#14564</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-6.jpg" alt="" class="thumb-md rounded-circle mr-2"> Alexander Pierson
-                                                </div>
-                                            </td>
-                                            <td>18//8/2018
-                                                <p class="font-13 text-muted mb-0">12:36PM</p>
-                                            </td>
-                                            <td>$116</td>
-                                            <td><span class="badge badge-success badge-pill"><i class="mdi mdi-checkbox-blank-circle text-success"></i> Delivered</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#14565</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-7.jpg" alt="" class="thumb-md rounded-circle mr-2"> Robert Rankin
-                                                </div>
-                                            </td>
-                                            <td>19/8/2018
-                                                <p class="font-13 text-muted mb-0">11:47AM</p>
-                                            </td>
-                                            <td>$109</td>
-                                            <td><span class="badge badge-primary badge-pill"><i class="mdi mdi-checkbox-blank-circle text-primary"></i> Cancel</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#14566</th>
-                                            <td>
-                                                <div>
-                                                    <img src="assets/images/users/user-8.jpg" alt="" class="thumb-md rounded-circle mr-2"> Myrna Shields
-                                                </div>
-                                            </td>
-                                            <td>20/8/2018
-                                                <p class="font-13 text-muted mb-0">02:52PM</p>
-                                            </td>
-                                            <td>$120</td>
-                                            <td><span class="badge badge-success badge-pill"><i class="mdi mdi-checkbox-blank-circle text-success"></i> Delivered</span></td>
-                                            <td>
-                                                <div>
-                                                    <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        @foreach($rooms as $room)
+                                            <tr>
+                                                <td>{{ $room->id }}</td>
+                                                <td>{{ $room->building }}</td>
+                                                <td>{{ $room->room_no }}</td>
+                                                <td>{{ $room->room_type == '0' ? 'Theory' : 'Sessional' }}</td>
+                                                <td>{{ $room->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
+                                            </tr>
+
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -540,6 +207,60 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="mt-0 header-title mb-4">Courses</h4>
+                                <div class="table-responsive">
+                                    <table id="datatable-buttons"
+                                           class="table table-striped table-bordered dt-responsive nowrap"
+                                           style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Course Name</th>
+                                            <th>Course Code</th>
+                                            <th>Credit</th>
+                                            <th>Course Type</th>
+                                            <th>Status</th>
+                                        </tr>
+                                        </thead>
+
+
+                                        <tbody>
+                                        @foreach($courses as $course)
+                                            <tr>
+                                                <td>{{ $course->id }}</td>
+                                                <td>{{ $course->course_name }}</td>
+                                                <td>{{ $course->course_code }}</td>
+                                                <td>{{ $course->credit }}</td>
+                                                <td>{{ $course->course_type == 0 ? 'Theory' : 'Sessional' }}</td>
+                                                <td>{{ $course->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+{{--                    <div class="col-xl-6">--}}
+{{--                        <div class="card">--}}
+{{--                            <div class="card-body">--}}
+{{--                                <h4 class="mt-0 header-title mb-4">Rooms</h4>--}}
+{{--                                <div class="table-responsive order-table">--}}
+
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+                </div>
+
+
+
                 <!-- end row -->
             </div>
             <!-- end container-fluid -->

@@ -14,4 +14,15 @@ class Student extends Model
     {
         return $this->belongsTo('App\Models\Batch');
     }
+
+    public function section_student()
+    {
+        return $this->hasMany('App\Models\SectionStudent');
+    }
+
+    public function yearly_session()
+    {
+        return $this->belongsTo('App\Models\YearlySession');
+    }
+
 }

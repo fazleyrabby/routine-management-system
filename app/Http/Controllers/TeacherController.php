@@ -11,6 +11,7 @@ use App\User;
 use App\Models\TeacherRank;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class TeacherController extends Controller
 {
@@ -45,10 +46,12 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
+//        $this->validate($request, ['file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',]);
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'required',
+            'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000'
         ],
             [
                 'firstname.required' => 'Enter First name',
@@ -88,11 +91,15 @@ class TeacherController extends Controller
             $fileExt = $image_url->getClientOriginalExtension();
 
             //Get file name to store
-            $fileNameToStore = $filename .'_'. $fileExt;
+            $fileNameToStore = $filename.time().'_'. $fileExt;
 
             $user->photo = $fileNameToStore;
+            $path = storage_path().'/app/public/uploads/';
 
-            $image_url->storeAs('public/uploads', $fileNameToStore);
+            $image_url->move($path,$fileNameToStore);
+            $image = Image::make($path.$fileNameToStore);
+            $image->resize(300,300);
+            $image->save($path.$fileNameToStore);
         }
 
         $user->save();
@@ -140,6 +147,7 @@ class TeacherController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'required|unique:users,email,' . $teacher->user_id,
+            'photo' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ],
             [
                 'firstname.required' => 'Enter First name',
@@ -165,6 +173,7 @@ class TeacherController extends Controller
 
 
         if ($request->photo){
+
             $image_url = $request->photo;
             //Get file with extension
             $fileNameWithExt = $image_url->getClientOriginalName();
@@ -176,11 +185,16 @@ class TeacherController extends Controller
             $fileExt = $image_url->getClientOriginalExtension();
 
             //Get file name to store
-            $fileNameToStore = $filename .'_'. $fileExt;
+            $fileNameToStore = $filename.time().'_'. $fileExt;
 
             $user->photo = $fileNameToStore;
 
-            $image_url->storeAs('public/uploads', $fileNameToStore);
+            $path = storage_path().'/app/public/uploads/';
+
+            $image_url->move($path,$fileNameToStore);
+            $image = Image::make($path.$fileNameToStore);
+            $image->fit(300,300);
+            $image->save($path.$fileNameToStore);
         }
 
         $user->save();

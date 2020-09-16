@@ -31,8 +31,9 @@
                                 Total Students - <strong>{{ $student->number_of_student }}</strong>
                                 <a href="{{ route('students.index') }}" class="btn btn-sm btn-primary float-right">Student List</a>
                             </div>
+                                <br>
                             {!! Form::open(['route' =>'theory_section_store'])!!}
-                                <input type="hidden" name="students_id" value="{{ $student->id }}">
+                                <input type="hidden" name="student_id" value="{{ $student->id }}">
                                 <input type="hidden" name="total_students" value="{{ $student->number_of_student }}">
 
                             <div class="row">
@@ -41,10 +42,29 @@
 
                                     <div class="form-group">
                                         @foreach($sections as $section)
-                                            <input type="checkbox" class="section" id="{{ $section->slug }}" name="student_section[{{ $section->id }}][section]" value={{ $section->id }}>
-                                            <label for="{{ $section->slug }}">{{ $section->section_name }}</label>
-                                            <input data-student="#{{ $section->slug }}" max="{{ $student->number_of_student }}" type="number" name="student_section[{{ $section->id }}][student]" class="form-control-sm student" disabled>
-                                            <br>
+                                            @if(count($student->section_student) != 0)
+                                                @foreach($student->section_student as $section_student)
+                                                    @if($section->id == $section_student->section_id)
+                                                        @php $flag = 1; @endphp
+                                                        @break
+                                                    @else
+                                                        @php $flag = 0; @endphp
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                @php $flag = -1; @endphp
+                                            @endif
+                                                @if($flag == 1)
+                                                    <input type="checkbox" class="section" id="{{ $section->slug }}" name="student_section[{{ $section->id }}][section]" checked value={{ $section->id }}>
+                                                    <label for="{{ $section->slug }}">{{ $section->section_name }}</label>
+                                                    <input data-student="#{{ $section->slug }}" value="{{ $section_student->students }}"  max="{{ $student->number_of_student }}" type="number" name="student_section[{{ $section->id }}][student]" class="form-control-sm student">
+                                                    <br>
+                                                @else
+                                                    <input type="checkbox" class="section" id="{{ $section->slug }}" name="student_section[{{ $section->id }}][section]" value={{ $section->id }}>
+                                                    <label for="{{ $section->slug }}">{{ $section->section_name }}</label>
+                                                    <input data-student="#{{ $section->slug }}"  type="number" name="student_section[{{ $section->id }}][student]" class="form-control-sm student" disabled>
+                                                    <br>
+                                                @endif
                                         @endforeach
 
                                         @if ($errors->has('students'))

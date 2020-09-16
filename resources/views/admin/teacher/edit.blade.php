@@ -124,7 +124,7 @@
                                         {!! Form::label('Photo','Photo', ['style'=> 'display:block;']) !!}
                                         {!! Form::file('photo', null, ['class'=> 'form-control']) !!}
                                         @if ($errors->has('photo'))
-                                            <span class="help-block">
+                                            <span class="help-block text-danger">
                                             {!! $errors->first('photo') !!}
                                         </span>
                                         @endif

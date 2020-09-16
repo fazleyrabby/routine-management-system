@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Room;
 use Illuminate\Http\Request;
-use App\Models\Teacher;
-use App\Models\Student;
-use App\Models\Batch;
-use App\Models\Course;
 
-class AdminController extends Controller
+class StudentsLogController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,14 +13,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $data['teacher'] = Teacher::all()->count();
-        $data['student'] = Student::sum('number_of_student');
-        $data['batch'] = Batch::all()->count();
-        $data['course'] = Course::all()->count();
-        $teachers = Teacher::with(['department','rank','user'])->get();
-        $rooms = Room::orderBy('id', 'DESC')->get();
-        $courses = Course::orderBy('id', 'DESC')->get();
-        return view('admin.index',compact('data','teachers','rooms','courses'));
+        //
     }
 
     /**

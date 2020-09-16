@@ -19,8 +19,11 @@
                         <div class="card-body">
                             <div class="mt-0 header-title mb-4">
                                 Batch wise Student - List
-                                <a href="{{ route('students.create') }}" class="btn btn-sm btn-primary float-right">Add
-                                    New</a>
+                                @foreach($shifts as $shift)
+
+                                <a href="{{ route('students_create', $shift->id) }}" class="btn btn-sm btn-primary float-right ml-1">Add Students {{ $shift->shift_name }} Batch </a>
+
+                                @endforeach
                             </div>
                             @if (Session::has('message'))
                                 <div class="alert-dismissable alert alert-success">
@@ -43,23 +46,36 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Batch</th>
+                                    <th>Assigned On</th>
                                     <th>Number of student</th>
+                                    <th>Section wise students</th>
                                     <th>Assign students Section</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-{{--                                {{ $students }}--}}
+
                                 @foreach($students as $student)
+
 
                                     <tr>
                                         <td>{{ $student->id }}</td>
                                         <td>{{ $student->batch->department->department_name ."-". $student->batch->batch_no ."-".$student->batch->shift->slug  }}</td>
+                                        <td> {{ $student->yearly_session->shift_session->session->session_name.'-'.$student->yearly_session->year }}</td>
                                         <td>{{ $student->number_of_student }}</td>
                                         <td>
+                                            @php $count = count($student->section_student); $i=0 @endphp
+                                            @foreach($student->section_student as $section_student)
+                                                @php $i++ @endphp
+                                                    <span class="bg-danger text-light p-1 m-0"><strong>{{ $section_student->section->section_name }}-{{ $section_student->students }}</strong></span>&nbsp;&nbsp;
+                                            @endforeach
+                                        </td>
+                                        <td>
                                             <a href="{{ route('theory_section', $student->id) }}" class="btn btn-sm btn-primary">Theory Section</a>
+                                            @if(count($student->section_student) != 0)
                                             <a href="{{ route('lab_section', $student->id) }}" class="btn btn-sm btn-primary">Lab Section</a>
+                                            @endif
                                         </td>
 {{--                                        <td>{{ $student->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>--}}
                                         <td>

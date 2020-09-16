@@ -15,8 +15,9 @@ class CreateSectionStudents extends Migration
     {
         Schema::create('section_students', function (Blueprint $table) {
             $table->id();
-            $table->integer('students_id')->nullable()->foreign('students_id')->references('id')->on('students');
+            $table->integer('student_id')->nullable()->foreign('student_id')->references('id')->on('students');
             $table->integer('section_id')->nullable()->foreign('section_id')->references('id')->on('sections');
+            $table->enum('section_type',['lab','theory'])->nullable();
             $table->integer('students')->nullable();
             $table->timestamps();
         });

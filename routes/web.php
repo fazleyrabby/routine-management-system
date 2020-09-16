@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use Intervention\Image\ImageManagerStatic as Image;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 
+//Route::get('/', function (){
+//   $img = Image::make('https://source.unsplash.com/1280x720');
+//   $img->resize(300, 200)->save('new'.rand ( 1 , 100 ).'.jpg');
+////   $img->save('new.jpg',5);
+//});
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/routine', 'HomeController@routineView')->name('routine');
 
@@ -35,10 +41,16 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::resource('users', 'UserController');
     Route::resource('ranks', 'TeacherRankController');
     Route::resource('students', 'StudentController');
+
+    Route::get('students_create/{id}', 'StudentController@create')->name('students_create');
+//    Route::get('students_edit/{id}/{shift_id}', 'StudentController@edit')->name('students_edit');
+
     Route::get('theory_section/{id}', 'StudentController@theory_section')->name('theory_section');
     Route::post('theory_section_store', 'StudentController@theory_section_store')->name('theory_section_store');
-    Route::post('lab_section', 'StudentController@lab_section')->name('lab_section');
+
+    Route::post('lab_section_store', 'StudentController@lab_section_store')->name('lab_section_store');
     Route::get('lab_section/{id}', 'StudentController@lab_section')->name('lab_section');
+
     Route::resource('section_students', 'SectionStudentController');
     Route::resource('courses', 'CourseController');
     Route::resource('assign_courses', 'AssignCourseController');

@@ -17,14 +17,10 @@ class SectionController extends Controller
     {
 //        $sections = Section::orderBy('id', 'DESC')->get();
 
-//        $sections = DB::table('sections')
-//            ->select(['sections.*', 'sub.section_name'])
-//            ->leftJoin('sections as sub', 'sub.parent', '=', 'sections.id')
-//            ->get();
         $sections = Section::select(['sections.*', 'sub.section_name as sub'])
             ->leftJoin('sections as sub', 'sub.id', '=', 'sections.parent')
             ->get();
-//        dd($sections);
+
         return view('admin.section.index', compact('sections'));
     }
 
@@ -35,7 +31,7 @@ class SectionController extends Controller
      */
     public function create()
     {
-        $sections = Section::orderBy('section_name', 'ASC')->where('parent',0)->pluck('section_name','id');
+        $sections = Section::orderBy('section_name', 'ASC')->where('parent',0)->pluck('section_name','id')->prepend('Select section',0);
         return view('admin.section.create',compact('sections'));
     }
 

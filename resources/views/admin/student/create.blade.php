@@ -39,7 +39,7 @@
 {{--                                        {!! Form::select('batch_id', $batches, null ,['class'=> 'form-control']) !!}--}}
                                         <select name="batch_id" id="" class="form-control">
                                             @foreach($batches as $batch)
-                                                <option value={{ $batch->id }} > {{ $batch->department->department_name. '-' . $batch->batch_no. '-' . $batch->shift->slug}}</option>
+                                                <option value={{ $batch->id }} {{ old($batch->id) }}> {{ $batch->department->department_name. '-' . $batch->batch_no. '-' . $batch->shift->slug}}</option>
                                             @endforeach
                                         </select>
 
@@ -50,6 +50,27 @@
                                         @endif
                                     </div>
                                 </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        {!! Form::label('Session') !!}
+
+                                        <select name="yearly_session_id" id="" class="form-control">
+
+                                            @foreach($sessions as $session)
+                                                <option value={{ $session->id }} > {{ $session->session_name. '-' . $session->year}}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @if ($errors->has('session'))
+                                            <span class="help-block">
+                                            {!! $errors->first('session') !!}
+                                        </span>
+                                        @endif
+
+                                    </div>
+                                </div>
+
 
                                 <div class="col-md-12">
                                     <div class="form-group">

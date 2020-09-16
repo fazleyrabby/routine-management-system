@@ -55,6 +55,26 @@
 
                                 <div class="col-md-12">
                                     <div class="form-group">
+                                        {!! Form::label('Session') !!}
+{{--                                        {{ $sessions }}--}}
+                                        <select name="yearly_session_id" id="" class="form-control">
+                                            @foreach($sessions as $session)
+
+                                                <option {{ $student->yearly_session_id == $session->id ? "selected" : "" }} value={{ $session->id }} > {{ $session->session_name. '-' . $session->year}}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @if ($errors->has('session'))
+                                            <span class="help-block">
+                                            {!! $errors->first('session') !!}
+                                        </span>
+                                        @endif
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
                                         {!! Form::label('Total Student Number') !!}
                                         {!! Form::number('number_of_student', $student->number_of_student ,['class'=> 'form-control']) !!}
 
