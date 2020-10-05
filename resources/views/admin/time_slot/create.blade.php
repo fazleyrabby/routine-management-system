@@ -34,6 +34,20 @@
                             {!! Form::open(['route' =>'time_slots.store']) !!}
 
                             <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group @if($errors->has('shift')) has-error @endif">
+                                        {!! Form::label('Shift Name') !!}
+                                        {!! Form::select('shift', $shifts, null, ['class'=> 'form-control']) !!}
+                                        @if ($errors->has('shift'))
+                                            <span class="help-block">
+                                        {!! $errors->first('shift') !!}
+                                    </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group @if($errors->has('lastname')) has-error @endif">
                                         {!! Form::label('From') !!}
@@ -45,7 +59,6 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="form-group @if($errors->has('lastname')) has-error @endif">
                                         {!! Form::label('To') !!}
@@ -57,7 +70,6 @@
                                         @endif
                                     </div>
                                 </div>
-
                             </div>
 
                             {!! Form::submit('Create',['class' => 'btn btn-sm btn-primary'] ) !!}

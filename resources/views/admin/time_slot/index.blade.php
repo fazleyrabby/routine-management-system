@@ -43,6 +43,7 @@
                                     <th>#</th>
                                     <th>Start time</th>
                                     <th>End time</th>
+                                    <th>Shift</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -55,6 +56,7 @@
                                         <td>{{ $i++ }}</td>
                                         <td>{{ date('g:i a', strtotime($time_slot->from)) }}</td>
                                         <td>{{ date('g:i a', strtotime($time_slot->to)) }}</td>
+                                        <td>{{ $time_slot->shift->shift_name }}</td>
                                         <td>
                                             <a href="{{ route('time_slots.edit', $time_slot->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                             <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{$time_slot->id}}">Delete</button>

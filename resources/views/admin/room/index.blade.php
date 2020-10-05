@@ -44,6 +44,7 @@
                                         <th>Building</th>
                                         <th>Room No</th>
                                         <th>Room Type</th>
+                                        <th>Capactiy</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -56,7 +57,8 @@
                                             <td>{{ $room->id }}</td>
                                             <td>{{ $room->building }}</td>
                                             <td>{{ $room->room_no }}</td>
-                                            <td>{{ $room->room_type == '0' ? 'Theory' : 'Sessional' }}</td>
+                                            <td>{{ $room->room_type == '0' ? 'Theory' : 'Lab' }}</td>
+                                            <td>{{ $room->capacity }}</td>
                                             <td>{{ $room->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
                                             <td>
                                                 <a href="{{ route('rooms.edit', $room->id) }}"

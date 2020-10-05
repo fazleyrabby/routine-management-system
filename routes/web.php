@@ -43,7 +43,9 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::resource('students', 'StudentController');
 
     Route::get('students_create/{id}', 'StudentController@create')->name('students_create');
-//    Route::get('students_edit/{id}/{shift_id}', 'StudentController@edit')->name('students_edit');
+
+    Route::get('teachers_offday/{id}', 'TeachersOffdayController@create')->name('teachers_offday');
+    Route::post('teachers_offday_store', 'TeachersOffdayController@store')->name('teachers_offday_store');
 
     Route::get('theory_section/{id}', 'StudentController@theory_section')->name('theory_section');
     Route::post('theory_section_store', 'StudentController@theory_section_store')->name('theory_section_store');
@@ -56,7 +58,15 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::resource('assign_courses', 'AssignCourseController');
     Route::resource('routine_committee', 'RoutineCommitteeController');
     Route::resource('time_slots', 'TimeSlotController');
-    Route::resource('full_routine', 'FullRoutineController');
+
+    //Day wise time slot & class slot
+    Route::get('day_wise_slots', 'DayWiseSlotController@index')->name('day_wise_slots');
+    Route::get('day_wise_slot_create/{id}', 'DayWiseSlotController@create')->name('day_wise_slot_create');
+    Route::post('day_wise_slot_store', 'DayWiseSlotController@store')->name('day_wise_slot_store');
+    Route::post('day_wise_slot_destroy/{id}', 'DayWiseSlotController@destroy')->name('day_wise_slot_destroy');
+
+    Route::get('full_routine', 'FullRoutineController@index')->name('full_routine');
+
 });
 
 #============================ *Logout Route* ============================#

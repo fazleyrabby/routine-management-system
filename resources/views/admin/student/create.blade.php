@@ -54,11 +54,10 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         {!! Form::label('Session') !!}
-
                                         <select name="yearly_session_id" id="" class="form-control">
 
                                             @foreach($sessions as $session)
-                                                <option value={{ $session->id }} > {{ $session->session_name. '-' . $session->year}}</option>
+                                                <option value={{ $session->id }} > {{ $session->session->session_name. '-' . $session->year}}</option>
                                             @endforeach
                                         </select>
 
@@ -76,13 +75,11 @@
                                     <div class="form-group">
                                         {!! Form::label('Total Student Number') !!}
                                         {!! Form::number('number_of_student', null ,['class'=> 'form-control']) !!}
-
                                         @if ($errors->has('number_of_student'))
                                             <span class="help-block">
                                             {!! $errors->first('number_of_student') !!}
                                         </span>
                                         @endif
-
                                     </div>
                                 </div>
 

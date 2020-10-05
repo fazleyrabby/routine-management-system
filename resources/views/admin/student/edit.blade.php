@@ -60,7 +60,7 @@
                                         <select name="yearly_session_id" id="" class="form-control">
                                             @foreach($sessions as $session)
 
-                                                <option {{ $student->yearly_session_id == $session->id ? "selected" : "" }} value={{ $session->id }} > {{ $session->session_name. '-' . $session->year}}</option>
+                                                <option {{ $student->yearly_session_id == $session->id ? "selected" : "" }} value={{ $session->id }} > {{ $session->session->session_name. '-' . $session->year}}</option>
                                             @endforeach
                                         </select>
 

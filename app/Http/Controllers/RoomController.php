@@ -40,9 +40,11 @@ class RoomController extends Controller
         $this->validate($request, [
             'room_no' => 'required|unique:rooms',
             'building' => 'required',
+            'capacity' => 'required',
         ],
             [
                 'room_no.required' => 'Enter Room No',
+                'capacity.required' => 'Enter Capacity',
                 'room_no.unique' => 'Room no already exist',
                 'building.required' => 'Enter Building Name'
             ]);
@@ -50,6 +52,7 @@ class RoomController extends Controller
         $room = new Room();
         $room->building = $request->building;
         $room->room_no = $request->room_no;
+        $room->capacity = $request->capacity;
         $room->room_type = $request->room_type;
         $room->save();
 
@@ -89,17 +92,20 @@ class RoomController extends Controller
     {
         $this->validate($request, [
             'room_no' => 'required|unique:rooms,room_no,' . $room->id,
+            'capacity' => 'required',
             'building' => 'required',
         ],
             [
                 'room_no.required' => 'Enter Room No',
                 'room_no.unique' => 'Room no already exist',
+                'capacity.required' => 'Enter Capacity',
                 'building.required' => 'Enter Building Name'
             ]);
 
         $room->building = $request->building;
         $room->room_no = $request->room_no;
         $room->room_type = $request->room_type;
+        $room->capacity = $request->capacity;
         $room->is_active = $request->is_active;
         $room->save();
 

@@ -25,6 +25,12 @@ class Teacher extends Model
         return $this->belongsTo('App\Models\TeacherRank');
     }
 
+    public function teachers_offday()
+    {
+        return $this->hasMany('App\Models\TeachersOffday');
+    }
+
+
 }
 
 

@@ -19,7 +19,7 @@
                         <div class="card-body">
                             <div class="mt-0 header-title mb-4">
                                 Assigned Course - List
-                                <a href="{{ route('courses.create') }}" class="btn btn-sm btn-primary float-right">Assign New</a>
+                                <a href="{{ route('assign_courses.create') }}" class="btn btn-sm btn-primary float-right">Assign New</a>
                             </div>
                             @if (Session::has('message'))
                                 <div class="alert-dismissable alert alert-success">
@@ -42,43 +42,56 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Teacher Name</th>
-                                    <th>Course Name</th>
+                                    <th>Designation</th>
                                     <th>Course Code</th>
-                                    <th>Course Type</th>
+                                    <th>Course Name</th>
+                                    <th>Credit</th>
+                                    <th>Program/Batch/Session</th>
                                     <th>Session</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
+{{--                                   @php $i = 1 @endphp--}}
+                                   @foreach($assign_courses as $assign_course)
+
                                     <tr>
-                                        <td>1</td>
-                                        <td>Teacher one</td>
-                                        <td>Data Comminucation</td>
-                                        <td>CSE435</td>
-                                        <td>Theory</td>
-                                        <td>Summer-2021</td>
-                                        <td>Active</td>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $assign_course->teacher->user->firstname." ".$assign_course->teacher->user->lastname }}</td>
+                                        <td>{{ $assign_course->teacher->rank->rank }}</td>
+                                        <td>{{ $assign_course->course->course_code }}</td>
+                                        <td>{{ $assign_course->course->course_name }}</td>
+                                        <td>{{ $assign_course->course->course_code }}</td>
+                                        <td>{{ $assign_course->batch->department->department_name. '-' . $assign_course->batch->batch_no. '-' . $assign_course->batch->shift->slug }}</td>
+                                        <td>{{ $assign_course->session->session->session_name."-".$assign_course->session->year }}</td>
                                         <td>
-                                            <a href="" class="btn btn-primary">Edit</a>
-                                            <a href="" class="btn btn-danger">Delete</a>
+                                            <a href="{{ route('assign_courses.edit', $assign_course->id) }}"
+                                               class="btn btn-sm btn-primary">Edit</a>
+
+                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{$assign_course->id}}">Delete</button>
                                         </td>
                                     </tr>
 
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Teacher one</td>
-                                        <td>Theory of Computing</td>
-                                        <td>CSE317</td>
-                                        <td>Theory</td>
-                                        <td>Summer-2021</td>
-                                        <td>Active</td>
-                                        <td>
-                                            <a href="" class="btn btn-primary">Edit</a>
-                                            <a href="" class="btn btn-danger">Delete</a>
-                                        </td>
-                                    </tr>
+{{--                                    @php $i++ @endphp--}}
+                                    <div class="modal fade bs-example-modal-center{{$assign_course->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5>Are you sure? You want to delete this?</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {!! Form::open(['route' => ['assign_courses.destroy', $assign_course->id ], 'method' => 'delete', 'style' => 'display:inline']) !!}
+                                                    {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
+                                                    {!! Form::close() !!}
+                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{$assign_course->id}}"> No </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+
+
 
                                 </tbody>
                             </table>

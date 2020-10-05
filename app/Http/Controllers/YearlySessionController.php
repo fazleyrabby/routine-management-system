@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\ShiftSession;
 use Illuminate\Support\Facades\DB;
+use App\Models\Session as SS;
 
 class YearlySessionController extends Controller
 {
@@ -23,19 +24,20 @@ class YearlySessionController extends Controller
 //            ->get();
 
 
-        $shift_sessions = DB::table('shift_sessions')
-                          ->leftJoin('shifts', 'shifts.id', '=', 'shift_sessions.shift_id')
-                          ->leftJoin('sessions', 'sessions.id', '=', 'shift_sessions.session_id')
-                          ->select('shift_name',DB::raw('group_concat(sessions.session_name) as session_names'))
-                          ->groupBy('shift_id')->get();
+//        $shift_sessions = DB::table('shift_sessions')
+//                          ->leftJoin('shifts', 'shifts.id', '=', 'shift_sessions.shift_id')
+//                          ->leftJoin('sessions', 'sessions.id', '=', 'shift_sessions.session_id')
+//                          ->select('shift_name',DB::raw('group_concat(sessions.session_name) as session_names'))
+//                          ->groupBy('shift_id')->get();
 
+         $sessions = SS::all();
 //        $shift_sessions = ShiftSession::groupBy('shift_id')->with(['session','shift'])->select('shift_id',DB::raw(group_concat(session_name))->get();
 
 //        dd($shift_sessions);
 
         $yearly_sessions = YearlySession::groupBy('year')->select('year', DB::raw('count(*) as total'))->get();
 
-        return view('admin.yearly_session.index', compact('yearly_sessions','shift_sessions'));
+        return view('admin.yearly_session.index', compact('yearly_sessions','sessions'));
     }
 
     /**
@@ -56,16 +58,14 @@ class YearlySessionController extends Controller
      */
     public function store(Request $request)
     {
-        $sessions = ShiftSession::where('is_active','yes')->pluck('id');
+        $sessions = SS::where('is_active','yes')->pluck('id');
         $existSession = YearlySession::where('year',$request->year)->count();
-
-
 
         if ($existSession == 0){
             if ($sessions->count() > 0){
                 foreach($sessions as $session){
                     $data[] = [
-                        'shift_session_id' => $session,
+                        'session_id' => $session,
                         'year' => $request->year,
                         'created_at' => now(),
                         'updated_at' => now()

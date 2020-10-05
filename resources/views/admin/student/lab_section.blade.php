@@ -50,53 +50,32 @@
 
                             <div class="row">
                                 <div class="form-group">
+                                    @php $flag = 0 @endphp
                                     @foreach($sections as $section)
-                                        @if(count($student->section_student) != 0)
-                                            @foreach($student->section_student as $section_student)
-                                                @if($section->id == $section_student->section_id)
-                                                    @php $flag = 1; @endphp
-                                                    @break
-                                                @else
-                                                    @php $flag = 0; @endphp
-                                                @endif
-                                            @endforeach
-                                        @else
-                                            @php $flag = -1; @endphp
-                                        @endif
-                                        @if($flag == 1)
-                                            <input type="checkbox" class="section" id="{{ $section->slug }}" name="student_section[{{ $section->id }}][section]" checked value={{ $section->id }}>
-                                            <label for="{{ $section->slug }}">{{ $section->section_name }}</label>
-                                            <input data-student="#{{ $section->slug }}" value="{{ $section_student->students }}"  max="{{ $student->number_of_student }}" type="number" name="student_section[{{ $section->id }}][student]" class="form-control-sm student">
-                                            <br>
-                                        @else
-                                            <input type="checkbox" class="section" id="{{ $section->slug }}" name="student_section[{{ $section->id }}][section]" value={{ $section->id }}>
-                                            <label for="{{ $section->slug }}">{{ $section->section_name }}</label>
-                                            <input data-student="#{{ $section->slug }}"  type="number" name="student_section[{{ $section->id }}][student]" class="form-control-sm student" disabled>
-                                            <br>
-                                        @endif
+                                        @foreach($student->section_student as $section_student)
+                                            @if($section->id == $section_student->section_id)
+                                                @php($flag = 1) @break
+                                            @else
+                                                @php($flag = 0)
+                                            @endif
+                                        @endforeach
+                                        <input type="checkbox" class="section" id="{{ $section->slug }}" name="student_section[{{ $section->id }}][section]" {{ $flag == 1 ? 'checked' : '' }} value={{ $section->id }}>
+                                        <label for="{{ $section->slug }}">{{ $section->section_name }}</label>
+                                        <input data-student="#{{ $section->slug }}" value="{{ $flag == 1 ? $section_student->students : '' }}"  max="{{ $student->number_of_student }}" type="number" name="student_section[{{ $section->id }}][student]" class="form-control-sm student" {{ $flag == 1 ? '' : 'disabled' }}>
+                                        <br>
                                     @endforeach
 
                                     @if ($errors->has('students'))
                                         <span class="help-block">
                                         {!! $errors->first('students') !!}
-
                                         </span>
                                     @endif
                                 </div>
                             </div>
-
-
                             {!! Form::submit('Create',['class' => 'btn btn-sm btn-primary'] ) !!}
-
                             {!! Form::close() !!}
-
                         </div>
-
-
-
                     </div>
-
-
                 </div>
             </div>
 

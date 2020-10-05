@@ -10,8 +10,8 @@ class YearlySession extends Model
 
     protected $guarded = [];
 
-    public function shift_session()
+    public function session()
     {
-        return $this->belongsTo('App\Models\ShiftSession');
+        return $this->belongsTo('App\Models\Session');
     }
 }

@@ -17,7 +17,8 @@ class CreateRoomsTable extends Migration {
 			$table->increments('id');
 			$table->string('building', 45)->nullable();
 			$table->string('room_no', 45)->nullable();
-            $table->enum('room_type',['0', '1'])->comment('0=Theory,1=Sessional');
+			$table->integer('capacity')->nullable();
+            $table->enum('room_type',['0', '1'])->comment('0=Theory,1=Lab');
             $table->timestamps();
             $table->enum('is_active',['yes','no'])->default('yes');
 		});

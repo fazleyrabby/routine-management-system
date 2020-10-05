@@ -514,7 +514,6 @@
                         </ul>
                     </li>
 
-
                     <li class="has-submenu">
                         <a href="#">Routine Committee</a>
                         <ul class="submenu">
@@ -530,9 +529,9 @@
                             </li>
                         </ul>
                     </li>
-
-
-
+                    <li class="">
+                        <a href="{{ route('day_wise_slots') }}">Day Wise Slot</a>
+                    </li>
 
 {{--                    <li class="has-submenu">--}}
 {{--                        <a href="#">Full Routine</a>--}}

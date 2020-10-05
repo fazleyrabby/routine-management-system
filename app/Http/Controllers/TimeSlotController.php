@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TimeSlot;
 use Illuminate\Support\Facades\Session;
+use App\Models\Shift;
 
 class TimeSlotController extends Controller
 {
@@ -15,7 +16,7 @@ class TimeSlotController extends Controller
      */
     public function index()
     {
-        $time_slots = TimeSlot::all();
+        $time_slots = TimeSlot::with('shift')->orderBy('from','asc')->get();
         return view('admin.time_slot.index',compact('time_slots'));
     }
 
@@ -26,7 +27,9 @@ class TimeSlotController extends Controller
      */
     public function create()
     {
-        return view('admin.time_slot.create');
+        $shifts = Shift::where('is_active','yes')->pluck('shift_name','id');
+//        dd($shifts);
+        return view('admin.time_slot.create',compact('shifts'));
     }
 
     /**
@@ -39,15 +42,18 @@ class TimeSlotController extends Controller
     {
         $this->validate($request, [
             'from' => 'required',
-            'to' => 'required'
+            'to' => 'required',
+            'shift' => 'required'
         ],
             [
                 'from.required' => 'Enter from time',
+                'shift.required' => 'Select Shift',
                 'to.required' => 'Enter to time',
             ]);
         $time_slot = new TimeSlot();
         $time_slot->from = $request->from;
         $time_slot->to = $request->to;
+        $time_slot->shift_id = $request->shift;
 
         $time_slot->save();
 
@@ -89,19 +95,22 @@ class TimeSlotController extends Controller
     {
         $this->validate($request, [
             'from' => 'required|unique:time_slots,from,' . $time_slot->id,
-            'to' => 'required|unique:time_slots,to,' . $time_slot->id
+            'to' => 'required|unique:time_slots,to,' . $time_slot->id,
+            'shift' => 'required'
         ],
             [
                 'from.required' => 'Enter from time',
                 'to.required' => 'Enter to time',
                 'from.unique' => 'Already exists',
                 'to.unique' => 'Already exists',
+                'shift.required' => 'Select Shift',
+
             ]);
 
 
         $time_slot->from = $request->from;
         $time_slot->to = $request->to;
-
+        $time_slot->shift_id = $request->shift;
         $time_slot->save();
 
 

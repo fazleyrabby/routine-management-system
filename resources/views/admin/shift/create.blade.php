@@ -34,11 +34,8 @@
                                         @endif
                                     </div>
                                 </div>
-
                                 {!! Form::submit('Create',['class' => 'btn btn-sm btn-primary'] ) !!}
-
                                 {!! Form::close() !!}
-
                             </div>
                         </div>
                     </div>

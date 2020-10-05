@@ -47,7 +47,7 @@
                                     <th>Department</th>
                                     <th>Rank</th>
                                     <th>Email</th>
-                                    <th>Join Date</th>
+                                    <th width="15%">Off day</th>
                                     <th>Contact</th>
                                     <th>Role</th>
                                     <th>Status</th>
@@ -65,16 +65,23 @@
                                         <td>{{ $teacher->department->department_name }}</td>
                                         <td>{{ $teacher->rank->rank }}</td>
                                         <td>{{ $teacher->user->email }}</td>
-                                        <td>{{ $teacher->join_date }}</td>
+                                        <td>@foreach($teacher->teachers_offday as $key => $offday)
+                                                {{ count( $teacher->teachers_offday ) != $key + 1 ? $offday->day->slug.',' : $offday->day->slug }}
+                                            @endforeach
+                                            &nbsp;&nbsp;<a href="{{ route('teachers_offday', $teacher->id) }}"
+                                                           class="btn btn-sm btn-secondary">Assign</a>
+                                        </td>
                                         <td>{{ ucwords($teacher->user->contact) }}</td>
                                         <td>{{ ucwords($teacher->user->role) }}</td>
                                         <td>{{ $teacher->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
+
                                         <td>
                                             <a href="{{ route('teachers.edit', $teacher->id) }}"
                                                class="btn btn-sm btn-primary">Edit</a>
 
                                             <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{$teacher->id}}">Delete</button>
                                         </td>
+
                                     </tr>
                                     <div class="modal fade bs-example-modal-center{{$teacher->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">

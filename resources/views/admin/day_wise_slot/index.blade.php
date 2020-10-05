@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Batch-Student')
+@section('title', 'Day wise Slot')
 
 @section('stylesheets')
     <!-- DataTables -->
@@ -18,12 +18,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="mt-0 header-title mb-4">
-                                Batch wise Student - List
-                                @foreach($shifts as $shift)
-
-                                <a href="{{ route('students_create', $shift->id) }}" class="btn btn-sm btn-primary float-right ml-1">Add Students {{ $shift->shift_name }} Batch </a>
-
-                                @endforeach
+                                Day Wise Time/Class Slot
+{{--                                <a href="{{ route('time_slots.create') }}" class="btn btn-sm btn-primary float-right">Assign New</a>--}}
                             </div>
                             @if (Session::has('message'))
                                 <div class="alert-dismissable alert alert-success">
@@ -40,66 +36,73 @@
                                 </div>
                             @endif
                             <table id="datatable-buttons"
-                                   class="table table-striped table-bordered dt-responsive nowrap"
+                                   class="table table-bordered dt-responsive nowrap"
                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
-                                <tr>
+                                <tr class="font-16">
                                     <th>#</th>
-                                    <th>Batch</th>
-                                    <th>Assigned On</th>
-                                    <th>Number of student</th>
-                                    <th>Section wise students</th>
-                                    <th>Assign students Section</th>
+                                    <th width="15%">Days</th>
+                                    <th class="text-center font-weight-bold">Time-range wise class slot</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
-
                                 <tbody>
-
-                                @foreach($students as $student)
-
+                                    @php $i = 1; @endphp
+                                    @foreach($days as $day)
                                     <tr>
-                                        <td>{{ $student->id }}</td>
-                                        <td>{{ $student->batch->department->department_name ."-". $student->batch->batch_no ."-".$student->batch->shift->slug  }}</td>
-                                        <td> {{ $student->yearly_session->session->session_name.'-'.$student->yearly_session->year }}</td>
-                                        <td>{{ $student->number_of_student }}</td>
+                                        <td>{{ $i++ }}</td>
+                                        <td class="text-center font-24 font-weight-bold">{{ $day->day_title }}</td>
                                         <td>
-                                            @php $count = count($student->section_student); $i=0 @endphp
-                                            @foreach($student->section_student as $section_student)
-                                                @php $i++ @endphp
-                                                    <span class="bg-danger text-light p-1 m-0"><strong>{{ $section_student->section->section_name }}-{{ $section_student->students }}</strong></span>&nbsp;
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('theory_section', $student->id) }}" class="btn btn-sm btn-primary">Theory Section</a>
-                                            @if(count($student->section_student) != 0)
-                                            <a href="{{ route('lab_section', $student->id) }}" class="btn btn-sm btn-primary">Lab Section</a>
-                                            @endif
-                                        </td>
-{{--                                        <td>{{ $student->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>--}}
-                                        <td>
-                                            <a href="{{ route('students.edit', $student->id) }}"
-                                               class="btn btn-sm btn-primary">Edit</a>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="bg-primary text-light">Time Range</th>
+                                                        <th class="bg-primary text-light">Class Slot</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if($day->day_wise_slot->count() > 0)
+                                                    @foreach($day->day_wise_slot as $day_wise_slot)
+                                                    <tr>
+                                                        <td class="font-14 font-weight-bold bg-dark text-light"><span> {{ date('g:i a', strtotime($day_wise_slot->time_slot->from )).'-'.date('g:i a', strtotime($day_wise_slot->time_slot->to )) }} </span></td>
+                                                        <td class="font-14 font-weight-bold bg-dark text-light"><span>{{ ($day_wise_slot->class_slot != '' ? $day_wise_slot->class_slot : 'Not assigned') }}</span></td>
+                                                    </tr>
+                                                    @endforeach
+                                                        @else
+                                                        <tr>
+                                                            <td> Not assigned </td>
+                                                            <td> Not assigned </td>
+                                                        </tr>
+                                                    @endif
 
-                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{$student->id}}">Delete</button>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('day_wise_slot_create', $day->id) }}" class="btn btn-primary">Assign</a>
                                         </td>
                                     </tr>
-                                    <div class="modal fade bs-example-modal-center{{$student->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+                                    <div class="modal fade bs-example-modal-center{{$day->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5>Are you sure? You want to delete this?</h5>
                                                 </div>
                                                 <div class="modal-body">
-                                                    {!! Form::open(['route' => ['students.destroy', $student->id ], 'method' => 'delete', 'style' => 'display:inline']) !!}
+                                                    {!! Form::open(['url' => ['day_wise_slot_destroy', $day->id ], 'method' => 'delete', 'style' => 'display:inline']) !!}
                                                     {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
                                                     {!! Form::close() !!}
-                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{$student->id}}"> No </button>
+                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{$day->id}}"> No </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                    @endforeach
+
+
+
+
                                 </tbody>
                             </table>
                         </div>
@@ -133,7 +136,7 @@
     <script src="{{ asset('assets/plugins/datatables/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/buttons.colVis.min.js') }}"></script>
-    <script src="../../../../.."></script>
+    <script src="../"></script>
     <!-- Buttons examples -->
 
 
@@ -142,13 +145,15 @@
             $('#datatable').DataTable();
 
             //Buttons examples
-            let table = $('#datatable-buttons').DataTable({
+            var table = $('#datatable-buttons').DataTable({
                 lengthChange: false,
-                buttons: ['copy', 'excel', 'pdf', 'print']
+                buttons: ['copy', 'excel', 'pdf', 'print',]
             });
 
             table.buttons().container()
                 .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
         });
     </script>
+
+
 @endpush

@@ -21,7 +21,7 @@
                                 rank - List
                                 <a href="{{ route('ranks.create') }}" class="btn btn-sm btn-primary float-right">Add New</a>
                             </div>
-                            @if (Session::has('message'))
+                            @if(Session::has('message'))
                                 <div class="alert-dismissable alert alert-success">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x
                                     </button>
@@ -57,8 +57,6 @@
                                         <td>{{ $rank->id }}</td>
                                         <td>{{ $rank->rank }}</td>
                                         <td>{{ $rank->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
-                                        </td>
-
                                         <td>
                                             <a href="{{ route('ranks.edit', $rank->id) }}"
                                                class="btn btn-sm btn-primary">Edit</a>

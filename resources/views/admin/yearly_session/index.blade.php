@@ -39,15 +39,13 @@
                             <table class="table table-striped table-bordered dt-responsive nowrap">
                                 <thead>
                                 <tr>
-                                    <th>Shift</th>
                                     <th>Sessions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($shift_sessions as $shift_sessions)
+                                @foreach($sessions as $session)
                                     <tr>
-                                        <td>{{ $shift_sessions->shift_name }}</td>
-                                        <td>{{ $shift_sessions->session_names }}</td>
+                                        <td>{{ $session->session_name }}</td>
                                     </tr>
                                 @endforeach
                                 </tbody>

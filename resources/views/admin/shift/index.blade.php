@@ -19,8 +19,7 @@
                             <div class="card-body">
                                 <div class="mt-0 header-title mb-4">
                                     Shift - List
-                                    <a href="{{ route('shifts.create') }}" class="btn btn-sm btn-primary float-right">Add
-                                        New</a>
+                                    <a href="{{ route('shifts.create') }}" class="btn btn-sm btn-primary float-right">Add New</a>
                                 </div>
                                 @if (Session::has('message'))
                                     <div class="alert-dismissable alert alert-success">

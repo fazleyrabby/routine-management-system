@@ -22,7 +22,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::with(['department','rank','user'])->get();
+        $teachers = Teacher::with(['department','rank','user','teachers_offday.day'])->get();
         return view('admin.teacher.index', compact('teachers'));
     }
 
@@ -218,5 +218,6 @@ class TeacherController extends Controller
         Session::flash('delete-message', 'Teacher deleted successfully');
         return redirect()->route('teachers.index');
     }
+
 
 }

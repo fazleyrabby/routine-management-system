@@ -53,12 +53,26 @@
                                 </div>
                             </div>
 
+                            <div class="form-group row @if($errors->has('capacity')) has-error @endif">
+                                <div class="col-md-2 align-self-center">
+                                    {!! Form::label('Capacity') !!}
+                                </div>
+                                <div class="col-md-10">
+                                    {!! Form::number('capacity', $room->capacity, ['class'=> 'form-control']) !!}
+                                    @if ($errors->has('room_no'))
+                                        <span class="help-block">
+                                            {!! $errors->first('capacity') !!}
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <div class="col-md-2 align-self-center">
                                     {!! Form::label('Room Type') !!}
                                 </div>
                                 <div class="col-md-10">
-                                    {!! Form::select('room_type', [0=> 'Theory',1 => 'Sessional'], $room->room_type ,['class'=> 'form-control']) !!}
+                                    {!! Form::select('room_type', [0=> 'Theory',1 => 'Lab'], $room->room_type ,['class'=> 'form-control']) !!}
                                 </div>
                             </div>
 

@@ -20,31 +20,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68c1187a-e521-4096-89c5-64b84bc2cc96" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/routine.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/routine.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/day_wise_slot/create.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/day_wise_slot/edit.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/day_wise_slot/index.blade.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/admin/teacher/offday.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SectionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SectionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AssignCourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AssignCourseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FullRoutineController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FullRoutineController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RoomController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RoomController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TeacherController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TeacherController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Section.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Section.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/SectionStudent.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/SectionStudent.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Shift.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Shift.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Student.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Student.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TimeSlotController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TimeSlotController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/YearlySessionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/YearlySessionController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/AssignCourse.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/AssignCourse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Course.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Course.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Teacher.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TimeSlot.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TimeSlot.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/YearlySession.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/YearlySession.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_15_132446_create_students_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_15_132446_create_students_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_09_01_141322_create_section_students.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_09_01_141322_create_section_students.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/section/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/section/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_14_132446_create_assign_courses_to_teachers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_14_132446_create_assign_courses_to_teachers_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_12_14_132446_create_rooms_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_12_14_132446_create_rooms_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_03_125738_create_shift_sessions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_03_125738_create_shift_sessions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_03_134307_create_yearly_sessions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_03_134307_create_yearly_sessions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_31_042012_create_time_slots_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_31_042012_create_time_slots_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/assign_course/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/assign_course/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/assign_course/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/assign_course/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/assign_course/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/assign_course/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/rank/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/rank/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/room/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/room/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/room/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/room/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/room/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/room/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/shift/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/shift/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/shift/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/shift/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/student/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/student/create.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/student/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/student/edit.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/student/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/student/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/student/lab_section.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/student/lab_section.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/student/theory_section.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/student/theory_section.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/teacher/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/teacher/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/teacher/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/teacher/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/teacher/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/teacher/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/time_slot/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/time_slot/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/time_slot/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/time_slot/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/time_slot/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/time_slot/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/yearly_session/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/yearly_session/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/includes/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/includes/nav.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -184,7 +200,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/time_slot" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/admin/day_wise_slot" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
@@ -193,6 +209,7 @@
       <recent name="D:\xampp\htdocs\rms\resources\views\admin\shift_session" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\rms\resources\views\admin\day_wise_slot" />
       <recent name="D:\xampp\htdocs\rms\resources\views\admin\time_slot" />
       <recent name="D:\xampp\htdocs\rms\resources\views\admin\section_student" />
       <recent name="D:\xampp\htdocs\rms\resources\views\admin\shift_session" />
@@ -274,6 +291,26 @@
       <workItem from="1600059506988" duration="13295000" />
       <workItem from="1600144689201" duration="22884000" />
       <workItem from="1600248175875" duration="16096000" />
+      <workItem from="1600322356824" duration="3033000" />
+      <workItem from="1600488907153" duration="2373000" />
+      <workItem from="1600526132638" duration="602000" />
+      <workItem from="1600593733251" duration="1614000" />
+      <workItem from="1600791466064" duration="4668000" />
+      <workItem from="1600837117830" duration="12119000" />
+      <workItem from="1600928334829" duration="1203000" />
+      <workItem from="1601028508486" duration="1729000" />
+      <workItem from="1601056543367" duration="816000" />
+      <workItem from="1601096635350" duration="4174000" />
+      <workItem from="1601187703260" duration="10309000" />
+      <workItem from="1601268956898" duration="1201000" />
+      <workItem from="1601312737123" duration="599000" />
+      <workItem from="1601358153819" duration="3594000" />
+      <workItem from="1601384890386" duration="10187000" />
+      <workItem from="1601443154216" duration="599000" />
+      <workItem from="1601533574510" duration="925000" />
+      <workItem from="1601550842020" duration="6669000" />
+      <workItem from="1601828341638" duration="5090000" />
+      <workItem from="1601875236886" duration="7244000" />
     </task>
     <servers />
   </component>
@@ -301,18 +338,22 @@
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
     <state x="2590" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1598805385451" />
-    <state x="2544" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600256540136">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="2544" y="213" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1601879015025">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1597041310547" />
+    <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1600846466987" />
     <state x="2544" y="211" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1600256540136" />
     <state x="499" y="167" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.824@0.0.1536.824" timestamp="1595998400214" />
-    <state x="555" y="0" key="SettingsEditor" timestamp="1599886764944">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="2544" y="213" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1536.832/1920.0.1920.1050@1920.0.1920.1050" timestamp="1601879015025" />
+    <state x="1903" y="207" width="916" height="708" key="SettingsEditor" timestamp="1601875962927">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
     <state x="555" y="0" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1599886764944" />
     <state x="2483" y="210" key="SettingsEditor/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1598103869884" />
     <state x="263" y="2" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1599028966727" />
+    <state x="555" y="123" key="SettingsEditor/0.0.1536.832/1920.0.1920.1050@0.0.1536.832" timestamp="1601029645748" />
+    <state x="1903" y="207" width="916" height="708" key="SettingsEditor/0.0.1536.832/1920.0.1920.1050@1920.0.1920.1050" timestamp="1601875962927" />
+    <state x="555" y="123" key="SettingsEditor/0.0.1536.832@0.0.1536.832" timestamp="1601029580299" />
     <state x="2601" y="261" width="540" height="524" key="StructurePopup" timestamp="1598104422190">
       <screen x="1920" y="0" width="1920" height="1040" />
     </state>
@@ -351,6 +392,16 @@
           <url>file://$PROJECT_DIR$/resources/views/admin/teacher/index.blade.php</url>
           <line>38</line>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/resources/views/admin/time_slot/edit.blade.php</url>
+          <line>22</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/resources/views/admin/teacher/offday.blade.php</url>
+          <line>35</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
