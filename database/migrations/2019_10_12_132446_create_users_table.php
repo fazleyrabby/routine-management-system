@@ -24,8 +24,10 @@ class CreateUsersTable extends Migration {
             $table->string('email', 191)->unique();
             $table->dateTime('email_verified_at')->nullable();
             $table->string('password', 191)->nullable();
-            $table->enum('role', array('superadmin','admin','subadmin','teacher'));
+            $table->enum('role', array('superadmin','admin','subadmin','user'))->default('user');
             $table->enum('is_active',['yes','no'])->default('yes');
+            $table->enum('is_teacher',['yes','no'])->default('yes');
+            $table->enum('in_committee',['yes','no'])->default('no');
             $table->string('remember_token', 191)->nullable();
             $table->string('photo', 191)->nullable();
             $table->string('contact')->nullable();

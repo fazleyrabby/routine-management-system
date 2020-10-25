@@ -17,6 +17,7 @@ class CreateYearlySessionsTable extends Migration
             $table->id();
             $table->integer('session_id')->nullable()->foreign('session_id')->references('id')->on('sessions');
             $table->year('year')->nullable();
+            $table->enum('is_active',['yes','no'])->default('yes');
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ClassSlotController extends Controller
+class ClassSlotController extends MasterController
 {
     /**
      * Display a listing of the resource.

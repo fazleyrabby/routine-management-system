@@ -8,7 +8,7 @@ use App\Models\TimeSlot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class DayWiseSlotController extends Controller
+class DayWiseSlotController extends MasterController
 {
     /**
      * Display a listing of the resource.

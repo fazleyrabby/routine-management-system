@@ -17,4 +17,10 @@ class DayWiseSlot extends Model
     {
         return $this->belongsTo('App\Models\TimeSlot');
     }
+
+//    public function routine()
+//    {
+//        return $this->belongsTo('App\Models\FullRoutine');
+//    }
+
 }

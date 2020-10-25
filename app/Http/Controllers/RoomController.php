@@ -6,7 +6,7 @@ use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class RoomController extends Controller
+class RoomController extends MasterController
 {
     /**
      * Display a listing of the resource.

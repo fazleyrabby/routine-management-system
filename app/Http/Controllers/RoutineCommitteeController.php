@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class RoutineCommitteeController extends Controller
+class RoutineCommitteeController extends MasterController
 {
     /**
      * Display a listing of the resource.

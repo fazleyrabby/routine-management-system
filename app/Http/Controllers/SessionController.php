@@ -6,7 +6,7 @@ use App\Models\Session as SS;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
-class SessionController extends Controller
+class SessionController extends MasterController
 {
     /**
      * Display a listing of the resource.

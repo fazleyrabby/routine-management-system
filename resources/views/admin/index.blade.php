@@ -195,7 +195,7 @@
                                                 <td>{{ $room->id }}</td>
                                                 <td>{{ $room->building }}</td>
                                                 <td>{{ $room->room_no }}</td>
-                                                <td>{{ $room->room_type == '0' ? 'Theory' : 'Sessional' }}</td>
+                                                <td>{{ $room->room_type == '0' ? 'Theory' : 'Lab' }}</td>
                                                 <td>{{ $room->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
                                             </tr>
 

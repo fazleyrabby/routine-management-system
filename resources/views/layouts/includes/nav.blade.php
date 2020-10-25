@@ -19,14 +19,14 @@
             <div class="menu-extras topbar-custom">
 
                 <ul class="navbar-right d-flex list-inline float-right mb-0">
-                    <li class="dropdown notification-list d-none d-sm-block">
-                        <form role="search" class="app-search">
-                            <div class="form-group mb-0">
-                                <input type="text" class="form-control" placeholder="Search..">
-                                <button type="submit"><i class="fa fa-search"></i></button>
-                            </div>
-                        </form>
-                    </li>
+{{--                    <li class="dropdown notification-list d-none d-sm-block">--}}
+{{--                        <form role="search" class="app-search">--}}
+{{--                            <div class="form-group mb-0">--}}
+{{--                                <input type="text" class="form-control" placeholder="Search..">--}}
+{{--                                <button type="submit"><i class="fa fa-search"></i></button>--}}
+{{--                            </div>--}}
+{{--                        </form>--}}
+{{--                    </li>--}}
 
                     <li class="dropdown notification-list">
                         <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -66,39 +66,42 @@
                                 </a>
                             </div>
                             <!-- All-->
-                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary">
-                                View all <i class="fi-arrow-right"></i>
-                            </a>
+{{--                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary">--}}
+{{--                                View all <i class="fi-arrow-right"></i>--}}
+{{--                            </a>--}}
                         </div>
                     </li>
-                    <li class="dropdown notification-list">
-                        <div class="dropdown notification-list">
-                            <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="{{ asset('assets/images/users/user-4.jpg')  }}" alt="user" class="rounded-circle">
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                                <!-- item-->
+                    <li class="d-flex align-items-center">
+                        <a class="btn btn-danger" href="{{ route('logout') }}"><i class="mdi mdi-power text-light"></i> Logout</a>
+{{--                        <div class="dropdown notification-list">--}}
+{{--                            <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">--}}
+{{--                                <img src="{{ asset('assets/images/users/user-4.jpg')  }}" alt="user" class="rounded-circle">--}}
+{{--                            </a>--}}
+{{--                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">--}}
+{{--                                <!-- item-->--}}
 {{--                                <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> Profile</a>--}}
 {{--                                <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5"></i> My Wallet</a>--}}
 {{--                                <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="mdi mdi-settings m-r-5"></i> Settings</a>--}}
 {{--                                <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> Lock screen</a>--}}
 {{--                                <div class="dropdown-divider"></div>--}}
-                            <a class="dropdown-item text-danger" href="{{ route('logout') }}"><i class="mdi mdi-power text-danger"></i> Logout</a>
-                            </div>
-                        </div>
+{{--                            <a class="dropdown-item text-danger" href="{{ route('logout') }}"><i class="mdi mdi-power text-danger"></i> Logout</a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+
+
                     </li>
 
-                    <li class="menu-item list-inline-item">
-                        <!-- Mobile menu toggle-->
-                        <a class="navbar-toggle nav-link">
-                            <div class="lines">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </a>
-                        <!-- End mobile menu toggle-->
-                    </li>
+{{--                    <li class="menu-item list-inline-item">--}}
+{{--                        <!-- Mobile menu toggle-->--}}
+{{--                        <a class="navbar-toggle nav-link">--}}
+{{--                            <div class="lines">--}}
+{{--                                <span></span>--}}
+{{--                                <span></span>--}}
+{{--                                <span></span>--}}
+{{--                            </div>--}}
+{{--                        </a>--}}
+{{--                       --}}
+{{--                    </li>--}}
 
                 </ul>
 
@@ -246,9 +249,33 @@
                         <a href="{{ url("/admin") }}"><i class="mdi mdi-home"></i>Dashboard</a>
                     </li>
 
+                    <li>
+{{--                        <a href="#">Profile</a>--}}
+                        <a href="{{ route('users.show', Auth::user()->id) }}">
+                            Profile
+                        </a>
+                    </li>
+
+                    @if ((Auth::user()->role) == 'superadmin')
+
                     <li class="has-submenu">
                         <a href="#">Application Settings</a>
                         <ul class="submenu">
+                            <li class="has-submenu">
+                                <a href="#">Users</a>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="{{ route('users.index') }}">
+                                            View All
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('users.create') }}">
+                                            Add New
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li class="has-submenu">
                                 <a href="#">Departments</a>
                                 <ul class="submenu">
@@ -349,17 +376,17 @@
                                 </ul>
                             </li>
 
-                            <li class="has-submenu">
-                                <a href="#">Shift-Session</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="{{ route('shift_sessions.index') }}">Show all</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('shift_sessions.create') }}">Assign Session</a>
-                                    </li>
-                                </ul>
-                            </li>
+{{--                            <li class="has-submenu">--}}
+{{--                                <a href="#">Shift-Session</a>--}}
+{{--                                <ul class="submenu">--}}
+{{--                                    <li>--}}
+{{--                                        <a href="{{ route('shift_sessions.index') }}">Show all</a>--}}
+{{--                                    </li>--}}
+{{--                                    <li>--}}
+{{--                                        <a href="{{ route('shift_sessions.create') }}">Assign Session</a>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </li>--}}
 
                             <li class="has-submenu">
                                 <a href="#">Yearly-Session</a>
@@ -434,11 +461,11 @@
                                     Add New
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ route('teachers.requests') }}">
-                                    Requests
-                                </a>
-                            </li>
+{{--                            <li>--}}
+{{--                                <a href="{{ route('teachers.requests') }}">--}}
+{{--                                    Requests--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
                             <li class="has-submenu">
                                 <a href="#">Assign Courses</a>
                                 <ul class="submenu">
@@ -448,7 +475,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
+                                        <a href="{{ route('assign_courses.create') }}">
                                             Add New
                                         </a>
                                     </li>
@@ -456,14 +483,6 @@
                             </li>
                         </ul>
                     </li>
-
-
-
-
-
-
-
-
 
 
                     <li class="has-submenu">
@@ -474,12 +493,13 @@
                                     Batch wise list
                                 </a>
                             </li>
+
+
 {{--                            <li>--}}
 {{--                                <a href="{{ route('theory_section') }}">--}}
 {{--                                    Add New--}}
 {{--                                </a>--}}
 {{--                            </li>--}}
-
 {{--                            <li class="has-submenu">--}}
 {{--                                <a href="#">Section - Students</a>--}}
 {{--                                <ul class="submenu">--}}
@@ -514,40 +534,62 @@
                         </ul>
                     </li>
 
-                    <li class="has-submenu">
-                        <a href="#">Routine Committee</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="#">
-                                    View All
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Add New
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="">
-                        <a href="{{ route('day_wise_slots') }}">Day Wise Slot</a>
-                    </li>
-
 {{--                    <li class="has-submenu">--}}
-{{--                        <a href="#">Full Routine</a>--}}
+{{--                        <a href="#">Routine Committee</a>--}}
 {{--                        <ul class="submenu">--}}
 {{--                            <li>--}}
-{{--                                <a href="{{ route('full_routine.index') }}">--}}
+{{--                                <a href="#">--}}
 {{--                                    View All--}}
 {{--                                </a>--}}
 {{--                            </li>--}}
 {{--                            <li>--}}
-{{--                                <a href="{{ route('full_routine.create') }}">--}}
+{{--                                <a href="#">--}}
 {{--                                    Add New--}}
 {{--                                </a>--}}
 {{--                            </li>--}}
 {{--                        </ul>--}}
 {{--                    </li>--}}
+                    <li class="">
+                        <a href="{{ route('day_wise_slots') }}">Day Wise Slot</a>
+                    </li>
+
+                    @endif
+
+                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin' )
+                    <li class="has-submenu">
+                        <a href="#">Generate Routine</a>
+                        <ul class="submenu">
+                            @if(!empty($y_session))
+                                @foreach($y_session as $session)
+                                    <li>
+                                        <a href="{{ route('full_routine',$session->id) }}">
+                                            {{ $session->session_name. '-' . $session->year}}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endif
+                        </ul>
+                    </li>
+                    @endif
+
+
+                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin' || Auth::user()->role == 'user' && Auth::user()->is_teacher == 'yes')
+                    <li class="has-submenu">
+                        <a href="#">View Routine</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="{{ route('teacher_search') }}">
+                                    Teacher Wise
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('batch_search') }}">
+                                    Batch Wise
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    @endif
 
                 </ul>
                 <!-- End navigation menu -->

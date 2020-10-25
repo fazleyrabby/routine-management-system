@@ -21,7 +21,11 @@ Auth::routes();
 ////   $img->save('new.jpg',5);
 //});
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/routine', 'HomeController@routineView')->name('routine');
+Route::get('/routine', 'HomeController@routine')->name('routine');
+Route::post('/routine_view', 'HomeController@routine_view')->name('routine_view');
+Route::post('/routine_print', 'HomeController@routine_print')->name('routine_print');
+
+
 
 Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::get('/', 'AdminController@index')->name('admin');
@@ -30,7 +34,7 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::resource('shift_sessions', 'ShiftSessionController');
     Route::resource('yearly_sessions', 'YearlySessionController');
 //    Route::get('yearly_sessions/delete/{}', 'YearlySessionController@index')->name('admin');
-    Route::delete('yearly_session/{year}','YearlySessionController@destroy')->name('yearly_session.destroy');
+    Route::post('yearly_session','YearlySessionController@status')->name('yearly_session.status');
     Route::resource('shifts', 'ShiftController');
     Route::resource('rooms', 'RoomController');
     Route::resource('departments', 'DepartmentController');
@@ -65,7 +69,16 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::post('day_wise_slot_store', 'DayWiseSlotController@store')->name('day_wise_slot_store');
     Route::post('day_wise_slot_destroy/{id}', 'DayWiseSlotController@destroy')->name('day_wise_slot_destroy');
 
-    Route::get('full_routine', 'FullRoutineController@index')->name('full_routine');
+    Route::get('full_routine/{yearly_session}', 'FullRoutineController@index')->name('full_routine');
+    Route::post('routine_create', 'FullRoutineController@create')->name('routine_create');
+    Route::post('teacher_wise_view', 'FullRoutineController@teacher_wise_view')->name('teacher_wise_view');
+
+    Route::get('teacher_search', 'FullRoutineController@teacher_search')->name('teacher_search');
+    Route::get('batch_search', 'FullRoutineController@batch_search')->name('batch_search');
+    Route::post('batch_wise_view', 'FullRoutineController@batch_wise_view')->name('batch_wise_view');
+    Route::post('teacher_wise_print', 'FullRoutineController@teacher_wise_print')->name('teacher_wise_print');
+
+
 
 });
 

@@ -61,7 +61,9 @@
                                     <tr>
                                         <td>{{ $student->id }}</td>
                                         <td>{{ $student->batch->department->department_name ."-". $student->batch->batch_no ."-".$student->batch->shift->slug  }}</td>
-                                        <td> {{ $student->yearly_session->session->session_name.'-'.$student->yearly_session->year }}</td>
+                                        <td> {{ 
+                                        $student->yearly_session != null ?
+                                        $student->yearly_session->session->session_name.'-'.$student->yearly_session->year : '' }}</td>
                                         <td>{{ $student->number_of_student }}</td>
                                         <td>
                                             @php $count = count($student->section_student); $i=0 @endphp

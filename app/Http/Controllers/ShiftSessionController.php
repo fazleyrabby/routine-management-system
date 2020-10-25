@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
-class ShiftSessionController extends Controller
+class ShiftSessionController extends MasterController
 {
     /**
      * Display a listing of the resource.

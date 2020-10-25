@@ -7,7 +7,7 @@ use App\Models\TeacherRank;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class TeacherRankController extends Controller
+class TeacherRankController extends MasterController
 {
     /**
      * Display a listing of the resource.

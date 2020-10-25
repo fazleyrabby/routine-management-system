@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Day;
 use Illuminate\Support\Facades\Session;
 
-class TeachersOffdayController extends Controller
+class TeachersOffdayController extends MasterController
 {
     /**
      * Display a listing of the resource.

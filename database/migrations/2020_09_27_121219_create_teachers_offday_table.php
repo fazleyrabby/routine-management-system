@@ -17,6 +17,7 @@ class CreateTeachersOffdayTable extends Migration
             $table->id();
             $table->integer('teacher_id')->nullable()->foreign('teacher_id')->references('id')->on('teachers');
             $table->integer('day_id')->nullable()->foreign('day_id')->references('id')->on('days');
+            $table->enum('is_active',['yes','no'])->default('yes');
             $table->timestamps();
         });
     }

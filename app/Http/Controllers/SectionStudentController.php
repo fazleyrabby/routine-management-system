@@ -8,7 +8,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class SectionStudentController extends Controller
+class SectionStudentController extends MasterController
 {
     /**
      * Display a listing of the resource.

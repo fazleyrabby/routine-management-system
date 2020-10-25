@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BatchSession;
 use Illuminate\Http\Request;
 
-class BatchSessionController extends Controller
+class BatchSessionController extends MasterController
 {
     /**
      * Display a listing of the resource.

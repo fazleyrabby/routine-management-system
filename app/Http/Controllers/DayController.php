@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class DayController extends Controller
+class DayController extends MasterController
 {
     /**
      * Display a listing of the resource.

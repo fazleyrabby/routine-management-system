@@ -6,7 +6,7 @@ use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class DepartmentController extends Controller
+class DepartmentController extends MasterController
 {
     /**
      * Display a listing of the resource.

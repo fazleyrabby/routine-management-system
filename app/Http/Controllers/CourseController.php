@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use Illuminate\Support\Facades\Session;
 
-class CourseController extends Controller
+class CourseController extends MasterController
 {
     /**
      * Display a listing of the resource.

@@ -13,7 +13,7 @@ use App\Models\YearlySession;
 use App\Models\Shift;
 use App\Models\StudentsLog;
 
-class StudentController extends Controller
+class StudentController extends MasterController
 {
     /**
      * Display a listing of the resource.
@@ -38,9 +38,11 @@ class StudentController extends Controller
 //            ->get();
 
 
-//        dd($students);
+        // dd($students);
 
         $shifts = Shift::all();
+
+
 
         return view('admin.student.index', compact('students','shifts'));
     }

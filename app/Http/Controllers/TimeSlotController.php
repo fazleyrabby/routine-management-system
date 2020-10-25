@@ -7,7 +7,7 @@ use App\Models\TimeSlot;
 use Illuminate\Support\Facades\Session;
 use App\Models\Shift;
 
-class TimeSlotController extends Controller
+class TimeSlotController extends MasterController
 {
     /**
      * Display a listing of the resource.

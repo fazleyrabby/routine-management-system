@@ -9,7 +9,7 @@ use App\Models\ShiftSession;
 use Illuminate\Support\Facades\DB;
 use App\Models\Session as SS;
 
-class YearlySessionController extends Controller
+class YearlySessionController extends MasterController
 {
     /**
      * Display a listing of the resource.
@@ -35,9 +35,16 @@ class YearlySessionController extends Controller
 
 //        dd($shift_sessions);
 
-        $yearly_sessions = YearlySession::groupBy('year')->select('year', DB::raw('count(*) as total'))->get();
+        $yearly_sessions = YearlySession::groupBy('year')->select('year','is_active', DB::raw('count(*) as total'))->get();
 
         return view('admin.yearly_session.index', compact('yearly_sessions','sessions'));
+    }
+
+    public function status(Request $request)
+    {
+        YearlySession::where('year', '=', $request->year)->update(array('is_active' => $request->is_active));
+        Session::flash('message', 'Status Updated successfully');
+        return redirect()->route('yearly_sessions.index');
     }
 
     /**

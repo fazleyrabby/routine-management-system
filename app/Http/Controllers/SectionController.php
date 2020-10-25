@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
-class SectionController extends Controller
+class SectionController extends MasterController
 {
     /**
      * Display a listing of the resource.

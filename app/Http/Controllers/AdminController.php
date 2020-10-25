@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Models\YearlySession;
 use Illuminate\Http\Request;
 use App\Models\Teacher;
 use App\Models\Student;
 use App\Models\Batch;
 use App\Models\Course;
+use App\Models\Session;
 
-class AdminController extends Controller
+class AdminController extends MasterController
 {
     /**
      * Display a listing of the resource.
@@ -25,6 +27,7 @@ class AdminController extends Controller
         $teachers = Teacher::with(['department','rank','user'])->get();
         $rooms = Room::orderBy('id', 'DESC')->get();
         $courses = Course::orderBy('id', 'DESC')->get();
+
         return view('admin.index',compact('data','teachers','rooms','courses'));
     }
 

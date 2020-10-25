@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\ImageManagerStatic as Image;
 
-class TeacherController extends Controller
+class TeacherController extends MasterController
 {
     /**
      * Display a listing of the resource.

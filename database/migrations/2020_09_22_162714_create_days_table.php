@@ -17,6 +17,7 @@ class CreateDaysTable extends Migration
             $table->id();
             $table->string('day_title')->unique();
             $table->string('slug')->unique();
+            $table->enum('is_active',['yes','no'])->default('yes');
             $table->timestamps();
         });
     }

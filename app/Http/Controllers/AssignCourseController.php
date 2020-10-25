@@ -10,7 +10,7 @@ use App\Models\YearlySession;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
-class AssignCourseController extends Controller
+class AssignCourseController extends MasterController
 {
     /**
      * Display a listing of the resource.
@@ -49,11 +49,18 @@ class AssignCourseController extends Controller
      */
     public function store(Request $request)
     {
+        $existData = AssignCourse::where([
+            ['teacher_id',$request->teacher_id],
+            ['session_id',$request->session_id],
+            ['course_id',$request->course_id]
+        ])->first();
+
+
         $this->validate($request, [
-            'session_id' => 'required|unique:assign_courses_to_teachers',
-            'teacher_id' => 'required|unique:assign_courses_to_teachers',
-            'course_id' => 'required|unique:assign_courses_to_teachers',
-            'batch_id' => 'required|unique:assign_courses_to_teachers'
+            'session_id' => 'required',
+            'teacher_id' => 'required',
+            'course_id' => 'required',
+            'batch_id' => 'required'
         ],
             [
                 'session_id.unique' => 'Session already assigned',
@@ -69,8 +76,15 @@ class AssignCourseController extends Controller
         $assign_course->batch_id = $request->batch_id;
         $assign_course->save();
 
-        Session::flash('message', 'Data assigned successfully');
-        return redirect()->route('assign_courses.index');
+        if ($existData){
+            Session::flash('error', 'Data already assigned');
+            return redirect()->route('assign_courses.create');
+        }else{
+            $assign_course->save();
+            Session::flash('message', 'Data assigned successfully');
+            return redirect()->route('assign_courses.index');
+        }
+
 ////        dd($request->all());
 //        $count = AssignCourse::where('teacher_id',$request->teacher_id)->where('session_id',$request->session_id)->get()->count();
 ////        dd($count);
@@ -150,7 +164,6 @@ class AssignCourseController extends Controller
                 'batch_id.unique' => 'Batch already assigned',
             ]);
 
-//        $assign_course = new AssignCourse();
         $assign_course->session_id = $request->session_id;
         $assign_course->teacher_id = $request->teacher_id;
         $assign_course->course_id = $request->course_id;
@@ -165,7 +178,6 @@ class AssignCourseController extends Controller
             Session::flash('message', 'Data assigned successfully');
             return redirect()->route('assign_courses.index');
         }
-
 
     }
 

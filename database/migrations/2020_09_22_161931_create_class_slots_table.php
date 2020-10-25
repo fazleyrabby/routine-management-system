@@ -17,6 +17,7 @@ class CreateClassSlotsTable extends Migration
             $table->id();
             $table->integer('time_slot_id')->nullable()->foreign('time_slot_id')->references('id')->on('time_slots');
             $table->integer('number_of_class')->nullable();
+            $table->enum('is_active',['yes','no'])->default('yes');
             $table->timestamps();
         });
     }

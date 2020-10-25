@@ -55,16 +55,15 @@
                                 <tbody>
 {{--                                   @php $i = 1 @endphp--}}
                                    @foreach($assign_courses as $assign_course)
-
                                     <tr>
                                         <td>{{ $i++ }}</td>
                                         <td>{{ $assign_course->teacher->user->firstname." ".$assign_course->teacher->user->lastname }}</td>
                                         <td>{{ $assign_course->teacher->rank->rank }}</td>
                                         <td>{{ $assign_course->course->course_code }}</td>
                                         <td>{{ $assign_course->course->course_name }}</td>
-                                        <td>{{ $assign_course->course->course_code }}</td>
+                                        <td>{{ $assign_course->course->credit }}</td>
                                         <td>{{ $assign_course->batch->department->department_name. '-' . $assign_course->batch->batch_no. '-' . $assign_course->batch->shift->slug }}</td>
-                                        <td>{{ $assign_course->session->session->session_name."-".$assign_course->session->year }}</td>
+                                        <td>{{ !empty($assign_course->session) ? $assign_course->session->session->session_name."-".$assign_course->session->year : '' }}</td>
                                         <td>
                                             <a href="{{ route('assign_courses.edit', $assign_course->id) }}"
                                                class="btn btn-sm btn-primary">Edit</a>

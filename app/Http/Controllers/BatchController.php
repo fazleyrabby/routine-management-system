@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Batch;
 use Illuminate\Support\Facades\Session;
 
-class BatchController extends Controller
+class BatchController extends MasterController
 {
     /**
      * Display a listing of the resource.

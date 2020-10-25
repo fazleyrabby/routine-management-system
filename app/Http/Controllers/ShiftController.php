@@ -5,7 +5,7 @@ use App\Models\Shift;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
-class ShiftController extends Controller
+class ShiftController extends MasterController
 {
     /**
      * Display a listing of the resource.
