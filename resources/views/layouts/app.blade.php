@@ -1,8 +1,9 @@
 @include('layouts.includes.header')
 
-@include('layouts.includes.nav')
-
-@include('layouts.includes.breadcrumbs')
+@if(Auth::check())
+    @include('layouts.includes.nav')
+    @include('layouts.includes.breadcrumbs')
+@endif
 
 @yield('content')
 

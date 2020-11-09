@@ -36,7 +36,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group @if($errors->has('batch_no')) has-error @endif">
                                         {!! Form::label('Batch No') !!}
-                                        {!! Form::number('batch_no', 1, ['class'=> 'form-control']) !!}
+                                        {!! Form::number('batch_no', $batch->batch_no, ['class'=> 'form-control']) !!}
                                         @if ($errors->has('batch_no'))
                                             <span class="help-block">
                                             {!! $errors->first('batch_no') !!}

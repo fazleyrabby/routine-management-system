@@ -1,8 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Teacher;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\RoutineInviteRequest;
+use App\Models\RoutineCommittee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class RoutineCommitteeController extends MasterController
 {
@@ -23,7 +29,7 @@ class RoutineCommitteeController extends MasterController
      */
     public function create()
     {
-         returnview('admin.routine_committee.create');
+         return view('admin.routine_committee.create');
     }
 
     /**
@@ -34,7 +40,35 @@ class RoutineCommitteeController extends MasterController
      */
     public function store(Request $request)
     {
-        //
+        $existData = RoutineCommittee::where([
+            ['receiver_id',$request->receiver_id],
+            ['request_status','active']
+        ])->count();
+
+        if($existData == 0){
+            $user = User::where('id', $request->receiver_id)->select('firstname','lastname','email')->first();
+            $expire_after = $request->expire_after;
+            $routine_committee = new RoutineCommittee();
+            $routine_committee->sender_id = $request->sender_id;
+            $routine_committee->receiver_id = $request->receiver_id;
+            $routine_committee->expire_after = $request->expire_after;
+            $routine_committee->expired_date = now()->addDays($expire_after);
+            RoutineCommittee::where('receiver_id',$request->receiver_id)->delete();
+            $routine_committee->save();
+
+            $data = [
+                'receiver' => $user->firstname." ".$user->lastname,
+                'sender' => Auth::user()->firstname." ".Auth::user()->lastname,
+                'expired_date' => date('d-m-Y', strtotime($routine_committee->expired_date))
+            ];
+
+            Mail::to($user->email)->send(new RoutineInviteRequest($data));
+
+            Session::flash('message', 'Invitation Send successfully!');
+        }else{
+            Session::flash('message', 'Sorry Invitation already sent!!');
+        }
+        return redirect()->route('teachers.index');
     }
 
     /**
@@ -81,4 +115,20 @@ class RoutineCommitteeController extends MasterController
     {
         //
     }
+
+
+
+    public function temp_routine_access(Request $request){
+        RoutineCommittee::where("receiver_id", $request->user_id)->update(["request_status" => 'expired']);
+        Session::flash('message', 'Temporary access removed!');
+        return redirect()->route('teachers.index');
+    }
+
+    public function routine_committee_status(Request $request){
+        User::where("id", $request->user_id)->update(["in_committee" => $request->in_committee]);
+        Session::flash('message', 'Routine Access Updated!');
+        return redirect()->route('teachers.index');
+    }
+
+
 }

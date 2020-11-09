@@ -21,6 +21,8 @@
                                 Routine View for <strong>{{ $teacher_detail->user->firstname." ".$teacher_detail->user->lastname }}</strong>
                             </div>
 
+                            <a class="btn btn-danger float-right" href="{{ route('teacher_search') }}">Back</a>
+
                             <form action="{{ route('teacher_wise_print') }}" method="post">
                                 @csrf
                                 <input type="hidden" name="teacher_id" value="{{  $teacher_detail->id }}">
@@ -29,6 +31,8 @@
                                     Download as PDF
                                 </button>
                             </form>
+
+
 
                             <br>
                             <br>

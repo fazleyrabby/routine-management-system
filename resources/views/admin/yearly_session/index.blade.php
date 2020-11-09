@@ -35,21 +35,6 @@
 
 
 
-                            <div class="header-title mb-4">Years generated for these sessions below:</div>
-                            <table class="table table-striped table-bordered dt-responsive nowrap">
-                                <thead>
-                                <tr>
-                                    <th>Sessions</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($sessions as $session)
-                                    <tr>
-                                        <td>{{ $session->session_name }}</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
 
                             <div class="mt-0 header-title mb-4">
                                 Yearly Session - List
@@ -62,7 +47,8 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Years (Sessions)</th>
+                                    <th>Session</th>
+                                    <th>Years</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -72,26 +58,26 @@
                                 @foreach($yearly_sessions as $yearly_session)
                                     <tr>
                                         <td>{{ $i++ }}</td>
+                                        <td>{{ $yearly_session->session->session_name }}</td>
                                         <td>{{ $yearly_session->year }}</td>
                                         <td> {{ $yearly_session->is_active == 'yes' ? 'Active' : 'Inactive' }} </td>
-                                        <td> <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{$yearly_session->year}}"> Status change </button>
+                                        <td> <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{$yearly_session->id}}"> Status change </button>
                                         </td>
 
                                     </tr>
-                                    <div class="modal fade bs-example-modal-center{{$yearly_session->year}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <div class="modal fade bs-example-modal-center{{$yearly_session->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5>Do you want to delete all sessions of <strong>{{ $yearly_session->year }} </strong>?</h5>
+                                                    <h5>Do you want to {{ $yearly_session->is_active == 'yes' ? 'Deactive' : 'Activate' }} this ?</h5>
                                                 </div>
                                                 <div class="modal-body">
-                                                    {!! Form::open(['route' => 'yearly_session.status', 'method' => 'post', 'style' => 'display:inline']) !!}
-                                                    <input type="hidden" name="is_active" value="{{ $yearly_session->is_active == 'yes' ? 'no' : 'yes' }}">
-                                                    <input type="hidden" name="year" value="{{$yearly_session->year}}">
+                                                    {!! Form::open([ 'route' => ['yearly_sessions.update' , $yearly_session->id], 'method' => 'put', 'style' => 'display:inline']) !!}
+{{--                                                    <input type="hidden" name="is_active" value="{{ $yearly_session->is_active == 'yes' ? 'no' : 'yes' }}">--}}
                                                     {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
                                                     {!! Form::close() !!}
 
-                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{ $yearly_session->year }}"> No </button>
+                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{ $yearly_session->id }}"> No </button>
                                                 </div>
                                             </div>
                                         </div>

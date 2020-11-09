@@ -1,15 +1,17 @@
+
+
 <header id="topnav">
     <div class="topbar-main">
         <div class="container-fluid">
 
             <!-- Logo container-->
             <div class="logo">
-
                 <a href="{{ route('admin') }}" class="logo">
                     {{-- <img src="assets/images/logo-sm-light.png" alt="" class="logo-small">
                     <img src="assets/images/logo-light.png" alt="" class="logo-large"> --}}
                     <span class="font-weight-bold">Routine Management System</span>
-                </a>
+                </a>&nbsp;
+                <span class="text-light mr-1 font-14">| Welcome! <strong> {{ ucfirst(Auth::user()->firstname)." ".ucfirst(Auth::user()->lastname) }}</strong></span>
 
             </div>
 
@@ -19,51 +21,48 @@
             <div class="menu-extras topbar-custom">
 
                 <ul class="navbar-right d-flex list-inline float-right mb-0">
-{{--                    <li class="dropdown notification-list d-none d-sm-block">--}}
+                    <li class="dropdown notification-list d-none d-sm-block">
 {{--                        <form role="search" class="app-search">--}}
 {{--                            <div class="form-group mb-0">--}}
 {{--                                <input type="text" class="form-control" placeholder="Search..">--}}
 {{--                                <button type="submit"><i class="fa fa-search"></i></button>--}}
 {{--                            </div>--}}
 {{--                        </form>--}}
-{{--                    </li>--}}
+
+
+                    </li>
 
                     <li class="dropdown notification-list">
                         <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i class="mdi mdi-bell noti-icon"></i>
-                            <span class="badge badge-pill badge-info noti-icon-badge">3</span>
+                            <span class="badge badge-pill badge-info noti-icon-badge">
+                                @php $count = 0 @endphp
+                                @if(!empty($requests))
+                                    @foreach($requests as $request)
+                                        @if($request->request_status == 'active')
+                                            @php($count++)
+                                        @endif
+                                    @endforeach
+                                @endif
+                                {{ $count ?? '' }}
+                            </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
                             <!-- item-->
+                            <!-- item-->
                             <h6 class="dropdown-item-text">
-                                Notifications (37)
+                                Notifications ({{ $count ?? '' }})
                             </h6>
                             <div class="slimscroll notification-item-list">
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                                @if(!empty($requests))
+                                @foreach($requests as $request)
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <div class="notify-icon bg-success"><i class="mdi mdi-cart-outline"></i></div>
-                                    <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of the printing and typesetting industry.</span></p>
+                                    <p class="notify-details">You are invited to entry data in routine at: <span class="text-muted">{{ date('d-m-Y h:i:s a', strtotime($request->created_at)) }}</span> <span class="text-muted">Expire at : {{ date('d-m-Y h:i:s a', strtotime($request->expired_date)) }}</span></p>
                                 </a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <div class="notify-icon bg-warning"><i class="mdi mdi-message"></i></div>
-                                    <p class="notify-details">New Message received<span class="text-muted">You have 87 unread messages</span></p>
-                                </a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <div class="notify-icon bg-info"><i class="mdi mdi-flag"></i></div>
-                                    <p class="notify-details">Your item is shipped<span class="text-muted">It is a long established fact that a reader will</span></p>
-                                </a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <div class="notify-icon bg-primary"><i class="mdi mdi-cart-outline"></i></div>
-                                    <p class="notify-details">Your order is placed<span class="text-muted">Dummy text of the printing and typesetting industry.</span></p>
-                                </a>
-                                <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <div class="notify-icon bg-danger"><i class="mdi mdi-message"></i></div>
-                                    <p class="notify-details">New Message received<span class="text-muted">You have 87 unread messages</span></p>
-                                </a>
+                                @endforeach
+                                @endif
                             </div>
                             <!-- All-->
 {{--                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary">--}}
@@ -91,17 +90,17 @@
 
                     </li>
 
-{{--                    <li class="menu-item list-inline-item">--}}
-{{--                        <!-- Mobile menu toggle-->--}}
-{{--                        <a class="navbar-toggle nav-link">--}}
-{{--                            <div class="lines">--}}
-{{--                                <span></span>--}}
-{{--                                <span></span>--}}
-{{--                                <span></span>--}}
-{{--                            </div>--}}
-{{--                        </a>--}}
-{{--                       --}}
-{{--                    </li>--}}
+                    <li class="menu-item list-inline-item">
+                        <!-- Mobile menu toggle-->
+                        <a class="navbar-toggle nav-link">
+                            <div class="lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </a>
+
+                    </li>
 
                 </ul>
 
@@ -256,26 +255,26 @@
                         </a>
                     </li>
 
-                    @if ((Auth::user()->role) == 'superadmin')
+                    @if ((Auth::user()->role) == 'superadmin' || (Auth::user()->role) == 'admin')
 
                     <li class="has-submenu">
                         <a href="#">Application Settings</a>
                         <ul class="submenu">
-                            <li class="has-submenu">
-                                <a href="#">Users</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="{{ route('users.index') }}">
-                                            View All
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('users.create') }}">
-                                            Add New
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+{{--                            <li class="has-submenu">--}}
+{{--                                <a href="#">Users</a>--}}
+{{--                                <ul class="submenu">--}}
+{{--                                    <li>--}}
+{{--                                        <a href="{{ route('users.index') }}">--}}
+{{--                                            View All--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                    <li>--}}
+{{--                                        <a href="{{ route('users.create') }}">--}}
+{{--                                            Add New--}}
+{{--                                        </a>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </li>--}}
                             <li class="has-submenu">
                                 <a href="#">Departments</a>
                                 <ul class="submenu">
@@ -434,17 +433,17 @@
                                 </ul>
                             </li>
 
+                            <li>
+                                <a href="{{ route('roles') }}">
+                                   Role Access
+                                </a>
+                            </li>
+
 
                         </ul>
 
 
                     </li>
-
-
-
-
-
-
 
                     <li class="has-submenu">
                         <a href="#">Teachers</a>
@@ -555,7 +554,7 @@
 
                     @endif
 
-                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin' )
+                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin' || Auth::user()->role == 'user' )
                     <li class="has-submenu">
                         <a href="#">Generate Routine</a>
                         <ul class="submenu">
@@ -598,3 +597,5 @@
     </div> <!-- end navbar-custom -->
 </header>
 <!-- End Navigation Bar-->
+
+

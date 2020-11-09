@@ -48,14 +48,15 @@
                                     <th>In Routine Committee</th>
                                     <th>Status</th>
                                     <th>Action</th>
+                                    <th>Routine Access</th>
+                                    <th>Invite for Routine Entry</th>
                                 </tr>
                                 </thead>
-
-
                                 <tbody>
-                                @foreach($users as $user)
+
+                                @foreach($users as $key => $user)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td>{{ $sl++ }}</td>
                                         <td>{{ $user->username }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{ $user->firstname." ".$user->lastname }}</td>
@@ -64,11 +65,26 @@
                                         <td>{{ $user->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
                                         <td>
 
-                                            --
+
 {{--                                            <a href="{{ route('users.edit', $user->id) }}"--}}
 {{--                                               class="btn btn-sm btn-primary">Edit</a>--}}
 
 {{--                                            <button type="button" class="btn btn-sm btn-{{ $user->is_active == 'yes' ? 'danger' : 'warning' }}" data-toggle="modal" data-target=".bs-example-modal-center{{$user->id}}">{{ $user->is_active == 'yes' ? 'Inactive' : 'Active' }}</button>--}}
+                                        </td>
+                                        <td>
+                                            @if(!empty($user->receiver->request_status))
+                                                    <span class="p-2 text-light font-weight-bold {{ $user->receiver->request_status == 'active' && $user->receiver->expired_date >= now() ? 'bg-dark' : 'bg-danger' }}">
+                                                        {{ ( $user->receiver->request_status == "active" && $user->receiver->expired_date >= now()) ? 'Active' : 'Expired' }}
+                                                    </span>
+                                            @else
+                                                    <span>--</span>
+                                            @endif
+
+                                        </td>
+                                        <td>
+                                            @if(Auth::user()->id != $user->id && $user->role == 'user')
+                                            <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target=".invite_{{$user->id}}"> Invite </button>
+                                            @endif
                                         </td>
                                     </tr>
                                     <div class="modal fade bs-example-modal-center{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -87,6 +103,35 @@
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    <div class="modal fade invite_{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5>Invite {{ ucfirst($user->firstname)." ".ucfirst($user->lastname) }} for routine entry!</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {!! Form::open(['route' => ['routine_committee_invite'], 'method' => 'post', 'style' => 'display:inline']) !!}
+                                                    {!! Form::hidden('sender_id', Auth::user()->id, ['class'=> 'form-control']) !!}
+                                                    {!! Form::hidden('receiver_id', $user->id, ['class'=> 'form-control']) !!}
+                                                    {!! Form::label('Invite Expire after (Days)') !!}
+                                                    <select name="expire_after" class="form-control" required>
+                                                        <option value="">Select</option>
+                                                        @for($i = 1; $i <= 10; $i++)
+                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                        @endfor
+                                                    </select>
+                                                    <br>
+{{--                                                    {!! Form::textarea('message', 'Please insert your routine data before time expires', ['class'=> 'form-control','rows' => 4, 'cols' => 54,'style' => 'resize:none']) !!}--}}
+{{--                                                    <br>--}}
+                                                    {!! Form::submit('Send', ['class' => 'btn btn-lg btn-danger']) !!}
+                                                    {!! Form::close() !!}
+                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".invite_{{$user->id}}"> Cancel </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                                 </tbody>
                             </table>
@@ -101,7 +146,7 @@
     </div>
     <!-- end page content-->
 
-    </div>
+{{--    </div>--}}
     <!-- page wrapper end -->
 @endsection
 

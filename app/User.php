@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Models\RoutineCommittee;
+use App\Notifications\PasswordReset;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -40,4 +42,21 @@ class User extends Authenticatable
     public function teacher(){
         return $this->hasOne('App\Models\Teacher');
     }
+
+    public function sender()
+    {
+        return $this->hasOne(RoutineCommittee::class,'sender_id');
+    }
+    public function receiver()
+    {
+        return $this->hasOne(RoutineCommittee::class,'receiver_id');
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new PasswordReset($token));
+    }
+
+
+
 }

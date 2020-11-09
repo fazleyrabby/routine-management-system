@@ -51,12 +51,14 @@ class TeacherController extends MasterController
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'required',
+            'contact' => 'required',
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000'
         ],
             [
                 'firstname.required' => 'Enter First name',
                 'lastname.required' => 'Enter Last name',
                 'email.required' => 'Enter email',
+                'contact.required' => 'Enter contact number',
             ]);
 
 
@@ -65,6 +67,7 @@ class TeacherController extends MasterController
         $user = new User();
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
+
         $user->contact = $request->contact;
         $user->email = $request->email;
         $user->username = $request->username;
@@ -74,6 +77,7 @@ class TeacherController extends MasterController
         $user->password = Hash::make('123456');
 
         $teacher->department_id = $request->department_id;
+        $teacher->slug = $request->slug;
         $teacher->rank_id = $request->rank_id;
         $teacher->join_date = date('Y-m-d', strtotime($request->join_date));
 
@@ -147,6 +151,7 @@ class TeacherController extends MasterController
             'firstname' => 'required',
             'lastname' => 'required',
             'email' => 'required|unique:users,email,' . $teacher->user_id,
+            'contact' => 'required|unique:users,contact,' . $teacher->user_id,
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ],
             [
@@ -154,12 +159,14 @@ class TeacherController extends MasterController
                 'lastname.required' => 'Enter Last name',
                 'email.required' => 'Enter email',
                 'email.unique' => 'Email already exists',
+                'contact.unique' => 'Contact number already exists',
+                'contact.required' => 'Enter Contact number',
             ]);
 
         $user = User::find($teacher->user_id);
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
-        $user->contact = '123456';
+        $user->contact = $request->contact;
         $user->email = $request->email;
         $user->username = $request->username;
         $user->role = $request->role;
@@ -169,6 +176,7 @@ class TeacherController extends MasterController
 
         $teacher->department_id = $request->department_id;
         $teacher->rank_id = $request->rank_id;
+        $teacher->slug = $request->slug;
         $teacher->join_date = date('Y-m-d', strtotime($request->join_date));
 
 

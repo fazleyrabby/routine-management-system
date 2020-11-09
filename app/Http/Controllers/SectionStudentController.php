@@ -28,7 +28,7 @@ class SectionStudentController extends MasterController
      */
     public function create()
     {
-        $batches = Batch::with(['shift','department'])->get();
+        $batches = Batch::with('shift','department')->get();
         $sections = Section::where('is_active','yes')->get();
         return view('admin.section_student.create',compact('batches','sections'));
     }

@@ -60,6 +60,8 @@
                                         @endif
                                     </div>
                                 </div>
+
+
                             </div>
 
                             <div class="row">
@@ -90,11 +92,10 @@
                             </div>
 
                             <div class="row">
-
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('Role') !!}
-                                        {!! Form::select('role', ['superadmin' => 'Super admin','admin' => 'Admin','subadmin'=> 'Sub Admin', 'teacher'=> 'Teacher'], null ,['class'=> 'form-control']) !!}
+                                        {!! Form::select('role', ['admin' => 'ADMIN','user' => 'USER'], null ,['class'=> 'form-control']) !!}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -106,7 +107,6 @@
                                             {!! $errors->first('photo') !!}
                                         </span>
                                         @endif
-
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -115,20 +115,42 @@
                                         {!! Form::select('department_id', $departments, null ,['class'=> 'form-control']) !!}
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="row">
                                 <div class="col-md-4">
+                                    <div class="form-group @if($errors->has('contact')) has-error @endif">
+                                        {!! Form::label('Contact') !!}
+                                        {!! Form::text('contact', null, ['class'=> 'form-control']) !!}
+                                        @if ($errors->has('contact'))
+                                            <span class="help-block">
+                                            {!! $errors->first('contact') !!}
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('Rank') !!}
-                                        {!! Form::select('rank_id', $ranks, null ,['class'=> 'form-control']) !!}
+                                        {!! Form::select('rank_id', $ranks, null , ['class'=> 'form-control']) !!}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('Join date') !!}
                                         {!! Form::date('join_date', null, ['class'=> 'form-control','id'=>'example-date-input']) !!}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group @if($errors->has('slug')) has-error @endif">
+                                        {!! Form::label('Slug / TN') !!}
+                                        {!! Form::text('slug', null, ['class'=> 'form-control']) !!}
+                                        @if ($errors->has('slug'))
+                                            <span class="help-block">
+                                            {!! $errors->first('slug') !!}
+                                        </span>
+                                        @endif
                                     </div>
                                 </div>
 

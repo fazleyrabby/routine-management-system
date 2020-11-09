@@ -43,3 +43,11 @@ li.has-submenu > a:after {
 .breadcrumb > li + li a{
     padding-left: 15px;
 }
+
+@media screen and (max-width: 991px) {
+    table {
+        width: 100%;
+        overflow-x: scroll;
+        display: block;
+    }
+}

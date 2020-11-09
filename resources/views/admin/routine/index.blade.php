@@ -10,6 +10,18 @@
 @endsection
 
 @section('content')
+    <style>
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
     <div class="page-content-wrapper">
         <div class="container-fluid">
             <!-- end row -->
@@ -19,7 +31,48 @@
                         <div class="card-body">
                             <div class="mt-0 header-title mb-4">
                                 Assign Routine
-                                {{--                                <a href="{{ route('ranks.create') }}" class="btn btn-sm btn-primary float-right">Add New</a>--}}
+
+                                @if(Auth::user()->role == 'admin')
+                                <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".routine_reset_{{$yearly_session}}">Full Routine Reset</button>
+
+                                <div class="modal fade routine_reset_{{$yearly_session}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5> Are you sure? You want to reset full routine? </h5>
+                                            </div>
+                                            <div class="modal-body">
+                                                {!! Form::open(['route' => ['routine_reset'], 'method' => 'post', 'style' => 'display:inline']) !!}
+                                                {!! Form::hidden('yearly_session_id', $yearly_session, ['class'=> 'form-control']) !!}
+                                                {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
+                                                {!! Form::close() !!}
+                                                <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".routine_reset_{{$yearly_session}}"> No </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @endif
+
+                                <span class="float-right font-14"> Last Data Input by <strong>
+                                        {{ ucwords($last_created_by->firstname." ".$last_created_by->lastname) }}
+                                    </strong> at <span class="font-12">{{ date('d-m-Y h:i a', strtotime($last_created_by->created_at)) }}</span>
+                                    <span> / </span>
+                                    Last Edited by <strong>
+                                        {{ ucwords($last_edited_by->firstname." ".$last_edited_by->lastname) }}
+                                    </strong> at <span class="font-12">{{ date('d-m-Y h:i a', strtotime($last_edited_by->updated_at)) }}</span>
+                                </span>
+
+
+                            </div>
+
+                            <div>
+                                  @if($request_check && ($request_check->request_status == "active" && $request_check->expired_date >= now()))
+                                    <h5>Insert your data before
+
+                                            <span class="bg bg-danger text-light p-2"> {{ date('d-m-Y', strtotime($request_check->expired_date)) }} </span> </h5>
+                                  @endif
+
                             </div>
                             @if (Session::has('message'))
                                 <div class="alert-dismissable alert alert-success">
@@ -35,6 +88,8 @@
                                     {{ Session('delete-message') }}
                                 </div>
                             @endif
+
+
 
                             {{--                            @foreach($days as $day)--}}
                             {{--                                <h3 class="text-uppercase bg-dark p-2 text-light float-left"><strong>--}}
@@ -104,7 +159,14 @@
                                             @if($flag == 1)
                                             <th class="p-0 text-center" style="overflow: hidden">
                                                 <span class="px-3 py-2 d-block">{{ date('g:i a', strtotime($timeslot->time_slot->from)).'-'.date('g:i a', strtotime($timeslot->time_slot->to)) }}</span>
-                                                <span class="bg-danger px-3 py-2 d-block text-light">{{ $timeslot->class_slot }}</span>
+                                                <span class="bg-success px-3 py-2 d-block text-light">
+                                                    @if(Auth::user()->role == 'admin')
+                                                        <input data-id="{{ $timeslot->id }}" min="1" max="9" class="class_slot text-light border-0 bg-transparent text-center w-100" type="number" value="{{ $timeslot->class_slot }}">
+                                                    @else
+                                                        <span>{{ $timeslot->class_slot }}</span>
+                                                    @endif
+                                                </span>
+
                                             </th>
                                             @endif
                                         @endforeach
@@ -113,7 +175,6 @@
                                     <tbody>
 
                                     @foreach($sections as $section)
-
                                         <tr>
                                             <td>
                                                 {{ $section->department_name.'-'.$section->batch_no.'-'.$section->slug }}
@@ -126,16 +187,19 @@
                                                 @endif
 
                                                 @if($flag == 1)
-                                                <td class="">
-                                                        <span class="mb-2 d-block text-center">
+                                                <td class="p-0">
                                                             @php
                                                                 $day_id = $time_slot_id = $batch_id = $section_id = $room_id = $course_id = $yearly_session_id = $teacher_id = $routine_id = '' ;
                                                             @endphp
 
                                                             @foreach($slot->routine as $routine)
 
+
                                                                 @if($timeslot->day_id == $routine->day_id && $timeslot->time_slot_id == $routine->time_slot_id && $routine->batch_id == $section->batch_id && $section->section_id == $routine->section_id && $routine->yearly_session_id == $yearly_session)
-                                                                    {{ $routine->course->course_code }} {{ $routine->course->course_type == '0' ? '(T)': '(L)' }} | {{ $routine->room->building.'-'.$routine->room->room_no }} | {{ $routine->teacher->user->firstname.' '.$routine->teacher->user->lastname }}
+
+                                                                    <span class="p-2 text-center d-block {{ ($routine->course->course_type == '0') ? 'bg-warning text-dark' : 'bg-danger text-light'}}">
+
+                                                                        {{ $routine->course->course_code }} {{ $routine->course->course_type == '0' ? '(T)': '(L)' }} | {{ $routine->room->building.'-'.$routine->room->room_no }} | {{ $routine->teacher->slug }}
                                                                     @php
                                                                         $routine_id = $routine->id;
                                                                         $day_id = $routine->day_id;
@@ -151,14 +215,18 @@
 {{--                                                                    @php--}}
 {{--                                                                        $day_wise_slot_id = $batch_id = $section_id = $room_id = $course_id = $yearly_session_id = $teacher_id = '';--}}
 {{--                                                                    @endphp--}}
+                                                                </span>
                                                                 @endif
+
                                                             @endforeach
 
+
+
+                                                    @if(($request_check && ($request_check->request_status == "active" && $request_check->expired_date >= now())) || Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin' || Auth::user()->in_committee == 'yes')
+                                                        <span class="d-block text-center">
+                                                            <button type="button" class="m-2 btn btn-sm btn-primary data_modal"  data-toggle="modal" data-target=".bs-example-modal-center{{ 'batch'.$section->batch_id.'_section'.$section->section_id.'_day'.$slot->day_title.'_time'.$timeslot->time_slot->id  }}">Assign / Edit</button>
                                                         </span>
-                                                    <span class="d-block text-center">
-                                                        <button type="button" class="btn btn-sm btn-danger data_modal"  data-toggle="modal" data-target=".bs-example-modal-center{{ 'batch'.$section->batch_id.'_section'.$section->section_id.'_day'.$slot->day_title.'_time'.$timeslot->time_slot->id  }}">Assign / Edit</button>
-{{--                                                         {{ $routine_id }}--}}
-                                                    </span>
+                                                    @endif
 
 
                                                     <div class="modal fade bs-example-modal-center{{ 'batch'.$section->batch_id.'_section'.$section->section_id.'_day'.$slot->day_title.'_time'.$timeslot->time_slot->id  }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -176,7 +244,7 @@
 
                                                                 <div class="modal-body">
                                                                     {!! Form::open(['route' => ['routine_create'],'style' => 'display:inline', 'class'=> 'form']) !!}
-                                                                    {{ $routine_id }}
+{{--                                                                    {{ $routine_id }}--}}
                                                                     <input type="hidden" name="yearly_session_id" value="{{ $yearly_session }}">
                                                                     <input type="hidden" name="batch_id" value="{{ $section->batch_id }}">
                                                                     <input type="hidden" name="section_id" value="{{ $section->section_id }}">
@@ -191,10 +259,8 @@
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
                                                                                 <label for="">Teacher</label>
-                                                                                <select name="teacher_id" id="" class="form-control" required>
-
+                                                                                <select name="teacher_id" class="form-control" required>
                                                                                     <option value="">Select</option>
-
                                                                                     @foreach($teachers as $teacher)
                                                                                         <option value="{{$teacher->id}}" {{ $teacher_id ==  $teacher->id ? 'selected' : '' }}>{{ $teacher->user->firstname.'-'.$teacher->user->lastname.' | '.$teacher->rank->rank }}</option>
                                                                                     @endforeach
@@ -205,7 +271,7 @@
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
                                                                                 <label for="">Course</label>
-                                                                                <select name="course_id" id="" class="form-control" required>
+                                                                                <select name="course_id"  class="form-control" required>
                                                                                     <option value="">Select</option>
                                                                                     @foreach($courses as $course)
                                                                                        <option value="{{$course->id}}" {{ $course_id ==  $course->id ? 'selected' : '' }}>{{ $course->course_code.'-'.$course->course_name }}</option>
@@ -216,9 +282,8 @@
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
                                                                                 <label for="">Room</label>
-                                                                                <select name="room_id" id="" class="form-control" required>
+                                                                                <select name="room_id"  class="form-control" required>
                                                                                     <option value="">Select</option>
-
                                                                                     @foreach($rooms as $room)
                                                                                         <option value="{{$room->id}}" {{ $room_id ==  $room->id ? 'selected' : '' }}>{{ $room->building.'-'.$room->room_no }} {{ $room->room_type == 0 ? '' : '- Lab' }}</option>
                                                                                     @endforeach
@@ -261,6 +326,36 @@
 
 
 @push('script')
+    <script src="{{asset ('assets/js/waves.min.js') }}"></script>
+    <script src="{{asset ('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+{{--    <script src="{{asset ('assets/plugins/peity/jquery.peity.min.js') }}"></script>--}}
+{{--    <script src="{{asset ('assets/plugins/morris/morris.min.js') }}"></script>--}}
+{{--    <script src="{{asset ('assets/plugins/raphael/raphael-min.js') }}"></script>--}}
+{{--    <script src="{{asset ('assets/pages/dashboard.js') }}"></script>--}}
+    <script>
+        let class_slots = document.querySelectorAll('.class_slot');
+        // console.log(class_slots[0].dataset.id);
+        class_slots.forEach((class_slot)=>{
+
+            class_slot.addEventListener('blur', function(e) {
+                let total_slot = e.target.value;
+                let id = e.target.dataset.id;
+                let csrf = "{{ csrf_token() }}";
+                let data = {'total_slot' : total_slot, 'id' : id, "_token": csrf }
+                $.ajax({
+                    type: "post",
+                    url: '{{route("class_slot_update")}}',
+                    data: data,
+                    dataType: "json",
+                    success: function(data) {
+                        if(data.type == 'success'){
+                            console.log('success');
+                        }
+                    }
+                });
+            })
+        })
+    </script>
 
     <script>
         let forms = document.querySelectorAll('.form');

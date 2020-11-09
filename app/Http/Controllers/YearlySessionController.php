@@ -30,14 +30,15 @@ class YearlySessionController extends MasterController
 //                          ->select('shift_name',DB::raw('group_concat(sessions.session_name) as session_names'))
 //                          ->groupBy('shift_id')->get();
 
-         $sessions = SS::all();
+//         $sessions = SS::all();
 //        $shift_sessions = ShiftSession::groupBy('shift_id')->with(['session','shift'])->select('shift_id',DB::raw(group_concat(session_name))->get();
 
 //        dd($shift_sessions);
 
-        $yearly_sessions = YearlySession::groupBy('year')->select('year','is_active', DB::raw('count(*) as total'))->get();
+//        $yearly_sessions = YearlySession::groupBy('year')->select('year','is_active', DB::raw('count(*) as total'))->get();
+        $yearly_sessions = YearlySession::with('session')->get();
 
-        return view('admin.yearly_session.index', compact('yearly_sessions','sessions'));
+        return view('admin.yearly_session.index', compact('yearly_sessions'));
     }
 
     public function status(Request $request)
@@ -73,6 +74,7 @@ class YearlySessionController extends MasterController
                 foreach($sessions as $session){
                     $data[] = [
                         'session_id' => $session,
+                        'is_active' => 'no',
                         'year' => $request->year,
                         'created_at' => now(),
                         'updated_at' => now()
@@ -154,9 +156,20 @@ class YearlySessionController extends MasterController
      * @param  \App\Models\YearlySession  $yearlySession
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, YearlySession $yearlySession)
+    public function update(YearlySession $yearlySession)
     {
-        //
+
+        if ($yearlySession->is_active == 'yes'){
+            $status = 'no';
+        }
+        else {
+            $status = 'yes';
+        }
+
+        $yearlySession->is_active = $status;
+        $yearlySession->save();
+        Session::flash('error', 'Status changed successfully!!');
+        return redirect()->route('yearly_sessions.index');
     }
 
     /**

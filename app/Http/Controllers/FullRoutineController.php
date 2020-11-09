@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Day;
 use App\Models\DayWiseSlot;
 use App\Models\FullRoutine;
+use App\Models\RoutineCommittee;
 use App\Models\Section;
 use App\Models\SectionStudent;
 use App\Models\Student;
@@ -81,11 +82,17 @@ class FullRoutineController extends MasterController
             ->leftJoin('batch', 'students.batch_id', '=', 'batch.id')
             ->leftJoin('shifts', 'shifts.id', '=', 'batch.shift_id')
             ->leftJoin('departments', 'departments.id', '=', 'batch.department_id')
+            ->where('batch.is_active','yes')
             ->get();
 
+        $last_created_by = FullRoutine::select('users.firstname','users.lastname','routine.created_at')->leftJoin('users','users.id','=','routine.created_by')->orderBy('routine.created_at','DESC')->get()->first();
+        $last_edited_by = FullRoutine::select('users.firstname','users.lastname','routine.updated_at')->leftJoin('users','users.id','=','routine.edited_by')->orderBy('routine.updated_at','DESC')->whereNotNull('routine.edited_by')->get()->first();
 
 
         $teachers = Teacher::with(['user','rank'])->where('is_active','yes')->get();
+
+        $request_check = RoutineCommittee::where('receiver_id', Auth::user()->id)->first();
+
 
 //        $teachers = Teacher::with(['user' => function ($query) {
 //            $query->select('id','firstname','lastname');
@@ -97,7 +104,7 @@ class FullRoutineController extends MasterController
         $courses = Course::where('is_active','yes')->get();
         $rooms = Room::where('is_active','yes')->get();
 
-        return view('admin.routine.index', compact('sections','slots','rooms','teachers','courses','yearly_session','day_wise_slots'));
+        return view('admin.routine.index', compact('sections','slots','rooms','teachers','courses','yearly_session','day_wise_slots','request_check','last_created_by','last_edited_by'));
     }
 
     public function batch_search(){
@@ -129,7 +136,6 @@ class FullRoutineController extends MasterController
             }else{
                 $query->select('id','teacher_id','batch_id','section_id','room_id','day_id','time_slot_id','course_id','yearly_session_id','room_id')->where('batch_id', $batch_id)->where('yearly_session_id',$y_session_id);
             }
-
         },'routine.course' => function ($query) {
             $query->select('id','course_name','course_code','course_type');
         },'routine.teacher' => function ($query) {
@@ -164,13 +170,10 @@ class FullRoutineController extends MasterController
     public function teacher_search(){
         $sessions = YearlySession::with('session')->get();
         $teachers = Teacher::with(['user','rank'])->where('is_active','yes')->get();
-        return view('admin.routine.teacher_search', compact('sessions','teachers'));
-    }
 
-    public function teacher_wise_view(Request $request){
+        $teacher_id = Auth::user()->id;
+        $y_session_id = YearlySession::where('is_active','yes')->orderBy('id','DESC')->pluck('id')->first();
 
-        $teacher_id = $request->teacher_id;
-        $y_session_id = $request->y_session_id;
 
 //        $slots = Day::with(['day_wise_slot','day_wise_slot.time_slot','day_wise_slot.routine','day_wise_slot.routine.course','day_wise_slot.routine.room'])->get();
 
@@ -194,14 +197,41 @@ class FullRoutineController extends MasterController
         }
         ])->get();
 
-//        dd($slots);
-
         $day_wise_slots = DayWiseSlot::with('day','time_slot')->get();
-
-
 
         $teacher_detail = Teacher::with(['user','rank'])->where('is_active','yes')->where('id', $teacher_id)->first();
 
+        return view('admin.routine.teacher_search', compact('sessions','teachers','slots','y_session_id','teacher_detail','day_wise_slots'));
+    }
+
+    public function teacher_wise_view(Request $request){
+
+        $teacher_id = $request->teacher_id;
+        $y_session_id = $request->y_session_id;
+
+//        $slots = Day::with(['day_wise_slot','day_wise_slot.time_slot','day_wise_slot.routine','day_wise_slot.routine.course','day_wise_slot.routine.room'])->get();
+
+
+        $slots = Day::with(['routine' => function ($query) use ($teacher_id,$y_session_id) {
+            $query->select('id','teacher_id','batch_id','section_id','room_id','day_id','time_slot_id','course_id','yearly_session_id','room_id')->where('teacher_id', $teacher_id)->where('yearly_session_id',$y_session_id);
+        },'routine.course' => function ($query) {
+            $query->select('id','course_name','course_code','course_type');
+        },'routine.teacher' => function ($query) use ($teacher_id) {
+            $query->select('id','user_id')->where('is_active','yes')->where('id', $teacher_id);
+        },'routine.room' => function ($query) {
+            $query->select('id','room_type','building','room_no')->where('is_active','yes');
+        },'routine.batch' => function ($query) {
+            $query->select('id','batch_no','department_id','shift_id')->where('is_active','yes');
+        },'routine.batch.department' => function ($query) {
+            $query->select('id','department_name')->where('is_active','yes');
+        },'routine.batch.shift' => function ($query) {
+            $query->select('id','slug')->where('is_active','yes');
+        }
+        ])->get();
+
+        $day_wise_slots = DayWiseSlot::with('day','time_slot')->get();
+
+        $teacher_detail = Teacher::with(['user','rank'])->where('is_active','yes')->where('id', $teacher_id)->first();
 
         return view('admin.routine.teacher_wise_view', compact('slots','y_session_id','teacher_detail','day_wise_slots'));
     }
@@ -456,4 +486,22 @@ class FullRoutineController extends MasterController
 
         return json_encode($message);
     }
+
+
+    public function  class_slot_update(Request $request){
+        $id = $request->id;
+        $total_slot = $request->total_slot;
+        if (Auth::user()->role == 'admin'){
+            DayWiseSlot::where("id", $id)->update(["class_slot" => $total_slot]);
+        }
+
+    }
+
+    public function reset(Request $request){
+        $yearly_session_id = $request->yearly_session_id;
+        FullRoutine::where("yearly_session_id", $yearly_session_id)->delete();
+    }
 }
+
+
+

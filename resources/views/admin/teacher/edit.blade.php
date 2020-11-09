@@ -94,7 +94,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('Role') !!}
-                                        {!! Form::select('role' , ['superadmin' => 'Super admin','admin' => 'Admin','subadmin'=> 'Sub Admin', 'teacher'=> 'Teacher'], $teacher->user->role ,['class'=> 'form-control']) !!}
+                                        {!! Form::select('role' , ['admin' => 'ADMIN','user' => 'USER'] , $teacher->user->role ,['class'=> 'form-control']) !!}
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -114,6 +114,17 @@
 
                             <div class="row">
                                 <div class="col-md-4">
+                                    <div class="form-group @if($errors->has('contact')) has-error @endif">
+                                        {!! Form::label('Contact') !!}
+                                        {!! Form::text('contact', $teacher->user->contact, ['class'=> 'form-control']) !!}
+                                        @if ($errors->has('contact'))
+                                            <span class="help-block">
+                                            {!! $errors->first('contact') !!}
+                                        </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('Rank') !!}
                                         {!! Form::select('rank_id', $ranks, $teacher->rank->id ,['class'=> 'form-control']) !!}
@@ -132,6 +143,19 @@
 
                                     </div>
                                      Prev Photo : <img width="100" src={{ asset('storage/uploads/' . $teacher->user->photo)  }} alt="">
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <div class="form-group @if($errors->has('slug')) has-error @endif">
+                                        {!! Form::label('Slug / TN') !!}
+                                        {!! Form::text('slug', $teacher->slug , ['class'=> 'form-control']) !!}
+                                        @if ($errors->has('slug'))
+                                            <span class="help-block">
+                                            {!! $errors->first('slug') !!}
+                                        </span>
+                                        @endif
+                                    </div>
                                 </div>
 
                             </div>

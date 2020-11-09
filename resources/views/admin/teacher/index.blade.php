@@ -42,15 +42,16 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
+{{--                                    <th>Photo</th>--}}
                                     <th>Teacher Name</th>
-                                    <th>Photo</th>
                                     <th>Department</th>
                                     <th>Rank</th>
                                     <th>Email</th>
                                     <th width="15%">Off day</th>
-                                    <th>Contact</th>
                                     <th>Role</th>
-                                    <th>Status</th>
+                                    <th>In Routine Committee</th>
+{{--                                    <th>Status</th>--}}
+                                    <th>Temp. Routine Access</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
@@ -60,8 +61,9 @@
                                 @foreach($teachers as $teacher)
                                     <tr>
                                         <td>{{ $teacher->id }}</td>
+{{--                                        <td><img width="100" src={{ asset('storage/uploads/' . $teacher->user->photo)  }} alt=""></td>--}}
                                         <td>{{ $teacher->user->firstname." ".$teacher->user->lastname }}</td>
-                                        <td><img width="100" src={{ asset('storage/uploads/' . $teacher->user->photo)  }} alt=""></td>
+
                                         <td>{{ $teacher->department->department_name }}</td>
                                         <td>{{ $teacher->rank->rank }}</td>
                                         <td>{{ $teacher->user->email }}</td>
@@ -71,11 +73,36 @@
                                             &nbsp;&nbsp;<a href="{{ route('teachers_offday', $teacher->id) }}"
                                                            class="btn btn-sm btn-secondary">Assign</a>
                                         </td>
-                                        <td>{{ ucwords($teacher->user->contact) }}</td>
                                         <td>{{ ucwords($teacher->user->role) }}</td>
-                                        <td>{{ $teacher->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
+                                        <td><strong class="text-uppercase">{{ $teacher->user->in_committee }}</strong> &nbsp;&nbsp;
+                                            @if($teacher->user->role != 'admin')
+                                                <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target=".routine_committee_{{$teacher->user->id}}"> Change Access </button>
+                                            @endif
+                                        </td>
+{{--                                        <td>{{ $teacher->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>--}}
+                                        <td class="text-center font-weight-bold">
+                                            @if(!empty($teacher->user->receiver->request_status))
+                                                <span class="p-2 {{ $teacher->user->receiver->request_status == 'active' && $teacher->user->receiver->expired_date >= now() ? 'bg-dark text-light' : 'text-dark' }}">
+                                                        {{ ( $teacher->user->role == 'admin' || $teacher->user->receiver->request_status == "active" && $teacher->user->receiver->expired_date >= now()) ? 'Active' : '--' }}
+                                                    </span>
+
+
+                                                @if( $teacher->user->receiver->request_status == 'active' && $teacher->user->receiver->expired_date >= now())
+                                                    <button type="button" class="shadow-none border-0 btn btn-link" data-toggle="modal" data-target=".remove_invite_access_{{$teacher->user->id}}"> Remove access </button>
+                                                @endif
+
+
+                                            @else
+                                                <span>--</span>
+                                            @endif
+
+                                        </td>
 
                                         <td>
+                                            @if(Auth::user()->id != $teacher->user->id && $teacher->user->role == 'user')
+                                                <button type="button" class="btn btn-sm btn-dark" data-toggle="modal" data-target=".invite_{{$teacher->user->id}}"> Invite </button>
+                                            @endif
+
                                             <a href="{{ route('teachers.edit', $teacher->id) }}"
                                                class="btn btn-sm btn-primary">Edit</a>
 
@@ -83,6 +110,78 @@
                                         </td>
 
                                     </tr>
+
+                                    <div class="modal fade remove_invite_access_{{$teacher->user->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5> Remove access of temporary access for {{ ucfirst($teacher->user->firstname)." ".ucfirst($teacher->user->lastname) }} ??
+                                                    </h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {!! Form::open(['route' => ['temp_routine_access'], 'method' => 'post', 'style' => 'display:inline']) !!}
+                                                    {!! Form::hidden('user_id', $teacher->user->id, ['class'=> 'form-control']) !!}
+                                                    {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
+                                                    {!! Form::close() !!}
+                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".remove_invite_access_{{$teacher->user->id}}"> Cancel </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="modal fade invite_{{$teacher->user->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5>Invite {{ ucfirst($teacher->user->firstname)." ".ucfirst($teacher->user->lastname) }} for routine entry!</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {!! Form::open(['route' => ['routine_committee_invite'], 'method' => 'post', 'style' => 'display:inline']) !!}
+                                                    {!! Form::hidden('sender_id', Auth::user()->id, ['class'=> 'form-control']) !!}
+                                                    {!! Form::hidden('receiver_id', $teacher->user->id, ['class'=> 'form-control']) !!}
+                                                    {!! Form::label('Invite Expire after (Days)') !!}
+                                                    <select name="expire_after" class="form-control" required>
+                                                        <option value="">Select</option>
+                                                        @for($i = 1; $i <= 10; $i++)
+                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                        @endfor
+                                                    </select>
+                                                    <br>
+                                                    {{--                                                    {!! Form::textarea('message', 'Please insert your routine data before time expires', ['class'=> 'form-control','rows' => 4, 'cols' => 54,'style' => 'resize:none']) !!}--}}
+                                                    {{--                                                    <br>--}}
+                                                    {!! Form::submit('Send', ['class' => 'btn btn-lg btn-danger']) !!}
+                                                    {!! Form::close() !!}
+                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".invite_{{$teacher->user->id}}"> Cancel </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="modal fade routine_committee_{{$teacher->user->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5> {{ $teacher->user->in_committee == 'yes' ? 'Remove from committee' : 'Add on committee' }}
+                                                        ( {{ ucfirst($teacher->user->firstname)." ".ucfirst($teacher->user->lastname) }} )
+                                                    </h5>
+
+                                                </div>
+                                                <div class="modal-body">
+                                                    {!! Form::open(['route' => ['routine_committee_status'], 'method' => 'post', 'style' => 'display:inline']) !!}
+                                                    {!! Form::hidden('user_id', $teacher->user->id, ['class'=> 'form-control']) !!}
+                                                    {!! Form::hidden('in_committee', $teacher->user->in_committee == 'yes' ? 'no' : 'yes', ['class'=> 'form-control']) !!}
+
+                                                    {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
+                                                    {!! Form::close() !!}
+                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".routine_committee_{{$teacher->user->id}}"> Cancel </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="modal fade bs-example-modal-center{{$teacher->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">

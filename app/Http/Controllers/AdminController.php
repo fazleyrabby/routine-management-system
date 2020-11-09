@@ -10,6 +10,7 @@ use App\Models\Student;
 use App\Models\Batch;
 use App\Models\Course;
 use App\Models\Session;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends MasterController
 {
@@ -28,6 +29,9 @@ class AdminController extends MasterController
         $rooms = Room::orderBy('id', 'DESC')->get();
         $courses = Course::orderBy('id', 'DESC')->get();
 
+
+
+
         return view('admin.index',compact('data','teachers','rooms','courses'));
     }
 
@@ -39,6 +43,10 @@ class AdminController extends MasterController
     public function create()
     {
         //
+    }
+
+    public function roles(){
+        return view('admin.roles');
     }
 
     /**

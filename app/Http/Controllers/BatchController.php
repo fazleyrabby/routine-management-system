@@ -108,11 +108,11 @@ class BatchController extends MasterController
     public function update(Request $request,Batch $batch)
     {
         $existBatch = Batch::where([
-            ['id','!=',$batch->id],
+            ['id','<>',$batch->id],
             ['batch_no','=',$request->batch_no],
-            ['department_id',$request->department_id],
-            ['shift_id',$request->shift_id]
-        ])->first();
+            ['department_id','=',$request->department_id],
+            ['shift_id','=',$request->shift_id]
+        ])->count();
 
         $this->validate($request, [
             'batch_no' => 'required',
@@ -130,7 +130,7 @@ class BatchController extends MasterController
         $batch->shift_id = $request->shift_id;
         $batch->is_active = $request->is_active;
 
-        if ($existBatch){
+        if ($existBatch > 0){
             Session::flash('error', 'Batch already assigned');
             return redirect()->route('batches.edit', $batch->id);
         }else{
