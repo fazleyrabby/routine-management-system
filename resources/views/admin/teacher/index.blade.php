@@ -7,6 +7,7 @@
     <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
           type="text/css"/>
     <link href="{{ asset('assets/plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ asset('assets/plugins/bootstrap-md-datetimepicker/css/bootstrap-material-datetimepicker.css') }}" rel="stylesheet" type="text/css"/>
 @endsection
 
 @section('content')
@@ -44,6 +45,7 @@
                                     <th>#</th>
 {{--                                    <th>Photo</th>--}}
                                     <th>Teacher Name</th>
+                                    <th>Slug</th>
                                     <th>Department</th>
                                     <th>Rank</th>
                                     <th>Email</th>
@@ -63,6 +65,7 @@
                                         <td>{{ $teacher->id }}</td>
 {{--                                        <td><img width="100" src={{ asset('storage/uploads/' . $teacher->user->photo)  }} alt=""></td>--}}
                                         <td>{{ $teacher->user->firstname." ".$teacher->user->lastname }}</td>
+                                        <td>{{ $teacher->slug }}</td>
 
                                         <td>{{ $teacher->department->department_name }}</td>
                                         <td>{{ $teacher->rank->rank }}</td>
@@ -87,7 +90,7 @@
                                                     </span>
 
 
-                                                @if( $teacher->user->receiver->request_status == 'active' && $teacher->user->receiver->expired_date >= now())
+                                                @if( $teacher->user->receiver->request_status == 'active' && $teacher->user->receiver->expired_date >= now() )
                                                     <button type="button" class="shadow-none border-0 btn btn-link" data-toggle="modal" data-target=".remove_invite_access_{{$teacher->user->id}}"> Remove access </button>
                                                 @endif
 
@@ -142,12 +145,15 @@
                                                     {!! Form::hidden('sender_id', Auth::user()->id, ['class'=> 'form-control']) !!}
                                                     {!! Form::hidden('receiver_id', $teacher->user->id, ['class'=> 'form-control']) !!}
                                                     {!! Form::label('Invite Expire after (Days)') !!}
-                                                    <select name="expire_after" class="form-control" required>
-                                                        <option value="">Select</option>
-                                                        @for($i = 1; $i <= 10; $i++)
-                                                            <option value="{{ $i }}">{{ $i }}</option>
-                                                        @endfor
-                                                    </select>
+{{--                                                    <select name="expire_after" class="form-control" required>--}}
+{{--                                                        <option value="">Select</option>--}}
+{{--                                                        @for($i = 1; $i <= 10; $i++)--}}
+{{--                                                            <option value="{{ $i }}">{{ $i }}</option>--}}
+{{--                                                        @endfor--}}
+{{--                                                    </select>--}}
+                                                    <div>
+                                                        <input type="text" name="expired_date"  class="form-control min-date floating-label" placeholder="Expired on" required>
+                                                    </div>
                                                     <br>
                                                     {{--                                                    {!! Form::textarea('message', 'Please insert your routine data before time expires', ['class'=> 'form-control','rows' => 4, 'cols' => 54,'style' => 'resize:none']) !!}--}}
                                                     {{--                                                    <br>--}}
@@ -220,6 +226,9 @@
     <!-- Datatable init js -->
 
     <!-- Required datatable js -->
+
+    <script src="{{ asset('assets/plugins/bootstrap-md-datetimepicker/js/moment-with-locales.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap-md-datetimepicker/js/bootstrap-material-datetimepicker.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/dataTables.buttons.min.js') }}"></script>
@@ -231,7 +240,7 @@
     <script src="{{ asset('assets/plugins/datatables/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/buttons.colVis.min.js') }}"></script>
-    <script src="../../../../.."></script>
+{{--    <script src="../../../../.."></script>--}}
     <!-- Buttons examples -->
 
 
@@ -248,5 +257,7 @@
             table.buttons().container()
                 .appendTo('#datatable-buttons_wrapper .col-md-6:eq(0)');
         });
+
+        $('.min-date').bootstrapMaterialDatePicker({ format : 'DD-MM-YYYY hh:mm a', minDate : new Date() });
     </script>
 @endpush

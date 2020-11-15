@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="col-md-10">
                                         {!! Form::text('course_name', null, ['class'=> 'form-control']) !!}
-                                        @if ($errors->has('course_name'))
+                                        @if ($errors->has('course_namecourse_name'))
                                             <span class="help-block">
                                             {!! $errors->first('course_name') !!}
                                         </span>

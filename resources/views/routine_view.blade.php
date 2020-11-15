@@ -12,7 +12,6 @@
                         <a class="btn btn-danger float-right" href="{{ route('routine') }}">
                             Go Back
                         </a>
-
                         <form action="{{ route('routine_print') }}" method="post">
                             @csrf
                             <input type="hidden" name="batch_id" value="{{  $batch->batch_id.",".$batch->section_id }}">
@@ -74,7 +73,7 @@
                                         @endif
 
                                         @if($flag == 1)
-                                            <td colspan="{{ $colspan }}">
+                                            <td colspan="{{ $colspan }}" class="text-center font-weight-bold">
                                                 @foreach($slot->routine as $routine)
                                                     @if($timeslot->day->id == $routine->day_id && $timeslot->time_slot->id == $routine->time_slot_id &&  $routine->yearly_session_id == $y_session_id)
                                                         {{ $routine->course->course_code }}-{{ $routine->course->course_type == '0' ? '(T)': '(L)' }} <br>
@@ -86,22 +85,12 @@
                                             </td>
                                             @endif
                                     @endforeach
-
-
                             </tr>
                         @endforeach
                         </tbody>
-
                     </table>
-
                 </div>
-
             </div>
-
-
-
-
-
         </div>
     </div>
 </div>

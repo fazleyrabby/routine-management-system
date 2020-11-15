@@ -40,7 +40,7 @@
                                     {!! Form::label('Session') !!}
 {{--                                    {!! Form::select('session_id', null, ['class'=> 'form-control']) !!}--}}
                                     <select name="session_id" id="" class="form-control">
-                                        <option value="">Select</option>
+{{--                                        <option value="">Select</option>--}}
                                         @foreach($sessions as $session)
                                             <option value={{ $session->id }} {{ old($session->id) }}> {{ $session->session->session_name. '-' . $session->year}}</option>
                                         @endforeach

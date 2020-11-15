@@ -53,15 +53,16 @@
                                 </div>
 
                                 @endif
-
-                                <span class="float-right font-14"> Last Data Input by <strong>
-                                        {{ ucwords($last_created_by->firstname." ".$last_created_by->lastname) }}
-                                    </strong> at <span class="font-12">{{ date('d-m-Y h:i a', strtotime($last_created_by->created_at)) }}</span>
-                                    <span> / </span>
-                                    Last Edited by <strong>
-                                        {{ ucwords($last_edited_by->firstname." ".$last_edited_by->lastname) }}
-                                    </strong> at <span class="font-12">{{ date('d-m-Y h:i a', strtotime($last_edited_by->updated_at)) }}</span>
-                                </span>
+                                @if($last_created_by && $last_edited_by)
+                                    <span class="float-right font-14"> Last Data Input by <strong>
+                                            {{ ucwords($last_created_by->firstname." ".$last_created_by->lastname) }}
+                                        </strong> at <span class="font-12">{{ date('d-m-Y h:i a', strtotime($last_created_by->created_at)) }}</span>
+                                        <span> / </span>
+                                        Last Edited by <strong>
+                                            {{ ucwords($last_edited_by->firstname." ".$last_edited_by->lastname) }}
+                                        </strong> at <span class="font-12">{{ date('d-m-Y h:i a', strtotime($last_edited_by->updated_at)) }}</span>
+                                    </span>
+                                @endif
 
 
                             </div>
@@ -70,7 +71,7 @@
                                   @if($request_check && ($request_check->request_status == "active" && $request_check->expired_date >= now()))
                                     <h5>Insert your data before
 
-                                            <span class="bg bg-danger text-light p-2"> {{ date('d-m-Y', strtotime($request_check->expired_date)) }} </span> </h5>
+                                            <span class="bg bg-danger text-light p-2"> {{ date('d-m-Y h:i a', strtotime($request_check->expired_date)) }} </span> </h5>
                                   @endif
 
                             </div>
@@ -197,7 +198,7 @@
 
                                                                 @if($timeslot->day_id == $routine->day_id && $timeslot->time_slot_id == $routine->time_slot_id && $routine->batch_id == $section->batch_id && $section->section_id == $routine->section_id && $routine->yearly_session_id == $yearly_session)
 
-                                                                    <span class="p-2 text-center d-block {{ ($routine->course->course_type == '0') ? 'bg-warning text-dark' : 'bg-danger text-light'}}">
+                                                                    <span class="position-relative p-2 text-center d-block {{ ($routine->course->course_type == '0') ? 'bg-warning text-dark' : 'bg-danger text-light'}}">
 
                                                                         {{ $routine->course->course_code }} {{ $routine->course->course_type == '0' ? '(T)': '(L)' }} | {{ $routine->room->building.'-'.$routine->room->room_no }} | {{ $routine->teacher->slug }}
                                                                     @php
@@ -215,7 +216,34 @@
 {{--                                                                    @php--}}
 {{--                                                                        $day_wise_slot_id = $batch_id = $section_id = $room_id = $course_id = $yearly_session_id = $teacher_id = '';--}}
 {{--                                                                    @endphp--}}
+                                                                        @if(($request_check && ($request_check->request_status == "active" && $request_check->expired_date >= now())) || Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin' || Auth::user()->in_committee == 'yes')
+
+                                                                        <button style="right: 0;top: 3px" class="position-absolute btn btn-sm btn-dark"  data-toggle="modal" data-target=".data_delete_{{ $routine_id }}">X</button>
+
+
+                                                                        <div class="modal fade data_delete_{{ $routine_id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header text-dark">
+                                                                                    <h5>Do you want to delete this?!</h5>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    {!! Form::open(['route' => ['routine_cell_delete'],'style' => 'display:inline']) !!}
+                                                                                    {!! Form::hidden('id',$routine_id) !!}
+
+                                                                                    {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
+
+                                                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".data_delete_{{ $routine_id }}"> Cancel </button>
+                                                                                    {!! Form::close() !!}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        </div>
+                                                                            @endif
                                                                 </span>
+
+
                                                                 @endif
 
                                                             @endforeach
@@ -227,6 +255,7 @@
                                                             <button type="button" class="m-2 btn btn-sm btn-primary data_modal"  data-toggle="modal" data-target=".bs-example-modal-center{{ 'batch'.$section->batch_id.'_section'.$section->section_id.'_day'.$slot->day_title.'_time'.$timeslot->time_slot->id  }}">Assign / Edit</button>
                                                         </span>
                                                     @endif
+
 
 
                                                     <div class="modal fade bs-example-modal-center{{ 'batch'.$section->batch_id.'_section'.$section->section_id.'_day'.$slot->day_title.'_time'.$timeslot->time_slot->id  }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
@@ -251,8 +280,6 @@
                                                                     <input type="hidden" name="day_id" value="{{ $timeslot->day_id }}">
                                                                     <input type="hidden" name="time_slot_id" value="{{ $timeslot->time_slot_id }}">
                                                                     <input type="hidden" name="routine_id" value="{{ $routine_id }}">
-
-
                                                                     <div class="alert_box"></div>
 
                                                                     <div class="row">
@@ -270,15 +297,21 @@
 
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
+
                                                                                 <label for="">Course</label>
-                                                                                <select name="course_id"  class="form-control" required>
+                                                                                <div class="course_alert"></div>
+                                                                                <select data-batch="{{ $section->batch_id }}" data-section="{{$section->section_id}}" data-time="{{ $timeslot->time_slot_id }}" data-day="{{ $timeslot->day_id }}" name="course_id"  class="course form-control" required>
                                                                                     <option value="">Select</option>
                                                                                     @foreach($courses as $course)
                                                                                        <option value="{{$course->id}}" {{ $course_id ==  $course->id ? 'selected' : '' }}>{{ $course->course_code.'-'.$course->course_name }}</option>
                                                                                     @endforeach
                                                                                 </select>
+                                                                                <div class="additional_slot"></div>
                                                                             </div>
+
                                                                         </div>
+
+
                                                                         <div class="col-md-12">
                                                                             <div class="form-group">
                                                                                 <label for="">Room</label>
@@ -385,6 +418,60 @@
                 });
             });
         })
+    </script>
+
+    <script>
+        let courses = document.querySelectorAll('.course');
+        // console.log(courses);
+        courses.forEach((course)=>{
+            course.addEventListener('change',function (e) {
+
+                //Check if course type is lab or theory
+                let additional_slot = e.target.parentNode.querySelector('.additional_slot');
+                additional_slot.innerHTML = '';
+                let course_alert = e.target.parentNode.querySelector('.course_alert');
+                let id = e.target.value;
+                let time_slot_id = e.target.dataset.time;
+                let day_id = e.target.dataset.day;
+                let batch = e.target.dataset.batch;
+                let section = e.target.dataset.section;
+                let csrf = "{{ csrf_token() }}";
+                let data = {
+                    'batch_id' : batch,
+                    'section_id' : section,
+                    'time_slot_id':time_slot_id,
+                    'id' : id,
+                    'day_id' : day_id,
+                    "_token": csrf }
+                $.ajax({
+                    type: "post",
+                    url: '{{route("course_check")}}',
+                    data: data,
+                    dataType: "json",
+                    success: function(data) {
+
+                        if(data){
+                            if(data.msg){
+                                course_alert.innerHTML = `<div class="alert-dismissable alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x
+                                    </button><strong>${data.msg}</strong></div>`;
+                            }else{
+                                let html = '<div class="mt-3"><label for="">Additional Slot</label><select name="additional_time_slot"  class="form-control" required>';
+                                Object.keys(data).forEach(function(key) {
+                                    html += `<option value="${data[key].id}">${data[key].from}-${data[key].to}</option>`
+                                });
+                                html += '</select><div>';
+                                additional_slot.innerHTML = html;
+                            }
+
+
+                        }
+                    }
+                });
+
+            })
+        })
+
     </script>
 
 @endpush

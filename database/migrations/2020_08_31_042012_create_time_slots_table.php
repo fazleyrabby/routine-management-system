@@ -19,6 +19,7 @@ class CreateTimeSlotsTable extends Migration
             $table->time('to')->nullable();
             $table->integer('shift_id')->nullable()->foreign('shift_id')->references('id')->on('shifts');
             $table->enum('is_active',['yes','no'])->default('yes');
+            $table->enum('type',['1','2'])->default('1');
             $table->timestamps();
         });
     }

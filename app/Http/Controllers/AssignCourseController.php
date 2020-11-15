@@ -36,7 +36,7 @@ class AssignCourseController extends MasterController
         $batches = Batch::with(['shift','department'])->get();
         $teachers = Teacher::with(['user'])->get();
         $courses = Course::where('is_active','yes')->get();
-        $sessions = YearlySession::with('session')->get();
+        $sessions = YearlySession::with('session')->where('is_active','yes')->get();
 
         return view('admin.assign_course.create',compact('batches','teachers','courses','sessions'));
     }
@@ -131,7 +131,7 @@ class AssignCourseController extends MasterController
         $batches = Batch::with(['shift','department'])->get();
         $teachers = Teacher::with(['user'])->get();
         $courses = Course::where('is_active','yes')->get();
-        $sessions = YearlySession::with('session')->get();
+        $sessions = YearlySession::with('session')->where('is_active','yes')->get();
         return view('admin.assign_course.edit', compact('batches','teachers','courses','sessions','assign_course'));
     }
 

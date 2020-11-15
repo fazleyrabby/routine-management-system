@@ -34,7 +34,7 @@ class HomeController extends Controller
     public function routine(){
 
 
-            $sessions = YearlySession::with('session')->get();
+            $sessions = YearlySession::with('session')->where('is_active','yes')->get();
             $batches = Student::select('*','sections.id as section_id','batch.id as batch_id')
                 ->leftJoin('section_students', 'section_students.student_id', '=', 'students.id')
                 ->leftJoin('sections', 'sections.id', '=', 'section_students.section_id')

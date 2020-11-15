@@ -13,8 +13,6 @@
         @page {
             margin-left: 25px;
             margin-right: 25px;
-            margin-top: 25px;
-            margin-bottom: 25px;
         }
     </style>
 </head>
@@ -25,8 +23,8 @@
 
         <div class="issue_info">
 
-            <center style="font-size: 18px; margin-bottom: 5px">
-                Class schedule for <strong>{{ ucfirst($teacher_detail->user->firstname)." ".ucfirst($teacher_detail->user->lastname) }} {{ $y_session->session->session_name."-".$y_session->year }}</strong>
+            <center style="font-size: 18px;">
+                Class schedule for <strong>{{ ucfirst($teacher_detail->user->firstname)." ".ucfirst($teacher_detail->user->lastname) }} ( {{ $yearly_session->session->session_name."-".$yearly_session->year }} )</strong>
             </center>
 
             <hr>
@@ -76,21 +74,31 @@
 
                             @if ($slot->id == $timeslot->day_id)
                                 @php $flag = 1 @endphp
+
                             @else @php $flag = 0 @endphp
                             @endif
 
                             @if($flag == 1)
+
+
                                 <td colspan="{{ $colspan }}" style="font-weight: bold;">
+                                    @foreach($slot->routine as $key => $routine)
 
-
-                                    @foreach($slot->routine as $routine)
-
+                                        @php($section_name = "")
+                                        @if($routine->section_id)
+                                            @foreach($routine->batch->student->section_student as $section_student)
+                                                @if($section_student->section->id == $routine->section_id)
+                                                    @php($section_name = "-".$section_student->section->section_name)
+                                                @endif
+                                            @endforeach
+                                        @endif
 
                                         @if($timeslot->day->id == $routine->day_id && $timeslot->time_slot->id == $routine->time_slot_id &&  $routine->yearly_session_id == $y_session_id)
                                             {{ $routine->course->course_code }}-{{ $routine->course->course_type == '0' ? '(T)': '(L)' }} <br>
-                                            {{ $routine->course->course_name }} <br>
+{{--                                            {{ $routine->course->course_name }} <br>--}}
+
                                             {{ $routine->room->building.'-'.$routine->room->room_no }} <br>
-                                            {{ $routine->batch->department->department_name."-".$routine->batch->batch_no."-".$routine->batch->shift->slug }}
+                                            {{ $routine->batch->department->department_name."-".$routine->batch->batch_no."-".$routine->batch->shift->slug.$section_name}}
                                         @endif
 
 

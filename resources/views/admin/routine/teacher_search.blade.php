@@ -120,13 +120,24 @@
                                             @endif
 
                                             @if($flag == 1)
-                                                <td colspan="{{ $colspan }}">
+                                                <td class="text-center font-weight-bold" colspan="{{ $colspan }}">
+
                                                     @foreach($slot->routine as $routine)
+                                                        @php($section_name = "")
+                                                        @if($routine->section_id)
+                                                            @foreach($routine->batch->student->section_student as $section_student)
+                                                                @if($section_student->section->id == $routine->section_id)
+                                                                    @php($section_name = "-".$section_student->section->section_name)
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+
+
                                                         @if($timeslot->day->id == $routine->day_id && $timeslot->time_slot->id == $routine->time_slot_id &&  $routine->yearly_session_id == $y_session_id)
                                                             {{ $routine->course->course_code }}-{{ $routine->course->course_type == '0' ? '(T)': '(L)' }} <br>
                                                             {{ $routine->course->course_name }} <br>
                                                             {{ $routine->room->building.'-'.$routine->room->room_no }} <br>
-                                                            {{ $routine->batch->department->department_name."-".$routine->batch->batch_no."-".$routine->batch->shift->slug }}
+                                                            {{ $routine->batch->department->department_name."-".$routine->batch->batch_no."-".$routine->batch->shift->slug.$section_name }}
                                                         @endif
                                                     @endforeach
                                                 </td>

@@ -22,9 +22,16 @@ class UserController extends MasterController
      */
     public function index()
     {
-        $users = User::with('sender','receiver')->get();
-//        $requests = RoutineCommittee::all();
-        return view('admin.user.index',compact('users'))->with('sl',1);
+        if (Auth::user()->role == 'user'){
+            abort(404);
+        }
+        return redirect()->route('teachers.index');
+//        if (Auth::user()->role == 'user'){
+//            abort(404);
+//        }
+//        $users = User::with('sender','receiver')->get();
+////        $requests = RoutineCommittee::all();
+//        return view('admin.user.index',compact('users'))->with('sl',1);
     }
 
     /**
@@ -34,7 +41,10 @@ class UserController extends MasterController
      */
     public function create()
     {
-        return view('admin.user.create');
+        if (Auth::user()->role == 'user'){
+            abort(404);
+        }
+        return redirect()->route('teachers.create');
     }
 
     /**
@@ -45,6 +55,10 @@ class UserController extends MasterController
      */
     public function store(Request $request)
     {
+        if (Auth::user()->role == 'user'){
+            abort(404);
+        }
+
         $this->validate($request, [
             'room_no' => 'required|unique:rooms',
             'building' => 'required',
@@ -76,7 +90,12 @@ class UserController extends MasterController
      */
     public function show($id)
     {
-        $is_teacher = User::where('id',$id)->pluck('is_teacher')->first();
+        $is_teacher = User::where('id', $id)->pluck('is_teacher')->first();
+
+        if ( Auth::user()->role == 'user' && Auth::id() != $id ){
+            abort(404);
+        }
+
         if($is_teacher == 'yes'){
             $user = Teacher::with(['department','rank','user','teachers_offday.day'])->where('user_id',$id)->first();
         }else{

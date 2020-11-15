@@ -18,7 +18,7 @@ class CreateRoutineCommitteeRequestsTable extends Migration
             $table->integer('sender_id')->nullable()->foreign('sender_id')->references('id')->on('users');
             $table->integer('receiver_id')->nullable()->foreign('receiver_id')->references('id')->on('users');
             $table->integer('expire_after')->default(2)->nullable();
-            $table->date('expired_date');
+            $table->dateTime('expired_date');
             $table->enum('request_status', ['expired','active'])->default('active');
             $table->timestamps();
         });

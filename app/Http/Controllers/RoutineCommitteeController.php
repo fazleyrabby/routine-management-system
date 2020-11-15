@@ -40,26 +40,29 @@ class RoutineCommitteeController extends MasterController
      */
     public function store(Request $request)
     {
+        $expired_on = date('Y-m-d H:i:s', strtotime($request->expired_date));
+//        dd($expired_on);
         $existData = RoutineCommittee::where([
             ['receiver_id',$request->receiver_id],
-            ['request_status','active']
+            ['request_status','active'],
+            ['expired_date','>', now()]
         ])->count();
 
         if($existData == 0){
             $user = User::where('id', $request->receiver_id)->select('firstname','lastname','email')->first();
-            $expire_after = $request->expire_after;
+//            $expire_after = $request->expire_after;
             $routine_committee = new RoutineCommittee();
             $routine_committee->sender_id = $request->sender_id;
             $routine_committee->receiver_id = $request->receiver_id;
-            $routine_committee->expire_after = $request->expire_after;
-            $routine_committee->expired_date = now()->addDays($expire_after);
+//            $routine_committee->expire_after = $request->expire_after;
+            $routine_committee->expired_date = $expired_on;
             RoutineCommittee::where('receiver_id',$request->receiver_id)->delete();
             $routine_committee->save();
 
             $data = [
                 'receiver' => $user->firstname." ".$user->lastname,
                 'sender' => Auth::user()->firstname." ".Auth::user()->lastname,
-                'expired_date' => date('d-m-Y', strtotime($routine_committee->expired_date))
+                'expired_date' => date('d-m-Y h:i a', strtotime($routine_committee->expired_date))
             ];
 
             Mail::to($user->email)->send(new RoutineInviteRequest($data));

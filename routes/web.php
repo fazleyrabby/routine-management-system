@@ -34,47 +34,53 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::resource('yearly_sessions', 'YearlySessionController');
 //    Route::get('yearly_sessions/delete/{}', 'YearlySessionController@index')->name('admin');
 //    Route::post('yearly_session','YearlySessionController@status')->name('yearly_session.status');
-    Route::resource('shifts', 'ShiftController');
-    Route::resource('rooms', 'RoomController');
-    Route::resource('departments', 'DepartmentController');
-    Route::resource('teachers', 'TeacherController');
-    Route::resource('courses', 'StudentController');
-    Route::resource('batches', 'BatchController');
-    Route::resource('sections', 'SectionController');
+    Route::resource('shifts', 'ShiftController')->middleware('auth_admin');
+    Route::resource('rooms', 'RoomController')->middleware('auth_admin');
+    Route::resource('departments', 'DepartmentController')->middleware('auth_admin');
+    Route::resource('teachers', 'TeacherController')->middleware('auth_admin');
+    Route::resource('courses', 'StudentController')->middleware('auth_admin');
+    Route::resource('batches', 'BatchController')->middleware('auth_admin');
+    Route::resource('sections', 'SectionController')->middleware('auth_admin');
+
     Route::resource('users', 'UserController');
+
     Route::get('profile_edit/{id}', 'UserController@profile_edit')->name('profile_edit');
     Route::get('password_edit', 'UserController@password_edit')->name('password_edit');
     Route::post('password_update', 'UserController@password_update')->name('password_update');
 
-    Route::resource('ranks', 'TeacherRankController');
-    Route::resource('students', 'StudentController');
+    Route::resource('ranks', 'TeacherRankController')->middleware('auth_admin');
+    Route::resource('students', 'StudentController')->middleware('auth_admin');
 
-    Route::get('students_create/{id}', 'StudentController@create')->name('students_create');
+    Route::get('students_create/{id}', 'StudentController@create')->name('students_create')->middleware('auth_admin');
 
-    Route::get('teachers_offday/{id}', 'TeachersOffdayController@create')->name('teachers_offday');
-    Route::post('teachers_offday_store', 'TeachersOffdayController@store')->name('teachers_offday_store');
+    Route::get('teachers_offday/{id}', 'TeachersOffdayController@create')->name('teachers_offday')->middleware('auth_admin');
+    Route::post('teachers_offday_store', 'TeachersOffdayController@store')->name('teachers_offday_store')->middleware('auth_admin');
 
-    Route::get('theory_section/{id}', 'StudentController@theory_section')->name('theory_section');
-    Route::post('theory_section_store', 'StudentController@theory_section_store')->name('theory_section_store');
+    Route::get('theory_section/{id}', 'StudentController@theory_section')->name('theory_section')->middleware('auth_admin');
+    Route::post('theory_section_store', 'StudentController@theory_section_store')->name('theory_section_store')->middleware('auth_admin');
 
-    Route::post('lab_section_store', 'StudentController@lab_section_store')->name('lab_section_store');
-    Route::get('lab_section/{id}', 'StudentController@lab_section')->name('lab_section');
+    Route::post('lab_section_store', 'StudentController@lab_section_store')->name('lab_section_store')->middleware('auth_admin');
+    Route::get('lab_section/{id}', 'StudentController@lab_section')->name('lab_section')->middleware('auth_admin');
 
-    Route::resource('section_students', 'SectionStudentController');
-    Route::resource('courses', 'CourseController');
-    Route::resource('assign_courses', 'AssignCourseController');
+    Route::resource('section_students', 'SectionStudentController')->middleware('auth_admin');
+    Route::resource('courses', 'CourseController')->middleware('auth_admin');
+    Route::resource('assign_courses', 'AssignCourseController')->middleware('auth_admin');
 
-    Route::resource('time_slots', 'TimeSlotController');
+    Route::resource('time_slots', 'TimeSlotController')->middleware('auth_admin');
 
     //Day wise time slot & class slot
-    Route::get('day_wise_slots', 'DayWiseSlotController@index')->name('day_wise_slots');
-    Route::get('day_wise_slot_create/{id}', 'DayWiseSlotController@create')->name('day_wise_slot_create');
-    Route::post('day_wise_slot_store', 'DayWiseSlotController@store')->name('day_wise_slot_store');
-    Route::post('day_wise_slot_destroy/{id}', 'DayWiseSlotController@destroy')->name('day_wise_slot_destroy');
+    Route::get('day_wise_slots', 'DayWiseSlotController@index')->name('day_wise_slots')->middleware('auth_admin');
+    Route::get('day_wise_slot_create/{id}', 'DayWiseSlotController@create')->name('day_wise_slot_create')->middleware('auth_admin');
+    Route::post('day_wise_slot_store', 'DayWiseSlotController@store')->name('day_wise_slot_store')->middleware('auth_admin');
+    Route::post('day_wise_slot_destroy/{id}', 'DayWiseSlotController@destroy')->name('day_wise_slot_destroy')->middleware('auth_admin');
 
     Route::get('full_routine/{yearly_session}', 'FullRoutineController@index')->name('full_routine');
     Route::post('routine_create', 'FullRoutineController@create')->name('routine_create');
-    Route::post('routine_reset', 'FullRoutineController@reset')->name('routine_reset');
+    Route::post('course_check', 'FullRoutineController@course_check')->name('course_check');
+    Route::post('routine_reset', 'FullRoutineController@reset')->name('routine_reset')->middleware('auth_admin');
+    Route::post('routine_cell_delete', 'FullRoutineController@routine_cell_delete')->name('routine_cell_delete')->middleware('auth_admin');
+
+
 
     Route::post('class_slot_update', 'FullRoutineController@class_slot_update')->name('class_slot_update');
 
@@ -89,16 +95,9 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
 
     Route::post('temp_routine_access', 'RoutineCommitteeController@temp_routine_access')->name('temp_routine_access');
 
-
-
     Route::post('routine_committee_status', 'RoutineCommitteeController@routine_committee_status')->name('routine_committee_status');
 
     Route::get('roles', 'AdminController@roles')->name('roles');
-
-
-
-
-
 });
 
 #============================ *Logout Route* ============================#
