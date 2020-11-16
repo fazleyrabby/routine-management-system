@@ -80,7 +80,7 @@
                             @endif
 
                             @if($flag == 1)
-                                <td colspan="{{ $colspan }}" style="font-weight: bold;">
+                                <td colspan="{{ $colspan }}" style="font-weight: bold; text-align: center">
                                     @foreach($slot->routine as $routine)
                                         @if($timeslot->day->id == $routine->day_id && $timeslot->time_slot->id == $routine->time_slot_id &&  $routine->yearly_session_id == $y_session_id)
                                             {{ $routine->course->course_code }}-{{ $routine->course->course_type == '0' ? '(T)': '(L)' }} <br>

@@ -53,10 +53,14 @@
                                 </div>
 
                                 @endif
-                                @if($last_created_by && $last_edited_by)
+                                @if($last_created_by)
                                     <span class="float-right font-14"> Last Data Input by <strong>
                                             {{ ucwords($last_created_by->firstname." ".$last_created_by->lastname) }}
                                         </strong> at <span class="font-12">{{ date('d-m-Y h:i a', strtotime($last_created_by->created_at)) }}</span>
+                                    </span>
+                                @endif
+
+                                @if($last_edited_by)
                                         <span> / </span>
                                         Last Edited by <strong>
                                             {{ ucwords($last_edited_by->firstname." ".$last_edited_by->lastname) }}
@@ -426,10 +430,12 @@
         courses.forEach((course)=>{
             course.addEventListener('change',function (e) {
 
+
                 //Check if course type is lab or theory
                 let additional_slot = e.target.parentNode.querySelector('.additional_slot');
                 additional_slot.innerHTML = '';
                 let course_alert = e.target.parentNode.querySelector('.course_alert');
+                course_alert.innerHTML = '';
                 let id = e.target.value;
                 let time_slot_id = e.target.dataset.time;
                 let day_id = e.target.dataset.day;

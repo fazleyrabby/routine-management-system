@@ -20,29 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68c1187a-e521-4096-89c5-64b84bc2cc96" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/routine.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/routine.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AssignCourseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AssignCourseController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FullRoutineController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FullRoutineController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RoutineCommitteeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RoutineCommitteeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_08_31_042012_create_time_slots_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_08_31_042012_create_time_slots_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_26_140017_create_routine_committee_requests_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_26_140017_create_routine_committee_requests_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/assign_course/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/assign_course/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/course/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/course/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/routine/batch_wise_view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/routine/batch_wise_view.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/routine/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/routine/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/routine/teacher_search.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/routine/teacher_search.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/routine/teacher_wise_print.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/routine/teacher_wise_print.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/admin/routine/teacher_wise_view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/routine/teacher_wise_view.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/teacher/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/teacher/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/routine_view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/routine_view.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/routine_print.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/routine_print.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -341,7 +324,9 @@
       <workItem from="1605362701572" duration="25000" />
       <workItem from="1605363455098" duration="7075000" />
       <workItem from="1605371994064" duration="3568000" />
-      <workItem from="1605442862338" duration="10449000" />
+      <workItem from="1605442862338" duration="10947000" />
+      <workItem from="1605511761019" duration="5546000" />
+      <workItem from="1605529487992" duration="14662000" />
     </task>
     <servers />
   </component>
@@ -409,9 +394,10 @@
     </state>
     <state x="2438" y="126" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.824/1920.0.1920.1040@1920.0.1920.1040" timestamp="1599630898554" />
     <state x="414" y="45" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.832/1920.0.1920.1050@0.0.1536.832" timestamp="1604824688214" />
-    <state x="615" y="347" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1603731155502">
-      <screen x="0" y="0" width="1536" height="832" />
+    <state x="2689" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605539745489">
+      <screen x="1920" y="0" width="1920" height="1050" />
     </state>
+    <state x="2689" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.832/1920.0.1920.1050@1920.0.1920.1050" timestamp="1605539745489" />
     <state x="615" y="347" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.832@0.0.1536.832" timestamp="1603731155502" />
     <state x="2637" y="177" width="584" height="714" key="find.popup" timestamp="1604250821423">
       <screen x="1920" y="0" width="1920" height="1050" />

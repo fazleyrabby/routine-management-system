@@ -18,7 +18,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="mt-0 header-title mb-4">
-                                Routine View for <strong>{{ $teacher_detail->user->firstname." ".$teacher_detail->user->lastname }}</strong>
+                                Routine View for
+                                <strong>{{ $teacher_detail->user->firstname." ".$teacher_detail->user->lastname }}</strong>
                             </div>
 
                             <a class="btn btn-danger float-right" href="{{ route('teacher_search') }}">Back</a>
@@ -31,7 +32,6 @@
                                     Download as PDF
                                 </button>
                             </form>
-
 
 
                             <br>
@@ -53,10 +53,10 @@
                             @endif
 
 
-                                <table class="table table-striped table-bordered dt-responsive nowrap"
-                                       style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                    <tbody>
-                                    @foreach($slots as $slot)
+                            <table class="table table-striped table-bordered dt-responsive nowrap"
+                                   style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                <tbody>
+                                @foreach($slots as $slot)
                                     <tr>
                                         <th class="p-0" style="overflow: hidden">
                                             <span class="px-3 py-2 d-block border-bottom">Day/Time </span>
@@ -69,9 +69,9 @@
                                             @endphp
 
                                             @php $flag = 0; $colspan = ''; @endphp
-                                                @if ($slot->id == $timeslot->day_id)
-                                                    @php $flag = 1; $count++; @endphp
-                                                @else @php $flag = 0; @endphp
+                                            @if ($slot->id == $timeslot->day_id)
+                                                @php $flag = 1; $count++; @endphp
+                                            @else @php $flag = 0; @endphp
                                             @endif
 
                                             @if($diff > 2 && $count < 4)
@@ -79,8 +79,10 @@
                                             @endif
 
                                             @if($flag == 1)
-                                                <th colspan="{{ $colspan }}" class="p-0 text-center" style="overflow: hidden">
-                                                    <span class="px-3 py-2 d-block">{{ date('g:i a', strtotime($timeslot->time_slot->from)).'-'.date('g:i a', strtotime($timeslot->time_slot->to)) }}</span>
+                                                <th colspan="{{ $colspan }}" class="p-0 text-center"
+                                                    style="overflow: hidden">
+                                                    <span
+                                                        class="px-3 py-2 d-block">{{ date('g:i a', strtotime($timeslot->time_slot->from)).'-'.date('g:i a', strtotime($timeslot->time_slot->to)) }}</span>
                                                 </th>
                                             @endif
 
@@ -94,6 +96,15 @@
                                         </td>
                                         @foreach($day_wise_slots as $timeslot)
 
+                                            @php
+                                                $diff = intval((strtotime($timeslot->time_slot->to) - strtotime($timeslot->time_slot->from))/3600);
+
+                                            @endphp
+
+                                            @if($diff > 2 && $count < 4)
+                                                @php $colspan = 2; @endphp
+                                            @endif
+
                                             @php $flag = 0 @endphp
 
                                             @if ($slot->id == $timeslot->day_id)
@@ -102,33 +113,64 @@
                                             @endif
 
                                             @if($flag == 1)
-                                                <td class="text-center font-weight-bold" colspan="{{ $colspan }}">
-                                                   @foreach($slot->routine as $routine)
-                                                        @php($section_name = "")
-                                                        @if($routine->section_id)
-                                                            @foreach($routine->batch->student->section_student as $section_student)
-                                                                @if($section_student->section->id == $routine->section_id)
-                                                                    @php($section_name = "-".$section_student->section->section_name)
-                                                                @endif
-                                                            @endforeach
-                                                        @endif
+                                                @php
+                                                    $ColumnPrinted = false; $course_code = $course_name = $course_type = $room = $faculty_details = ''; $slot_count = count($slot->routine) @endphp
+                                                @foreach($slot->routine as $key => $routine)
+                                                    @php($section_name = "")
 
-                                                       @if($timeslot->day->id == $routine->day_id && $timeslot->time_slot->id == $routine->time_slot_id &&  $routine->yearly_session_id == $y_session_id)
-                                                            {{ $routine->course->course_code }}-{{ $routine->course->course_type == '0' ? '(T)': '(L)' }} <br>
-                                                            {{ $routine->course->course_name }} <br>
-                                                            {{ $routine->room->building.'-'.$routine->room->room_no }} <br>
-                                                            {{ $routine->batch->department->department_name."-".$routine->batch->batch_no."-".$routine->batch->shift->slug.$section_name }}
-                                                       @endif
-                                                   @endforeach
+                                                    @if($routine->section_id)
+                                                        @foreach($routine->batch->student->section_student as $section_student)
+                                                            @if($section_student->section->id == $routine->section_id)
+                                                                @php($section_name = "-".$section_student->section->section_name)
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+
+                                                    @if($timeslot->day->id == $routine->day_id && $timeslot->time_slot->id == $routine->time_slot_id &&  $routine->yearly_session_id == $y_session_id)
+                                                        @php($course_code = $routine->course->course_code)
+                                                        @php($course_type = $routine->course->course_type == '0' ? ' (T)': ' (L)')
+                                                        @php($type = $routine->course->course_type)
+                                                        @php($course_name = $routine->course->course_name)
+                                                        @php($room = $routine->room->building.'-'.$routine->room->room_no)
+                                                        @php($faculty_details = $routine->batch->department->department_name."-".$routine->batch->batch_no."-".$routine->batch->shift->slug.$section_name)
+
+                                                    @endif
+
+{{--                                                    @if($key != $slot_count - 1)--}}
+{{--                                                        @if($course_code == $slot->routine[$key+1]->course->course_code && $type == 1)--}}
+{{--                                                            @php($ColumnPrinted = true)--}}
+{{--                                                            @php($colspan = 2)--}}
+{{--                                                        @else--}}
+{{--                                                            @php($colspan = 1)--}}
+{{--                                                            @php($ColumnPrinted = false)--}}
+{{--                                                        @endif--}}
+{{--                                                    @endif--}}
+                                                @endforeach
+
+{{--                                                    @if($ColumnPrinted == false)--}}
+{{--                                                    <td class="text-center font-weight-bold" colspan="{{ $colspan }}">--}}
+{{--                                                        {{ $course_code.$course_type }} <br>--}}
+{{--                                                        {{ $course_name }} <br>--}}
+{{--                                                        {{ $room }} <br>--}}
+{{--                                                        {{ $faculty_details }} <br>--}}
+{{--                                                    </td>--}}
+{{--                                                    @php($colspan = 1)--}}
+{{--                                                    @php($ColumnPrinted = true)--}}
+{{--                                                    @endif--}}
+                                                <td class="text-center font-weight-bold" colspan="{{ $colspan }}">
+                                                    {{ $course_code.$course_type }} <br>
+                                                    {{ $course_name }} <br>
+                                                    {{ $room }} <br>
+                                                    {{ $faculty_details }} <br>
                                                 </td>
                                             @endif
 
                                         @endforeach
                                     </tr>
-                                    @endforeach
-                                    </tbody>
+                                @endforeach
+                                </tbody>
 
-                                </table>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -149,8 +191,8 @@
 
     <script>
         let forms = document.querySelectorAll('.form');
-        forms.forEach((form)=>{
-            $(form).on('submit', function(e) {
+        forms.forEach((form) => {
+            $(form).on('submit', function (e) {
                 e.preventDefault();
                 let alertBox = e.target.querySelector('.alert_box');
                 let data = $(this).serialize();
@@ -159,12 +201,12 @@
                     url: '{{route("routine_create")}}',
                     data: data,
                     dataType: "json",
-                    success: function(data) {
-                        if(data.type == 'error'){
+                    success: function (data) {
+                        if (data.type == 'error') {
                             alertBox.innerHTML = `<div class="alert-dismissable alert alert-danger">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x
                                     </button><strong>${data.text}</strong></div>`;
-                        }else{
+                        } else {
                             alert(data.text);
                             location.reload();
                         }

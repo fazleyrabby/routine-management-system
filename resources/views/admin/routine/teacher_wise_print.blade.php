@@ -79,9 +79,7 @@
                             @endif
 
                             @if($flag == 1)
-
-
-                                <td colspan="{{ $colspan }}" style="font-weight: bold;">
+                                <td colspan="{{ $colspan }}" style="font-weight: bold; text-align: center">
                                     @foreach($slot->routine as $key => $routine)
 
                                         @php($section_name = "")

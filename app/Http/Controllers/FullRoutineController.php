@@ -92,6 +92,7 @@ class FullRoutineController extends MasterController
         $last_edited_by = FullRoutine::select('users.firstname','users.lastname','routine.updated_at')->leftJoin('users','users.id','=','routine.edited_by')->orderBy('routine.updated_at','DESC')->whereNotNull('routine.edited_by')->get()->first();
 
 
+
         $teachers = Teacher::with(['user','rank'])->where('is_active','yes')->get();
 
         $request_check = RoutineCommittee::where('receiver_id', Auth::user()->id)->first();
@@ -333,6 +334,8 @@ class FullRoutineController extends MasterController
                     })
                     ->orderBy('time_slots.from','DESC')->limit(1)->get()->first();
 
+
+
                 if (!empty($next)){
                      $next_val = DB::table('routine')
                         ->where('routine.day_id',$day_id)
@@ -404,73 +407,108 @@ class FullRoutineController extends MasterController
 //        DB::table('time_slots')->whereRaw("(select min(id) from time_slots where to > )")->get();
 
             if ($course->course_type == 0) {
-                $next = DB::table('time_slots')->select('id', 'from', 'to')
+
+                $next = DB::table('time_slots')->select('id')
                     ->where('time_slots.from', '>', function ($query) use ($time_slot_id) {
                         $query->from('time_slots')->select('time_slots.from')->where('time_slots.id', $time_slot_id);
                     })
                     ->where('type', function ($query) use ($time_slot_id) {
                         $query->from('time_slots')->select('time_slots.type')->where('time_slots.id', $time_slot_id);
                     })
-                    ->orderBy('time_slots.from')->limit(1)->first();
+                    ->orderBy('time_slots.from')->limit(2)->pluck('id')->toArray();
 
-                $prev = DB::table('time_slots')->select('id', 'from', 'to')
+                $prev = DB::table('time_slots')->select('id')
                     ->where('time_slots.from', '<', function ($query) use ($time_slot_id) {
                         $query->from('time_slots')->select('time_slots.from')->where('time_slots.id', $time_slot_id);
                     })
                     ->where('type', function ($query) use ($time_slot_id) {
                         $query->from('time_slots')->select('time_slots.type')->where('time_slots.id', $time_slot_id);
                     })
-                    ->orderBy('time_slots.from', 'DESC')->limit(1)->first();
+                    ->orderBy('time_slots.from', 'DESC')->limit(2)->pluck('id')->toArray();
 
-//                dd($prev);
 
+                $next_with_batch = $next_without_batch = $prev_with_batch = $prev_without_batch = 0;
                 if ($request->routine_id == ''){
+
                     if (!empty($next)) {
-                        $next = DB::table('routine')
+                        $next_with_batch = DB::table('routine')
                             ->where('routine.day_id', $request->day_id)
-                            ->where('routine.time_slot_id', $next->id)
+                            ->where('routine.time_slot_id', $next[0])
                             ->where('routine.batch_id', $request->batch_id)
+                            ->where('routine.teacher_id', $request->teacher_id)
+                            ->count();
+
+                        $next_without_batch = DB::table('routine')
+                            ->where('routine.day_id', $request->day_id)
+                            ->whereIn('routine.time_slot_id', $next)
+                            ->where('routine.teacher_id', $request->teacher_id)
+                            ->count();
+                    }
+                    if (!empty($prev)) {
+                        $prev_with_batch = DB::table('routine')
+                            ->where('routine.day_id', $request->day_id)
+                            ->where('routine.time_slot_id', $prev[0])
+                            ->where('routine.batch_id', $request->batch_id)
+                            ->where('routine.teacher_id', $request->teacher_id)
+                            ->count();
+
+                        $prev_without_batch = DB::table('routine')
+                            ->where('routine.day_id', $request->day_id)
+                            ->whereIn('routine.time_slot_id', $prev)
                             ->where('routine.teacher_id', $request->teacher_id)
                             ->count();
                     }
 
-                    if (!empty($prev)) {
-                        $prev = DB::table('routine')
-                            ->where('routine.day_id', $request->day_id)
-                            ->where('routine.time_slot_id', $prev->id)
-                            ->where('routine.batch_id', $request->batch_id)
-                            ->where('routine.teacher_id', $request->teacher_id)
-                            ->count();
-                    }
                 }else{
                     if (!empty($next)) {
-                        $next = DB::table('routine')
+                        $prev_with_batch = DB::table('routine')
                             ->where('routine.id','!=', $request->routine_id)
                             ->where('routine.day_id', $request->day_id)
-                            ->where('routine.time_slot_id', $next->id)
+                            ->where('routine.time_slot_id', $next[0])
                             ->where('routine.batch_id', $request->batch_id)
+                            ->where('routine.teacher_id', $request->teacher_id)
+                            ->count();
+
+                        $next_without_batch = DB::table('routine')
+                            ->where('routine.id','!=', $request->routine_id)
+                            ->where('routine.day_id', $request->day_id)
+                            ->whereIn('routine.time_slot_id', $next)
                             ->where('routine.teacher_id', $request->teacher_id)
                             ->count();
                     }
 
                     if (!empty($prev)) {
-                        $prev = DB::table('routine')
+                        $prev_with_batch = DB::table('routine')
                             ->where('routine.id','!=', $request->routine_id)
                             ->where('routine.day_id', $request->day_id)
-                            ->where('routine.time_slot_id', $prev->id)
+                            ->where('routine.time_slot_id', $prev[0])
                             ->where('routine.batch_id', $request->batch_id)
+                            ->where('routine.teacher_id', $request->teacher_id)
+                            ->count();
+
+                        $prev_without_batch = DB::table('routine')
+                            ->where('routine.id','!=', $request->routine_id)
+                            ->where('routine.day_id', $request->day_id)
+                            ->whereIn('routine.time_slot_id', $prev)
                             ->where('routine.teacher_id', $request->teacher_id)
                             ->count();
                     }
                 }
 
-                if ($next != 0 || $prev != 0) {
+                $total_consecutive_theory_class = $prev_without_batch + $next_without_batch;
+                $total_consecutive_theory_class_batch_wise = $prev_with_batch + $next_with_batch;
+
+                if ($total_consecutive_theory_class_batch_wise >= 1) {
                     $message = ['type' => 'error','text' => 'Can not take 2 consecutive theory classes of same batch!'];
                     return json_encode($message);
                 }
-
+                if ($total_consecutive_theory_class > 1) {
+                    $message = ['type' => 'error','text' => 'Can not take 3 consecutive theory classes in one day!'];
+                    return json_encode($message);
+                }
             }
 
+//            dd('ok');
 
         if ($request->routine_id != ''){
             // Checking existing data
