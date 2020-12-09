@@ -33,36 +33,45 @@
                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                 <tbody>
                 @foreach($slots as $slot)
-                    <tr>
-                        <th width="10px" class="p-0" style="overflow: hidden">
-                            <span class="px-3 py-2 d-block border-bottom">Day/Time </span>
-                        </th>
 
                         @php $count = 0; @endphp
-                        @foreach($day_wise_slots as $key => $timeslot)
-                            @php
-                                $diff = intval((strtotime($timeslot->time_slot->to) - strtotime($timeslot->time_slot->from))/3600);
-                            @endphp
+                        @if($slot->slug == 'SAT' || $slot->slug == 'FRI')
+                            <tr class="bg-light">
+                            <th>Day / Time</th>
+                            @foreach($day_wise_slots as $key => $timeslot)
 
-                            @php $flag = 0; $colspan = ''; @endphp
-                            @if ($slot->id == $timeslot->day_id)
-                                @php $flag = 1; $count++; @endphp
-                            @else @php $flag = 0; @endphp
-                            @endif
+                                @php $flag = 0; $colspan = ''; @endphp
+                                @php
+                                    $diff = intval((strtotime($timeslot->time_slot->to) - strtotime($timeslot->time_slot->from))/3600);
+                                @endphp
 
-                            @if($diff > 2 && $count < 4)
-                                @php $colspan = 2; @endphp
-                            @endif
+                                @if($diff > 2 && $count < 4)
+                                    @php $colspan = 2;@endphp
+                                @endif
 
-                            @if($flag == 1)
-                                <th colspan="{{ $colspan }}" class="p-0 text-center" style="overflow: hidden;font-size: 11px;font-weight: 400;">
-                                    <span class="px-3 py-2 d-block">{{ date('g:i a', strtotime($timeslot->time_slot->from)).'-'.date('g:i a', strtotime($timeslot->time_slot->to)) }}</span>
-                                </th>
-                            @endif
 
-                        @endforeach
+                                @if ($slot->id == $timeslot->day_id && $timeslot->time_slot_id == $timeslot->time_slot->id)
+                                    @php $flag = 1; $count++; @endphp
+                                @else @php $flag = 0; @endphp
+                                @endif
 
-                    </tr>
+                                @if($flag == 1)
+                                    @php
+                                        $time_slot_id = $timeslot->time_slot_id;
+                                        $day_id = $timeslot->day_id;
+                                        $data = date('g:i a', strtotime($timeslot->time_slot->from)).'-'.date('g:i a', strtotime($timeslot->time_slot->to));
+                                    @endphp
+
+                                    <th width="15%" colspan="{{ $colspan }}" class="p-0 text-center" style="overflow: hidden">
+                                                    <span class="px-3 py-2 d-block">
+                                                        {{ $data }}
+                                                    </span>
+                                    </th>
+                                @endif
+                            @endforeach
+                            </tr>
+                        @endif
+
 
                     <tr>
                         <td>

@@ -92,7 +92,6 @@ class ShiftSessionController extends MasterController
      */
     public function edit(ShiftSession $shiftSession)
     {
-
         $sessions = SS::orderBy('id', 'ASC')->where('is_active','yes')->pluck('session_name', 'id');
         $shifts = Shift::orderBy('id', 'ASC')->where('is_active','yes')->pluck('shift_name', 'id');
         return view('admin.shift_session.edit', compact('shiftSession','sessions','shifts'));

@@ -80,7 +80,7 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group @if($errors->has('email')) has-error @endif">
-                                        {!! Form::label('E-mail') !!}
+                                        {!! Form::label('E-mail (required)') !!}
                                         {!! Form::text('email', null, ['class'=> 'form-control']) !!}
                                         @if ($errors->has('email'))
                                             <span class="help-block">
@@ -95,7 +95,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         {!! Form::label('Role') !!}
-                                        {!! Form::select('role', ['admin' => 'ADMIN','user' => 'USER'], null ,['class'=> 'form-control']) !!}
+                                        {!! Form::select('role', ['' => 'Select','admin' => 'ADMIN','user' => 'USER'], null ,['class'=> 'form-control']) !!}
                                     </div>
                                 </div>
                                 <div class="col-md-4">

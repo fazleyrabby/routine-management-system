@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Day;
 use App\Models\Department;
 use App\Models\RoutineCommittee;
 use App\Models\Teacher;
 use App\Models\TeacherRank;
+use App\Models\TeachersOffday;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -105,6 +107,31 @@ class UserController extends MasterController
         return view('admin.user.show', compact('user','id','is_teacher'));
     }
 
+    public function teacher_offday($id){
+        $days = Day::all();
+        $teacher = Teacher::with(['user','teachers_offday'])->where('teachers.id',$id)->first();
+        return view('admin.user.offday', compact('days','teacher'));
+    }
+    public function assign_teacher_offday(Request $request){
+          if (count($request->offday) <= 2){
+                foreach ($request->offday as $key => $offday) {
+                    $data[] = [
+                        'teacher_id' => $request->teacher_id,
+                        'day_id' => $offday,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ];
+                }
+                TeachersOffday::where('teacher_id',$request->teacher_id)->delete();
+                TeachersOffday::insert($data);
+                return redirect()->route('users.show',$request->user_id);
+            }
+            else{
+                Session::flash('message', 'Off Day Cannot be more than 2 days!!');
+                return redirect()->route('teacher_offday',$request->teacher_id);
+            }
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -136,7 +163,6 @@ class UserController extends MasterController
      */
     public function update(Request $request, User $user)
     {
-
         $this->validate($request, [
             'firstname' => 'required',
             'lastname' => 'required',

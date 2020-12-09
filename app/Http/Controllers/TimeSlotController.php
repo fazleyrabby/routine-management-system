@@ -81,7 +81,8 @@ class TimeSlotController extends MasterController
      */
     public function edit(TimeSlot $time_slot)
     {
-        return view('admin.time_slot.edit', compact('time_slot'));
+        $shifts = Shift::pluck('shift_name','id');
+        return view('admin.time_slot.edit', compact('time_slot','shifts'));
     }
 
     /**

@@ -82,8 +82,8 @@ class SectionController extends MasterController
      */
     public function edit(Section $section)
     {
-        $parent = Section::orderBy('section_name', 'ASC')->where('parent',0)->pluck('section_name','id');
-        return view('admin.section.edit', compact('section','parent'));
+        $parents = Section::orderBy('section_name', 'ASC')->where('parent',0)->get();
+        return view('admin.section.edit', compact('section','parents'));
     }
 
     /**

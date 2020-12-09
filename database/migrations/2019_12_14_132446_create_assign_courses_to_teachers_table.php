@@ -17,8 +17,7 @@ class CreateAssignCoursesToTeachersTable extends Migration {
 			$table->increments('id');
 			$table->integer('session_id')->nullable()->foreign('session_id')->references('id')->on('yearly_sessions')->unsigned();
 			$table->integer('teacher_id')->nullable()->foreign('teacher_id')->references('id')->on('teachers')->unsigned();
-			$table->integer('course_id')->nullable()->foreign('course_id')->references('id')->on('courses')->unsigned();
-			$table->integer('batch_id')->nullable()->foreign('batch_id')->references('id')->on('batch')->unsigned();
+            $table->string('courses', 191)->nullable();
 			$table->timestamps();
             $table->enum('is_active',['yes','no'])->default('yes');
 		});

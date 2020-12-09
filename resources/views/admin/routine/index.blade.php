@@ -7,6 +7,21 @@
     <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
           type="text/css"/>
     <link href="{{ asset('assets/plugins/datatables/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
+    <style>
+        .sticky {
+            position: fixed;
+            top: 121px;
+            width: 100%;
+            z-index: 1;
+            transition: 0.5s ease;
+            left: 0;
+        }
+        @media screen and (max-width: 768px) {
+            .sticky{
+                position: inherit !important;
+            }
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -53,20 +68,21 @@
                                 </div>
 
                                 @endif
-                                @if($last_created_by)
-                                    <span class="float-right font-14"> Last Data Input by <strong>
+                               <div class="float-right font-14">
+                                   @if($last_created_by)
+                                       <span> Last Data Input by <strong>
                                             {{ ucwords($last_created_by->firstname." ".$last_created_by->lastname) }}
                                         </strong> at <span class="font-12">{{ date('d-m-Y h:i a', strtotime($last_created_by->created_at)) }}</span>
-                                    </span>
-                                @endif
-
-                                @if($last_edited_by)
-                                        <span> / </span>
+                                    </span>@endif
+                                       <br>
+                                   @if($last_edited_by)
+                                       <span>
                                         Last Edited by <strong>
                                             {{ ucwords($last_edited_by->firstname." ".$last_edited_by->lastname) }}
                                         </strong> at <span class="font-12">{{ date('d-m-Y h:i a', strtotime($last_edited_by->updated_at)) }}</span>
                                     </span>
-                                @endif
+                                   @endif
+                               </div>
 
 
                             </div>
@@ -94,53 +110,21 @@
                                 </div>
                             @endif
 
+                            <ul id="teacher_day_count" class="list-group bg-white" style="flex-direction: row;flex-wrap: wrap;">
+                            @foreach($teachers as $teacher)
+                                @foreach($assigned_class_distinct_day_count as $counter)
+                                    @if($counter->teacher_id == $teacher->id && $counter->day_count < 5)
+                                    <li class="list-group-item ">
+                                        <button type="button" class="btn btn-dark waves-effect mo-mb-2" data-container="body" data-toggle="popover"  data-trigger="focus" data-placement="top" data-content="Classes Assigned for {{ $counter->day_count }} {{ $counter->day_count > 1 ? 'days': 'day' }}" data-original-title=" {{ $teacher->user->firstname." ".$teacher->user->lastname }} " title="" aria-describedby="popover108586">
+                                            {{ $teacher->user->firstname." ".$teacher->user->lastname }}
+                                            <span class="badge badge-pill badge-danger noti-icon-badge">{{ $counter->day_count }}</span>
+                                        </button>
+                                    </li>
+                                    @endif
+                                @endforeach
+                            @endforeach
+                            </ul>
 
-
-                            {{--                            @foreach($days as $day)--}}
-                            {{--                                <h3 class="text-uppercase bg-dark p-2 text-light float-left"><strong>--}}
-                            {{--                                        {{ $day->day_title }}</strong>--}}
-                            {{--                                </h3>--}}
-                            {{--                                <table class="table table-striped table-bordered dt-responsive nowrap"--}}
-                            {{--                                       style="border-collapse: collapse; border-spacing: 0; width: 100%;">--}}
-                            {{--                                    <thead>--}}
-                            {{--                                    <tr>--}}
-
-                            {{--                                        <th>Batch</th>--}}
-                            {{--                                        @foreach($timeslots as $timeslot)--}}
-                            {{--                                        <th class="text-center">--}}
-                            {{--                                            {{ date('g:i a', strtotime($timeslot->from)).'-'.date('g:i a', strtotime($timeslot->to)) }}--}}
-                            {{--                                        </th>--}}
-                            {{--                                        @endforeach--}}
-                            {{--                                    </tr>--}}
-                            {{--                                    </thead>--}}
-
-
-                            {{--                                    <tbody>--}}
-                            {{--                                        @foreach($sections as $section)--}}
-                            {{--                                            <tr>--}}
-                            {{--                                            <td>--}}
-                            {{--                                                {{ $section->department_name.'-'.$section->batch_no.'-'.$section->slug }}--}}
-                            {{--                                                 {{ $section->section_name ? '- '.$section->section_name : '' }}--}}
-                            {{--                                            </td>--}}
-                            {{--                                             @for($i=0; $i < $timeslots->count(); $i++)--}}
-                            {{--                                                    <td class="text-center">--}}
-                            {{--                                                        <span class="mb-2 d-block">--}}
-                            {{--                                                           Course | Room | Teacher--}}
-                            {{--                                                        </span>--}}
-                            {{--                                                        <button id="{{ 'b'.$section->batch_id.'/s'.$section->section_id  }}" class="btn btn-primary btn-sm">Assign / Edit </button>--}}
-                            {{--                                                    </td>--}}
-                            {{--                                             @endfor--}}
-                            {{--                                            </tr>--}}
-                            {{--                                        @endforeach--}}
-
-                            {{--                                    </tbody>--}}
-                            {{--                                </table>--}}
-                            {{--                            @endforeach--}}
-
-
-                            {{--                            {{ $slots[0]->day_wise_slot[0]->time_slot }}--}}
-
-                            {{--                            {{ $slots[0]->day_wise_slot[0]->time_slot->from }}--}}
                             @foreach($slots as $slot)
                                 <h3 class="text-uppercase bg-dark p-2 text-light float-left">
                                     <strong>
@@ -204,7 +188,7 @@
 
                                                                     <span class="position-relative p-2 text-center d-block {{ ($routine->course->course_type == '0') ? 'bg-warning text-dark' : 'bg-danger text-light'}}">
 
-                                                                        {{ $routine->course->course_code }} {{ $routine->course->course_type == '0' ? '(T)': '(L)' }} | {{ $routine->room->building.'-'.$routine->room->room_no }} | {{ $routine->teacher->slug }}
+                                                                        {{ $routine->course->course_code }} {{ $routine->course->course_type == '0' ? '(T)': '(L)' }} <br> {{ $routine->room->building.'-'.$routine->room->room_no }} <br> {{ $routine->teacher->user->firstname." ".$routine->teacher->user->lastname }}
                                                                     @php
                                                                         $routine_id = $routine->id;
                                                                         $day_id = $routine->day_id;
@@ -216,10 +200,7 @@
                                                                         $course_id = $routine->course_id;
                                                                         $teacher_id = $routine->teacher_id;
                                                                     @endphp
-{{--                                                                @else--}}
-{{--                                                                    @php--}}
-{{--                                                                        $day_wise_slot_id = $batch_id = $section_id = $room_id = $course_id = $yearly_session_id = $teacher_id = '';--}}
-{{--                                                                    @endphp--}}
+
                                                                         @if(($request_check && ($request_check->request_status == "active" && $request_check->expired_date >= now())) || Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin' || Auth::user()->in_committee == 'yes')
 
                                                                         <button style="right: 0;top: 3px" class="position-absolute btn btn-sm btn-dark"  data-toggle="modal" data-target=".data_delete_{{ $routine_id }}">X</button>
@@ -246,8 +227,6 @@
                                                                         </div>
                                                                             @endif
                                                                 </span>
-
-
                                                                 @endif
 
                                                             @endforeach
@@ -259,8 +238,6 @@
                                                             <button type="button" class="m-2 btn btn-sm btn-primary data_modal"  data-toggle="modal" data-target=".bs-example-modal-center{{ 'batch'.$section->batch_id.'_section'.$section->section_id.'_day'.$slot->day_title.'_time'.$timeslot->time_slot->id  }}">Assign / Edit</button>
                                                         </span>
                                                     @endif
-
-
 
                                                     <div class="modal fade bs-example-modal-center{{ 'batch'.$section->batch_id.'_section'.$section->section_id.'_day'.$slot->day_title.'_time'.$timeslot->time_slot->id  }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 
@@ -373,7 +350,6 @@
         let class_slots = document.querySelectorAll('.class_slot');
         // console.log(class_slots[0].dataset.id);
         class_slots.forEach((class_slot)=>{
-
             class_slot.addEventListener('blur', function(e) {
                 let total_slot = e.target.value;
                 let id = e.target.dataset.id;
@@ -398,6 +374,7 @@
         let forms = document.querySelectorAll('.form');
         forms.forEach((form)=>{
             $(form).on('submit', function(e) {
+
                 e.preventDefault();
                 let alertBox = e.target.querySelector('.alert_box');
                 let data = $(this).serialize();
@@ -408,12 +385,13 @@
                     dataType: "json",
                     success: function(data) {
                         if(data.type == 'error'){
-                            alertBox.innerHTML = `<div class="alert-dismissable alert alert-danger">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x
-                                    </button><strong>${data.text}</strong></div>`;
+                            // alertBox.innerHTML = `<div class="alert-dismissable alert alert-danger">
+                            //         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x
+                            //         </button><strong>${data.text}</strong></div>`;
+                            alert(data.text);
                         }else{
                             alert(data.text);
-                            location.reload();
+                            document.location.reload(true)
                         }
                     }
                     // error: function(error) {
@@ -430,13 +408,15 @@
         courses.forEach((course)=>{
             course.addEventListener('change',function (e) {
 
-
                 //Check if course type is lab or theory
                 let additional_slot = e.target.parentNode.querySelector('.additional_slot');
                 additional_slot.innerHTML = '';
                 let course_alert = e.target.parentNode.querySelector('.course_alert');
                 course_alert.innerHTML = '';
                 let id = e.target.value;
+                let submitBtn = $(this).closest('form').find(':input[type=submit]');
+                let currentForm = $(this).closest('form');
+
                 let time_slot_id = e.target.dataset.time;
                 let day_id = e.target.dataset.day;
                 let batch = e.target.dataset.batch;
@@ -461,8 +441,11 @@
                                 course_alert.innerHTML = `<div class="alert-dismissable alert alert-danger">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x
                                     </button><strong>${data.msg}</strong></div>`;
+                                submitBtn.prop('disabled', true);
                             }else{
-                                let html = '<div class="mt-3"><label for="">Additional Slot</label><select name="additional_time_slot"  class="form-control" required>';
+                                submitBtn.prop('disabled', false);
+                                let html = '<div class="mt-3"><label for="">Additional Slot</label><select name="additional_time_slot"  class="form-control">';
+                                html += `<option value="">Select Additional Slot</option>`
                                 Object.keys(data).forEach(function(key) {
                                     html += `<option value="${data[key].id}">${data[key].from}-${data[key].to}</option>`
                                 });
@@ -478,6 +461,22 @@
             })
         })
 
+    </script>
+
+
+    <script>
+        window.onscroll = function() {myFunction()};
+
+        let header = document.getElementById("teacher_day_count");
+        let sticky = header.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
     </script>
 
 @endpush

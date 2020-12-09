@@ -35,6 +35,7 @@
                             {!! Form::open(['route' =>'theory_section_store'])!!}
                                 <input type="hidden" name="student_id" value="{{ $student->id }}">
                                 <input type="hidden" name="total_students" value="{{ $student->number_of_student }}">
+                                <input type="hidden" name="batch_id" value={{ $student->batch->id }}>
 
                             <div class="row">
 

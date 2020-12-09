@@ -18,7 +18,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="mt-0 header-title mb-4">
-                                Search Teacher View
+                                Search Batch View
                             </div>
                             @if (Session::has('message'))
                                 <div class="alert-dismissable alert alert-success">

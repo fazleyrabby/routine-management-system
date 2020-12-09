@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 
 class DayController extends MasterController
@@ -13,7 +12,6 @@ class DayController extends MasterController
      */
     public function index()
     {
-        //
     }
 
     /**

@@ -29,9 +29,6 @@ class AdminController extends MasterController
         $rooms = Room::orderBy('id', 'DESC')->get();
         $courses = Course::orderBy('id', 'DESC')->get();
 
-
-
-
         return view('admin.index',compact('data','teachers','rooms','courses'));
     }
 

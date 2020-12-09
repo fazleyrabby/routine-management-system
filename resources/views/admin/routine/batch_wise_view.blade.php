@@ -55,12 +55,14 @@
 
                                 <tbody>
                                 @foreach($slots as $slot)
+                                    @php $count = 0; @endphp
+                                    @if($slot->slug == 'SAT' || $slot->slug == 'FRI')
                                     <tr>
                                         <th class="p-0" style="overflow: hidden">
                                             <span class="px-3 py-2 d-block border-bottom">Day/Time </span>
                                         </th>
 
-                                        @php $count = 0; @endphp
+
                                         @foreach($day_wise_slots as $key => $timeslot)
                                             @php
                                                 $diff = intval((strtotime($timeslot->time_slot->to) - strtotime($timeslot->time_slot->from))/3600);
@@ -83,8 +85,8 @@
                                             @endif
 
                                         @endforeach
-
                                     </tr>
+                                    @endif
 
                                     <tr>
                                         <td>
@@ -100,7 +102,7 @@
                                             @endif
 
                                             @if($flag == 1)
-                                                <td class="text-center font-weight-bold colspan="{{ $colspan }}">
+                                                <td class="text-center font-weight-bold" colspan="{{ $colspan }}">
                                                     @foreach($slot->routine as $routine)
                                                         @if($timeslot->day->id == $routine->day_id && $timeslot->time_slot->id == $routine->time_slot_id &&  $routine->yearly_session_id == $y_session_id)
                                                             {{ $routine->course->course_code }}-{{ $routine->course->course_type == '0' ? '(T)': '(L)' }} <br>

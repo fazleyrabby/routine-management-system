@@ -1,5 +1,3 @@
-
-
 <header id="topnav">
     <div class="topbar-main">
         <div class="container-fluid">
@@ -11,7 +9,8 @@
                     <img src="assets/images/logo-light.png" alt="" class="logo-large"> --}}
                     <span class="font-weight-bold">Routine Management System</span>
                 </a>&nbsp;
-                <span class="text-light mr-1 font-14">| Welcome! <strong> {{ ucfirst(Auth::user()->firstname)." ".ucfirst(Auth::user()->lastname) }}</strong></span>
+                <span
+                    class="text-light mr-1 font-14">| Welcome! <strong> {{ ucfirst(Auth::user()->firstname)." ".ucfirst(Auth::user()->lastname) }}</strong></span>
 
             </div>
 
@@ -22,18 +21,19 @@
 
                 <ul class="navbar-right d-flex list-inline float-right mb-0">
                     <li class="dropdown notification-list d-none d-sm-block">
-{{--                        <form role="search" class="app-search">--}}
-{{--                            <div class="form-group mb-0">--}}
-{{--                                <input type="text" class="form-control" placeholder="Search..">--}}
-{{--                                <button type="submit"><i class="fa fa-search"></i></button>--}}
-{{--                            </div>--}}
-{{--                        </form>--}}
+                        {{--                        <form role="search" class="app-search">--}}
+                        {{--                            <div class="form-group mb-0">--}}
+                        {{--                                <input type="text" class="form-control" placeholder="Search..">--}}
+                        {{--                                <button type="submit"><i class="fa fa-search"></i></button>--}}
+                        {{--                            </div>--}}
+                        {{--                        </form>--}}
 
 
                     </li>
 
                     <li class="dropdown notification-list">
-                        <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown"
+                           href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i class="mdi mdi-bell noti-icon"></i>
                             <span class="badge badge-pill badge-info noti-icon-badge">
                                 @php $count = 0 @endphp
@@ -56,36 +56,42 @@
                             <div class="slimscroll notification-item-list">
                                 <!-- item-->
                                 @if(!empty($requests))
-                                @foreach($requests as $request)
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                    <div class="notify-icon bg-success"><i class="mdi mdi-cart-outline"></i></div>
-                                    <p class="notify-details">You are invited to entry data in routine at: <span class="text-muted">{{ date('d-m-Y h:i:s a', strtotime($request->created_at)) }}</span> <span class="text-muted">Expire at : {{ date('d-m-Y h:i:s a', strtotime($request->expired_date)) }}</span></p>
-                                </a>
-                                @endforeach
+                                    @foreach($requests as $request)
+                                        <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                            <div class="notify-icon bg-success"><i class="mdi mdi-cart-outline"></i>
+                                            </div>
+                                            <p class="notify-details">You are invited to entry data in routine at: <span
+                                                    class="text-muted">{{ date('d-m-Y h:i:s a', strtotime($request->created_at)) }}</span>
+                                                <span
+                                                    class="text-muted">Expire at : {{ date('d-m-Y h:i:s a', strtotime($request->expired_date)) }}</span>
+                                            </p>
+                                        </a>
+                                    @endforeach
                                 @endif
                             </div>
                             <!-- All-->
-{{--                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary">--}}
-{{--                                View all <i class="fi-arrow-right"></i>--}}
-{{--                            </a>--}}
+                            {{--                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary">--}}
+                            {{--                                View all <i class="fi-arrow-right"></i>--}}
+                            {{--                            </a>--}}
                         </div>
                     </li>
                     <li class="d-flex align-items-center">
-                        <a class="btn btn-danger" href="{{ route('logout') }}"><i class="mdi mdi-power text-light"></i> Logout</a>
-{{--                        <div class="dropdown notification-list">--}}
-{{--                            <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">--}}
-{{--                                <img src="{{ asset('assets/images/users/user-4.jpg')  }}" alt="user" class="rounded-circle">--}}
-{{--                            </a>--}}
-{{--                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">--}}
-{{--                                <!-- item-->--}}
-{{--                                <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> Profile</a>--}}
-{{--                                <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5"></i> My Wallet</a>--}}
-{{--                                <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="mdi mdi-settings m-r-5"></i> Settings</a>--}}
-{{--                                <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> Lock screen</a>--}}
-{{--                                <div class="dropdown-divider"></div>--}}
-{{--                            <a class="dropdown-item text-danger" href="{{ route('logout') }}"><i class="mdi mdi-power text-danger"></i> Logout</a>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                        <a class="btn btn-danger" href="{{ route('logout') }}"><i class="mdi mdi-power text-light"></i>
+                            Logout</a>
+                        {{--                        <div class="dropdown notification-list">--}}
+                        {{--                            <a class="dropdown-toggle nav-link arrow-none waves-effect nav-user waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">--}}
+                        {{--                                <img src="{{ asset('assets/images/users/user-4.jpg')  }}" alt="user" class="rounded-circle">--}}
+                        {{--                            </a>--}}
+                        {{--                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">--}}
+                        {{--                                <!-- item-->--}}
+                        {{--                                <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5"></i> Profile</a>--}}
+                        {{--                                <a class="dropdown-item" href="#"><i class="mdi mdi-wallet m-r-5"></i> My Wallet</a>--}}
+                        {{--                                <a class="dropdown-item d-block" href="#"><span class="badge badge-success float-right">11</span><i class="mdi mdi-settings m-r-5"></i> Settings</a>--}}
+                        {{--                                <a class="dropdown-item" href="#"><i class="mdi mdi-lock-open-outline m-r-5"></i> Lock screen</a>--}}
+                        {{--                                <div class="dropdown-divider"></div>--}}
+                        {{--                            <a class="dropdown-item text-danger" href="{{ route('logout') }}"><i class="mdi mdi-power text-danger"></i> Logout</a>--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
 
 
                     </li>
@@ -103,7 +109,6 @@
                     </li>
 
                 </ul>
-
 
 
             </div>
@@ -249,7 +254,7 @@
                     </li>
 
                     <li>
-{{--                        <a href="#">Profile</a>--}}
+                        {{--                        <a href="#">Profile</a>--}}
                         <a href="{{ route('users.show', Auth::user()->id) }}">
                             Profile
                         </a>
@@ -257,337 +262,369 @@
 
                     @if ((Auth::user()->role) == 'superadmin' || (Auth::user()->role) == 'admin')
 
-                    <li class="has-submenu">
-                        <a href="#">Application Settings</a>
-                        <ul class="submenu">
-{{--                            <li class="has-submenu">--}}
-{{--                                <a href="#">Users</a>--}}
-{{--                                <ul class="submenu">--}}
-{{--                                    <li>--}}
-{{--                                        <a href="{{ route('users.index') }}">--}}
-{{--                                            View All--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-{{--                                    <li>--}}
-{{--                                        <a href="{{ route('users.create') }}">--}}
-{{--                                            Add New--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-{{--                                </ul>--}}
-{{--                            </li>--}}
-                            <li class="has-submenu">
-                                <a href="#">Departments</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="{{ route('departments.index') }}">
-                                            View All
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('departments.create') }}">
-                                            Add New
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                        <li class="has-submenu">
+                            <a href="#">Application Settings</a>
+                            <ul class="submenu">
+                                {{--                            <li class="has-submenu">--}}
+                                {{--                                <a href="#">Users</a>--}}
+                                {{--                                <ul class="submenu">--}}
+                                {{--                                    <li>--}}
+                                {{--                                        <a href="{{ route('users.index') }}">--}}
+                                {{--                                            View All--}}
+                                {{--                                        </a>--}}
+                                {{--                                    </li>--}}
+                                {{--                                    <li>--}}
+                                {{--                                        <a href="{{ route('users.create') }}">--}}
+                                {{--                                            Add New--}}
+                                {{--                                        </a>--}}
+                                {{--                                    </li>--}}
+                                {{--                                </ul>--}}
+                                {{--                            </li>--}}
+                                <li class="has-submenu">
+                                    <a href="#">Departments</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="{{ route('departments.index') }}">
+                                                View All
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('departments.create') }}">
+                                                Add New
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            <li class="has-submenu">
-                                <a href="#">Shift</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="{{ route('shifts.index') }}">
-                                            View All
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('shifts.create') }}">
-                                            Add New
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="has-submenu">
+                                    <a href="#">Shift</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="{{ route('shifts.index') }}">
+                                                View All
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('shifts.create') }}">
+                                                Add New
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            <li class="has-submenu">
-                                <a href="#">Courses</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="{{ route('courses.index') }}">
-                                            View all
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('courses.create') }}">
-                                            Add New
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="has-submenu">
+                                    <a href="#">Courses</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="{{ route('courses.index') }}">
+                                                View all
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('courses.create') }}">
+                                                Add New
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                            <li class="has-submenu">
-                                <a href="#">Rooms</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="{{ route('rooms.index') }}">
-                                            View all
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('rooms.create') }}">
-                                            Add New
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-
-                            <li class="has-submenu">
-                                <a href="#">Batch</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="{{ route('batches.index') }}">
-                                            View all
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('batches.create') }}">
-                                            Add New
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li class="has-submenu">
-                                <a href="#">Sessions</a>
-                                <ul class="submenu">
-
-                                    <li>
-                                        <a href="{{ route('sessions.index') }}">
-                                            View all
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="{{ route('sessions.create') }}">
-                                            Add New
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-
-{{--                            <li class="has-submenu">--}}
-{{--                                <a href="#">Shift-Session</a>--}}
-{{--                                <ul class="submenu">--}}
-{{--                                    <li>--}}
-{{--                                        <a href="{{ route('shift_sessions.index') }}">Show all</a>--}}
-{{--                                    </li>--}}
-{{--                                    <li>--}}
-{{--                                        <a href="{{ route('shift_sessions.create') }}">Assign Session</a>--}}
-{{--                                    </li>--}}
-{{--                                </ul>--}}
-{{--                            </li>--}}
-
-                            <li class="has-submenu">
-                                <a href="#">Yearly-Session</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="{{ route('yearly_sessions.index') }}">Show all</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('yearly_sessions.create') }}">Assign New Year</a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="has-submenu">
+                                    <a href="#">Rooms</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="{{ route('rooms.index') }}">
+                                                View all
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('rooms.create') }}">
+                                                Add New
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
 
-                            <li class="has-submenu">
-                                <a href="#">Sections</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="{{ route('sections.index') }}">
-                                            View all
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('sections.create') }}">
-                                            Add New
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="has-submenu">
+                                    <a href="#">Batch</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="{{ route('batches.index') }}">
+                                                View all
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('batches.create') }}">
+                                                Add New
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="has-submenu">
+                                    <a href="#">Sessions</a>
+                                    <ul class="submenu">
+
+                                        <li>
+                                            <a href="{{ route('sessions.index') }}">
+                                                View all
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('sessions.create') }}">
+                                                Add New
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+
+                                {{--                            <li class="has-submenu">--}}
+                                {{--                                <a href="#">Shift-Session</a>--}}
+                                {{--                                <ul class="submenu">--}}
+                                {{--                                    <li>--}}
+                                {{--                                        <a href="{{ route('shift_sessions.index') }}">Show all</a>--}}
+                                {{--                                    </li>--}}
+                                {{--                                    <li>--}}
+                                {{--                                        <a href="{{ route('shift_sessions.create') }}">Assign Session</a>--}}
+                                {{--                                    </li>--}}
+                                {{--                                </ul>--}}
+                                {{--                            </li>--}}
+
+                                <li class="has-submenu">
+                                    <a href="#">Yearly-Session</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="{{ route('yearly_sessions.index') }}">Show all</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('yearly_sessions.create') }}">Assign New Year</a>
+                                        </li>
+                                    </ul>
+                                </li>
 
 
-                            <li class="has-submenu">
-                                <a href="#">Teacher Rank</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="{{ route('ranks.index') }}">
-                                            View All
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('ranks.create') }}">
-                                            Add New
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                            <li>
-                                <a href="{{ route('roles') }}">
-                                   Role Access
-                                </a>
-                            </li>
+                                <li class="has-submenu">
+                                    <a href="#">Sections</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="{{ route('sections.index') }}">
+                                                View all
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('sections.create') }}">
+                                                Add New
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
 
 
-                        </ul>
+                                <li class="has-submenu">
+                                    <a href="#">Teacher Rank</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="{{ route('ranks.index') }}">
+                                                View All
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('ranks.create') }}">
+                                                Add New
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('roles') }}">
+                                        Role Access
+                                    </a>
+                                </li>
 
 
-                    </li>
-
-                    <li class="has-submenu">
-                        <a href="#">Teachers</a>
-                        <ul class="submenu">
+                            </ul>
 
 
-                            <li>
-                                <a href="{{ route('teachers.index') }}">
-                                    View All
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('teachers.create') }}">
-                                    Add New
-                                </a>
-                            </li>
-{{--                            <li>--}}
-{{--                                <a href="{{ route('teachers.requests') }}">--}}
-{{--                                    Requests--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-                            <li class="has-submenu">
-                                <a href="#">Assign Courses</a>
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="{{ route('assign_courses.index') }}">
-                                            View All
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('assign_courses.create') }}">
-                                            Add New
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
+                        </li>
+
+                        <li class="has-submenu">
+                            <a href="#">Teachers</a>
+                            <ul class="submenu">
 
 
-                    <li class="has-submenu">
-                        <a href="#">Students</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="{{ route('students.index') }}">
-                                    Batch wise list
-                                </a>
-                            </li>
+                                <li>
+                                    <a href="{{ route('teachers.index') }}">
+                                        View All
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('teachers.create') }}">
+                                        Add New
+                                    </a>
+                                </li>
+                                {{--                            <li>--}}
+                                {{--                                <a href="{{ route('teachers.requests') }}">--}}
+                                {{--                                    Requests--}}
+                                {{--                                </a>--}}
+                                {{--                            </li>--}}
+                                <li class="has-submenu">
+                                    <a href="#">Workload Teacher</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="{{ route('assign_courses.index') }}">
+                                                View All
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('assign_courses.create') }}">
+                                                Add New
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
 
 
-{{--                            <li>--}}
-{{--                                <a href="{{ route('theory_section') }}">--}}
-{{--                                    Add New--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                            <li class="has-submenu">--}}
-{{--                                <a href="#">Section - Students</a>--}}
-{{--                                <ul class="submenu">--}}
-{{--                                    <li>--}}
-{{--                                        <a href="{{ route('section_students.index') }}">--}}
-{{--                                            View all--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-{{--                                    <li>--}}
-{{--                                        <a href="{{ route('section_students.create') }}">--}}
-{{--                                            Add New--}}
-{{--                                        </a>--}}
-{{--                                    </li>--}}
-{{--                                </ul>--}}
-{{--                            </li>--}}
-                        </ul>
-                    </li>
+                        <li class="has-submenu">
+                            <a href="#">Students</a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="{{ route('students.index') }}">
+                                        Batch wise list
+                                    </a>
+                                </li>
 
-                    <li class="has-submenu">
-                        <a href="#">Time Slot</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="{{ route('time_slots.index') }}">
-                                    View All
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('time_slots.create') }}">
-                                    Add New
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
 
-{{--                    <li class="has-submenu">--}}
-{{--                        <a href="#">Routine Committee</a>--}}
-{{--                        <ul class="submenu">--}}
-{{--                            <li>--}}
-{{--                                <a href="#">--}}
-{{--                                    View All--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                            <li>--}}
-{{--                                <a href="#">--}}
-{{--                                    Add New--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                        </ul>--}}
-{{--                    </li>--}}
-                    <li class="">
-                        <a href="{{ route('day_wise_slots') }}">Day Wise Slot</a>
-                    </li>
+                                {{--                            <li>--}}
+                                {{--                                <a href="{{ route('theory_section') }}">--}}
+                                {{--                                    Add New--}}
+                                {{--                                </a>--}}
+                                {{--                            </li>--}}
+                                {{--                            <li class="has-submenu">--}}
+                                {{--                                <a href="#">Section - Students</a>--}}
+                                {{--                                <ul class="submenu">--}}
+                                {{--                                    <li>--}}
+                                {{--                                        <a href="{{ route('section_students.index') }}">--}}
+                                {{--                                            View all--}}
+                                {{--                                        </a>--}}
+                                {{--                                    </li>--}}
+                                {{--                                    <li>--}}
+                                {{--                                        <a href="{{ route('section_students.create') }}">--}}
+                                {{--                                            Add New--}}
+                                {{--                                        </a>--}}
+                                {{--                                    </li>--}}
+                                {{--                                </ul>--}}
+                                {{--                            </li>--}}
+                            </ul>
+                        </li>
+
+                        <li class="has-submenu">
+                            <a href="#">Time Slot</a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="{{ route('time_slots.index') }}">
+                                        View All
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('time_slots.create') }}">
+                                        Add New
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="has-submenu">
+                            <a href="#">Course Offers</a>
+                            <ul class="submenu">
+                                <li>
+                                    <a href="{{ route('course_offers.index') }}">
+                                        View All
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('course_offers.create') }}">
+                                        Add New
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        {{--                    <li class="has-submenu">--}}
+                        {{--                        <a href="#">Routine Committee</a>--}}
+                        {{--                        <ul class="submenu">--}}
+                        {{--                            <li>--}}
+                        {{--                                <a href="#">--}}
+                        {{--                                    View All--}}
+                        {{--                                </a>--}}
+                        {{--                            </li>--}}
+                        {{--                            <li>--}}
+                        {{--                                <a href="#">--}}
+                        {{--                                    Add New--}}
+                        {{--                                </a>--}}
+                        {{--                            </li>--}}
+                        {{--                        </ul>--}}
+                        {{--                    </li>--}}
+                        <li class="">
+                            <a href="{{ route('day_wise_slots') }}">Day Wise Slot</a>
+                        </li>
 
                     @endif
 
                     @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin' || Auth::user()->role == 'user' )
-                    <li class="has-submenu">
-                        <a href="#">Generate Routine</a>
-                        <ul class="submenu">
-                            @if(!empty($y_session))
-                                @foreach($y_session as $session)
-                                    <li>
-                                        <a href="{{ route('full_routine',$session->id) }}">
-                                            {{ $session->session_name. '-' . $session->year}}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            @endif
-                        </ul>
-                    </li>
+                        <li class="has-submenu">
+                            <a href="#">Generate Routine</a>
+                            <ul class="submenu">
+                                @if(!empty($y_session))
+                                    @foreach($y_session as $session)
+                                        <li>
+                                            <a href="{{ route('full_routine',$session->id) }}">
+                                                {{ $session->session_name. '-' . $session->year}}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @endif
+                            </ul>
+                        </li>
                     @endif
 
 
                     @if (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin' || Auth::user()->role == 'user' && Auth::user()->is_teacher == 'yes')
-                    <li class="has-submenu">
-                        <a href="#">View Routine</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="{{ route('teacher_search') }}">
-                                    Teacher Wise
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('batch_search') }}">
-                                    Batch Wise
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="has-submenu">
+                            <a href="#">View Routine</a>
+                            <ul class="submenu">
+                                <li class="has-submenu">
+                                    <a href="">Single View</a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="{{ route('teacher_search') }}">Teacher Wise</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('batch_search') }}">Batch Wise</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="has-submenu">
+                                    <a href="">Routine List</a>
+                                    <ul class="submenu">
+                                        @if(!empty($y_session))
+                                            @foreach($y_session as $session)
+                                                <li>
+                                                    <a href="{{ route('routine_list',$session->id) }}">
+                                                        {{ $session->session_name. '-' . $session->year}}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        @endif
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
                     @endif
 
                 </ul>

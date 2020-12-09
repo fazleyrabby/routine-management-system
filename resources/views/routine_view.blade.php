@@ -27,7 +27,9 @@
                            style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <tbody>
                         @foreach($slots as $slot)
-                            <tr>
+                            @php $count = 0; @endphp
+                            @if($slot->slug == 'SAT' || $slot->slug == 'FRI')
+                                <tr>
                                 <th class="p-0" style="overflow: hidden">
                                     <span class="px-3 py-2 d-block border-bottom">Day/Time </span>
                                 </th>
@@ -56,7 +58,9 @@
 
                                 @endforeach
 
+
                             </tr>
+                            @endif
 
                             <tr>
                                 <td>

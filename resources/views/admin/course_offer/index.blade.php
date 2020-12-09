@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Batch')
+@section('title', 'Course')
 
 @section('stylesheets')
     <!-- DataTables -->
@@ -18,8 +18,10 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="mt-0 header-title mb-4">
-                                Batch - List
-                                <a href="{{ route('batches.create') }}" class="btn btn-sm btn-primary float-right">Add New</a>
+                                Course - List
+                                <a href="{{ route('course_offers.create') }}"
+                                   class="btn btn-sm btn-primary float-right">Add
+                                    New</a>
                             </div>
                             @if (Session::has('message'))
                                 <div class="alert-dismissable alert alert-success">
@@ -35,49 +37,64 @@
                                     {{ Session('delete-message') }}
                                 </div>
                             @endif
-
-
                             <table id="datatable-buttons"
                                    class="table table-striped table-bordered dt-responsive nowrap"
                                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Department</th>
                                     <th>Batch</th>
-                                    <th>Shift</th>
+                                    <th>Session</th>
+                                    <th>Courses</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
-                                <tbody>
 
-                                @foreach($batches as $batch)
+                                <tbody>
+                                @foreach($course_offers as $course_offer)
+
                                     <tr>
-                                        <td>{{ $batch->id }}</td>
-                                        <td>{{ $batch->department->department_name }}</td>
-                                        <td>{{ $batch->batch_no }}</td>
-                                        <td>{{ $batch->shift->shift_name }}</td>
-                                        <td>{{ $batch->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
+                                        <td>{{ $i++ }}</td>
+                                        <td>{{ "$course_offer->department_name".$course_offer->batch_no."-".$course_offer->slug }}</td>
+                                        <td>{{ $course_offer->session_name."-".$course_offer->year }}</td>
                                         <td>
-                                            <a href="{{ route('batches.edit', $batch->id) }}"
-                                               class="btn btn-sm btn-primary">Edit
-                                            </a>
-                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{ $batch->id }}">Delete
+                                            <ul class="list-group">
+                                                @php $sl = 1; @endphp
+                                                @foreach(explode(',', $course_offer->course) as $key => $course)
+                                                    <li class="list-group-item"> {{ $sl++ }} - {{ $course }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td>{{ $course_offer->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
+                                        <td>
+                                            <a href="{{ route('course_offers.edit', $course_offer->course_offer_id) }}"
+                                               class="btn btn-sm btn-primary">Edit</a>
+
+                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
+                                                    data-target=".bs-example-modal-center{{$course_offer->course_offer_id}}">
+                                                Delete
                                             </button>
                                         </td>
                                     </tr>
-                                    <div class="modal fade bs-example-modal-center{{ $batch->id }}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    <div class="modal fade bs-example-modal-center{{$course_offer->course_offer_id}}"
+                                         tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                         aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5>Are you sure? You want to delete this?</h5>
                                                 </div>
                                                 <div class="modal-body">
-                                                    {!! Form::open(['route' => ['batches.destroy', $batch->id ], 'method' => 'delete', 'style' => 'display:inline']) !!}
+                                                    {!! Form::open(['route' => ['course_offers.destroy', $course_offer->course_offer_id ], 'method' => 'delete', 'style' => 'display:inline']) !!}
                                                     {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
                                                     {!! Form::close() !!}
-                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{$batch->id}}"> No </button>
+                                                    <button type="button"
+                                                            class="btn btn-lg btn-primary waves-effect waves-light"
+                                                            data-toggle="modal"
+                                                            data-target=".bs-example-modal-center{{$course_offer->course_offer_id}}">
+                                                        No
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>

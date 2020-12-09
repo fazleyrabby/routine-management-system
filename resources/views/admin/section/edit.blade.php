@@ -30,7 +30,13 @@
                                     {!! Form::label('Parent') !!}
                                 </div>
                                 <div class="col-md-10">
-                                    {!! Form::select('parent', $parent, $section->parent ,['class'=> 'form-control']) !!}
+{{--                                    {!! Form::select('parent', $parent, $section->parent ,['class'=> 'form-control']) !!}--}}
+                                    <select class="form-control" name="parent" id="">
+                                        <option value="0">Select section</option>
+                                        @foreach($parents as $parent)
+                                            <option {{ $section->parent == $parent->id ? 'selected' : '' }} value="{{ $parent->id }}">{{ $parent->section_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 

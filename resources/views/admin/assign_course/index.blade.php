@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Assign Course')
+@section('title', 'Course')
 
 @section('stylesheets')
     <!-- DataTables -->
@@ -18,8 +18,10 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="mt-0 header-title mb-4">
-                                Assigned Course - List
-                                <a href="{{ route('assign_courses.create') }}" class="btn btn-sm btn-primary float-right">Assign New</a>
+                                Course - List
+                                <a href="{{ route('assign_courses.create') }}"
+                                   class="btn btn-sm btn-primary float-right">Add
+                                    New</a>
                             </div>
                             @if (Session::has('message'))
                                 <div class="alert-dismissable alert alert-success">
@@ -41,57 +43,64 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Teacher Name</th>
-                                    <th>Designation</th>
-                                    <th>Course Code</th>
-                                    <th>Course Name</th>
-                                    <th>Credit</th>
-                                    <th>Program/Batch/Session</th>
+                                    <th>Teacher</th>
+                                    <th>Courses</th>
                                     <th>Session</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-{{--                                   @php $i = 1 @endphp--}}
-                                   @foreach($assign_courses as $assign_course)
+                                @foreach($assign_courses as $assign_course)
+
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>{{ $assign_course->teacher->user->firstname." ".$assign_course->teacher->user->lastname }}</td>
-                                        <td>{{ $assign_course->teacher->rank->rank }}</td>
-                                        <td>{{ $assign_course->course->course_code }}</td>
-                                        <td>{{ $assign_course->course->course_name }}</td>
-                                        <td>{{ $assign_course->course->credit }}</td>
-                                        <td>{{ $assign_course->batch->department->department_name. '-' . $assign_course->batch->batch_no. '-' . $assign_course->batch->shift->slug }}</td>
-                                        <td>{{ !empty($assign_course->session) ? $assign_course->session->session->session_name."-".$assign_course->session->year : '' }}</td>
+                                        <td>{{ $assign_course->firstname."-".$assign_course->lastname }}</td>
                                         <td>
-                                            <a href="{{ route('assign_courses.edit', $assign_course->id) }}"
+                                            <ul class="list-group">
+                                                @php $sl = 1; @endphp
+                                                @foreach(explode(',', $assign_course->course) as $key => $course)
+                                                    <li class="list-group-item"> {{ $sl++ }} - {{ $course }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                        <td>{{ $assign_course->session_name."-".$assign_course->year }}</td>
+                                        <td>{{ $assign_course->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
+                                        <td>
+                                            <a href="{{ route('assign_courses.edit', $assign_course->assign_courses_id) }}"
                                                class="btn btn-sm btn-primary">Edit</a>
 
-                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target=".bs-example-modal-center{{$assign_course->id}}">Delete</button>
+                                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal"
+                                                    data-target=".bs-example-modal-center{{$assign_course->assign_courses_id}}">
+                                                Delete
+                                            </button>
                                         </td>
-                                    </tr>
 
-{{--                                    @php $i++ @endphp--}}
-                                    <div class="modal fade bs-example-modal-center{{$assign_course->id}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                    </tr>
+                                    <div class="modal fade bs-example-modal-center{{$assign_course->assign_courses_id}}"
+                                         tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+                                         aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5>Are you sure? You want to delete this?</h5>
                                                 </div>
                                                 <div class="modal-body">
-                                                    {!! Form::open(['route' => ['assign_courses.destroy', $assign_course->id ], 'method' => 'delete', 'style' => 'display:inline']) !!}
+                                                    {!! Form::open(['route' => ['assign_courses.destroy', $assign_course->assign_courses_id ], 'method' => 'delete', 'style' => 'display:inline']) !!}
                                                     {!! Form::submit('Yes', ['class' => 'btn btn-lg btn-danger']) !!}
                                                     {!! Form::close() !!}
-                                                    <button type="button" class="btn btn-lg btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-center{{$assign_course->id}}"> No </button>
+                                                    <button type="button"
+                                                            class="btn btn-lg btn-primary waves-effect waves-light"
+                                                            data-toggle="modal"
+                                                            data-target=".bs-example-modal-center{{$assign_course->assign_courses_id}}">
+                                                        No
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    @endforeach
-
-
-
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>

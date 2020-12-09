@@ -35,6 +35,7 @@
                    style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                 <tbody>
                 @foreach($slots as $slot)
+                    @if($slot->slug == 'SAT' || $slot->slug == 'FRI')
                     <tr>
                         <th width="10px"  style="overflow: hidden">
                             <span>Day/Time </span>
@@ -64,6 +65,7 @@
                         @endforeach
 
                     </tr>
+                    @endif
 
                     <tr>
                         <td style="text-align: center; border: none">

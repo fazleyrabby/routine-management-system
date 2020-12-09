@@ -42,7 +42,12 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::resource('batches', 'BatchController')->middleware('auth_admin');
     Route::resource('sections', 'SectionController')->middleware('auth_admin');
 
+
+
     Route::resource('users', 'UserController');
+
+    Route::get('teacher_offday/{teacher_id}','UserController@teacher_offday')->name('teacher_offday');
+    Route::post('assign_teacher_offday','UserController@assign_teacher_offday')->name('assign_teacher_offday');
 
     Route::get('profile_edit/{id}', 'UserController@profile_edit')->name('profile_edit');
     Route::get('password_edit', 'UserController@password_edit')->name('password_edit');
@@ -80,11 +85,12 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::post('routine_reset', 'FullRoutineController@reset')->name('routine_reset')->middleware('auth_admin');
     Route::post('routine_cell_delete', 'FullRoutineController@routine_cell_delete')->name('routine_cell_delete')->middleware('auth_admin');
 
-
-
     Route::post('class_slot_update', 'FullRoutineController@class_slot_update')->name('class_slot_update');
 
     Route::post('teacher_wise_view', 'FullRoutineController@teacher_wise_view')->name('teacher_wise_view');
+
+    Route::get('routine_list/{session}', 'FullRoutineController@routine_list')->name('routine_list');
+
 
     Route::get('teacher_search', 'FullRoutineController@teacher_search')->name('teacher_search');
     Route::get('batch_search', 'FullRoutineController@batch_search')->name('batch_search');
@@ -98,6 +104,8 @@ Route::group(['prefix' => 'admin','middleware' => 'auth'], function () {
     Route::post('routine_committee_status', 'RoutineCommitteeController@routine_committee_status')->name('routine_committee_status');
 
     Route::get('roles', 'AdminController@roles')->name('roles');
+
+    Route::resource('course_offers', 'CourseOfferController');
 });
 
 #============================ *Logout Route* ============================#

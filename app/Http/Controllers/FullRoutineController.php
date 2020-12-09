@@ -6,13 +6,13 @@ use App\Models\Day;
 use App\Models\DayWiseSlot;
 use App\Models\FullRoutine;
 use App\Models\RoutineCommittee;
-use App\Models\Section;
-use App\Models\SectionStudent;
+// use App\Models\Section;
+// use App\Models\SectionStudent;
 use App\Models\Shift;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Course;
-use App\Models\Batch;
+// use App\Models\Batch;
 use App\Models\Room;
 use App\Models\TeachersOffday;
 use App\Models\YearlySession;
@@ -95,6 +95,35 @@ class FullRoutineController extends MasterController
 
         $teachers = Teacher::with(['user','rank'])->where('is_active','yes')->get();
 
+//        select teacher_id, day_id, COUNT(DISTINCT day_id) from routine group by teacher_id
+        $assigned_class_distinct_day_count = FullRoutine::selectRaw('teacher_id, COUNT(DISTINCT day_id) as day_count')
+            ->groupBy('teacher_id')
+            ->get();
+//        $days = Day::get('id');
+//        $teachers_data_in_routine = FullRoutine::select('day_id', 'teacher_id')->where('yearly_session_id', $yearly_session)->get();
+
+//        $count = 0;
+//        $teacher_id_count = 0;
+//        $arr = array();
+//        $teacher_count = count($teachers_data_in_routine);
+//        foreach ($days as $day) {
+//            foreach ($teachers_data_in_routine as $key => $data)
+//
+//            if ($teacher_count >= $key){
+//                if ($data->day_id != $day->id && $teachers_data_in_routine[$key]->teacher_id == $teachers_data_in_routine[$key+1]->teacher_id){
+//                    $count++;
+//                }else{
+//                    $count = 0;
+//                }
+//                $arr[$data->teacher_id][$day->id] = $count;
+//            }
+//        }
+
+//        dd($arr);
+//        dd($classes_assigned_teacher_count);
+
+//        die();
+//        exit();
         $request_check = RoutineCommittee::where('receiver_id', Auth::user()->id)->first();
 
 
@@ -108,7 +137,7 @@ class FullRoutineController extends MasterController
         $courses = Course::where('is_active','yes')->get();
         $rooms = Room::where('is_active','yes')->get();
 
-        return view('admin.routine.index', compact('sections','slots','rooms','teachers','courses','yearly_session','day_wise_slots','request_check','last_created_by','last_edited_by'));
+        return view('admin.routine.index', compact('sections','slots','rooms','teachers','courses','yearly_session','day_wise_slots','request_check','last_created_by','last_edited_by','assigned_class_distinct_day_count'));
     }
 
     public function batch_search(){
@@ -122,8 +151,6 @@ class FullRoutineController extends MasterController
             ->leftJoin('yearly_sessions', 'yearly_sessions.id', '=', 'students.yearly_session_id')
             ->leftJoin('shift_sessions', 'shift_sessions.session_id', '=', 'yearly_sessions.session_id')
             ->get();
-
-
         return view('admin.routine.batch_search', compact('sessions','batches'));
     }
 
@@ -149,7 +176,6 @@ class FullRoutineController extends MasterController
         }
         ])->get();
 
-
         $day_wise_slots = DayWiseSlot::with('day','time_slot')->get();
 
         $batch = Student::select('*','sections.id as section_id','batch.id as batch_id')
@@ -172,7 +198,6 @@ class FullRoutineController extends MasterController
     }
 
     public function teacher_search(){
-
         $sessions = YearlySession::with('session')->where('is_active','yes')->get();
         $teachers = Teacher::with(['user','rank'])->where('is_active','yes')->get();
 
@@ -183,7 +208,6 @@ class FullRoutineController extends MasterController
 
 
 //        $slots = Day::with(['day_wise_slot','day_wise_slot.time_slot','day_wise_slot.routine','day_wise_slot.routine.course','day_wise_slot.routine.room'])->get();
-
 
         $teacher_detail = Teacher::with(['user','rank'])->where('is_active','yes')->where('user_id', Auth::user()->id)->first();
         $teacher_id = $teacher_detail->id;
@@ -212,6 +236,26 @@ class FullRoutineController extends MasterController
 
         return view('admin.routine.teacher_search', compact('sessions','teachers','slots','y_session_id','teacher_detail','day_wise_slots'));
     }
+
+    public function routine_list($yearly_session_id){
+        $teachers = Teacher::with(['user','rank'])->where('is_active','yes')->get();
+        $session = YearlySession::with('session')->where('id',$yearly_session_id)->first();
+
+//        $batches = Batch::with(['shift', 'department'])->get();
+
+        $batches = Student::select('*','sections.id as section_id','batch.id as batch_id')
+            ->leftJoin('section_students', 'section_students.student_id', '=', 'students.id')
+            ->leftJoin('sections', 'sections.id', '=', 'section_students.section_id')
+            ->leftJoin('batch', 'students.batch_id', '=', 'batch.id')
+            ->leftJoin('shifts', 'shifts.id', '=', 'batch.shift_id')
+            ->leftJoin('departments', 'departments.id', '=', 'batch.department_id')
+            ->leftJoin('yearly_sessions', 'yearly_sessions.id', '=', 'students.yearly_session_id')
+            ->leftJoin('shift_sessions', 'shift_sessions.session_id', '=', 'yearly_sessions.session_id')
+            ->get();
+
+        return view('admin.routine.routine_list', compact('teachers','session','batches'));
+    }
+
 
     public function teacher_wise_view(Request $request){
 
@@ -274,8 +318,6 @@ class FullRoutineController extends MasterController
         }
         ])->get();
 
-//        dd($slots);
-
 
 
         $yearly_session = YearlySession::with('session')->find($y_session_id);
@@ -292,12 +334,9 @@ class FullRoutineController extends MasterController
 
 
         $pdf_name = $teacher_detail->user->firstname."_".$teacher_detail->user->lastname."_".$yearly_session->session->session_name."_".$yearly_session->year;
-        return view('admin.routine.teacher_wise_print',$data);
-
-
+//        return view('admin.routine.teacher_wise_print',$data);
 
         $pdf = PDF::loadView('admin.routine.teacher_wise_print',$data);
-
         return $pdf->download('routine_'.$pdf_name.".pdf");
     }
 
@@ -310,11 +349,17 @@ class FullRoutineController extends MasterController
 
         $data = array();
         $type = Course::where('id',$request->id)->pluck('course_type')->first();
+        $time_slot = TimeSlot::where('id', $time_slot_id)->select('from', 'to')->first();
+        $time_range_in_hour = intval((strtotime($time_slot->to) - strtotime($time_slot->from))/3600);
 
 //        ->rightJoin('routine','routine.time_slot_id','=','time_slots.id')
 //            ->where('routine.day_id',$day_id)
 //            ->where('routine.batch_id',$batch_id)
 //            ->where('routine.section_id',$section_id)
+        if ($time_range_in_hour == 3){
+            return false;
+        }
+
         if ($type == 1){
                 $next = DB::table('time_slots')->select('id','from','to')
                     ->where('time_slots.from', '>' , function($query) use ($time_slot_id){
@@ -370,44 +415,27 @@ class FullRoutineController extends MasterController
                 return json_encode($data);
         }
 
-
-
     }
 
     public function create(Request $request)
     {
         $evening_shift_id = Shift::where('slug','D')->pluck('id')->first();
-
         $day_wise_slot = DayWiseSlot::where('day_id', $request->day_id)->where('time_slot_id', $request->time_slot_id)->pluck('class_slot')->first();
         $course = Course::where('id', $request->course_id)->select('course_type')->first();
-        $exist_class_slots = FullRoutine::where('day_id', $request->day_id)->where('time_slot_id', $request->time_slot_id)->count();
+//        $exist_class_slots = FullRoutine::where('day_id', $request->day_id)->where('time_slot_id', $request->time_slot_id)->where('course_type', 0)->count();
 //        $day_id = $day_wise_slot->day_id;
         $time_slot_id = $request->time_slot_id;
+
+        $exist_class_slots = DB::table('routine')->select('*')
+            ->where('routine.day_id' , $request->day_id)
+            ->where('routine.time_slot_id', $request->time_slot_id)
+            ->leftjoin('courses','courses.id', 'routine.course_id')
+            ->where('course_type', '0')
+            ->count();
         $data = array();
 
-//        dd(DB::table('time_slots')->where('time_slots.id',$time_slot_id)->get());
-//        $next = DB::table('time_slots')->where('from', '>' ,function($query) use ($time_slot_id){
-//            $query->from('time_slots')->select('from')->where('time_slots.id',$time_slot_id);
-//        })->where('type', function($query) use ($time_slot_id){
-//            $query->from('time_slots')->select('type')->where('time_slots.id',$time_slot_id);
-//        })->orderBy('from')->limit(1)->get();
-//
-//        $prev = DB::table('time_slots')->where('from', '<' ,function($query) use ($time_slot_id){
-//            $query->from('time_slots')->select('from')->where('time_slots.id',$time_slot_id);
-//        })->where('type', function($query) use ($time_slot_id){
-//            $query->from('time_slots')->select('type')->where('time_slots.id',$time_slot_id);
-//        })->orderBy('from','DESC')->limit(1)->get();
-//
-//
-//        dd($next);
-
-
-
-//
-//        DB::table('time_slots')->whereRaw("(select min(id) from time_slots where to > )")->get();
 
             if ($course->course_type == 0) {
-
                 $next = DB::table('time_slots')->select('id')
                     ->where('time_slots.from', '>', function ($query) use ($time_slot_id) {
                         $query->from('time_slots')->select('time_slots.from')->where('time_slots.id', $time_slot_id);
@@ -624,8 +652,6 @@ class FullRoutineController extends MasterController
         ])->count();
 
 
-
-
         $routine = new FullRoutine;
         $routine->batch_id = $request->batch_id;
         $routine->section_id = $request->section_id;
@@ -671,7 +697,7 @@ class FullRoutineController extends MasterController
 //                If total class exceeds from given class slot
 
                     if ($request->routine_id == ''){
-                        if ($day_wise_slot == $exist_class_slots) {
+                        if ($day_wise_slot == $exist_class_slots && $course->course_type == 0) {
                             $message = ['type' => 'error','text' => 'Class slot limit exceeded!'];
                             return json_encode($message);
                         }
@@ -734,13 +760,12 @@ class FullRoutineController extends MasterController
     }
 
 
-    public function  class_slot_update(Request $request){
+    public function class_slot_update(Request $request){
         $id = $request->id;
         $total_slot = $request->total_slot;
         if (Auth::user()->role == 'admin'){
             DayWiseSlot::where("id", $id)->update(["class_slot" => $total_slot]);
         }
-
     }
 
     public function reset(Request $request){

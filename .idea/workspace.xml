@@ -21,11 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="68c1187a-e521-4096-89c5-64b84bc2cc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FullRoutineController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FullRoutineController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/routine/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/routine/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/routine/teacher_wise_print.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/routine/teacher_wise_print.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/routine/teacher_wise_view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/routine/teacher_wise_view.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/routine_print.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/routine_print.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +163,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../shs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../pos" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
@@ -326,7 +321,8 @@
       <workItem from="1605371994064" duration="3568000" />
       <workItem from="1605442862338" duration="10947000" />
       <workItem from="1605511761019" duration="5546000" />
-      <workItem from="1605529487992" duration="14662000" />
+      <workItem from="1605529487992" duration="15074000" />
+      <workItem from="1605610235805" duration="333000" />
     </task>
     <servers />
   </component>
@@ -368,10 +364,10 @@
       <screen x="0" y="0" width="1536" height="832" />
     </state>
     <state x="548" y="64" key="#roles.blade.php/0.0.1536.832/1920.0.1920.1050@0.0.1536.832" timestamp="1604821679428" />
-    <state x="2660" y="280" key="FileChooserDialogImpl" timestamp="1605076044311">
+    <state x="2660" y="280" key="FileChooserDialogImpl" timestamp="1605610569684">
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>
-    <state x="2660" y="280" key="FileChooserDialogImpl/0.0.1536.832/1920.0.1920.1050@1920.0.1920.1050" timestamp="1605076044311" />
+    <state x="2660" y="280" key="FileChooserDialogImpl/0.0.1536.832/1920.0.1920.1050@1920.0.1920.1050" timestamp="1605610569684" />
     <state x="2714" y="448" key="NewPhpFileDialog" timestamp="1605372887497">
       <screen x="1920" y="0" width="1920" height="1050" />
     </state>

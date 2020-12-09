@@ -119,8 +119,6 @@ class RoutineCommitteeController extends MasterController
         //
     }
 
-
-
     public function temp_routine_access(Request $request){
         RoutineCommittee::where("receiver_id", $request->user_id)->update(["request_status" => 'expired']);
         Session::flash('message', 'Temporary access removed!');

@@ -79,6 +79,18 @@
                                                 <th>In Committee</th>
                                                 <td><strong class="text-uppercase">{{ $user->user->in_committee }}</strong></td>
                                             </tr>
+                                            <tr>
+
+                                                <th>Offday</th>
+                                                <td>
+                                                    @foreach($user->teachers_offday as $key => $offday)
+                                                        {{ count( $user->teachers_offday ) != $key + 1 ? $offday->day->slug.',' : $offday->day->slug }}
+                                                    @endforeach
+                                                    &nbsp;&nbsp;<a href="{{ route('teacher_offday', $user->id) }}"
+                                                                   class="btn btn-sm btn-secondary">Assign</a>
+                                                </td>
+
+                                            </tr>
 
                                             </tbody>
                                         @else
@@ -107,6 +119,8 @@
                                                 <th>In Committee</th>
                                                 <td><strong class="text-uppercase">{{ $user->in_committee }}</strong></td>
                                             </tr>
+
+
                                             </tbody>
                                         @endif
                                     </table>

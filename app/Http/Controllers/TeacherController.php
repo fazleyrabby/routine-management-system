@@ -48,17 +48,17 @@ class TeacherController extends MasterController
     {
 //        $this->validate($request, ['file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',]);
         $this->validate($request, [
-            'firstname' => 'required',
-            'lastname' => 'required',
+//            'firstname' => 'required',
+//            'lastname' => 'required',
             'email' => 'required',
-            'contact' => 'required',
+//            'contact' => 'required',
             'photo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5000'
         ],
             [
-                'firstname.required' => 'Enter First name',
-                'lastname.required' => 'Enter Last name',
+//                'firstname.required' => 'Enter First name',
+//                'lastname.required' => 'Enter Last name',
                 'email.required' => 'Enter email',
-                'contact.required' => 'Enter contact number',
+//                'contact.required' => 'Enter contact number',
             ]);
 
 

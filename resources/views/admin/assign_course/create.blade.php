@@ -73,72 +73,23 @@
 
 
                             <div class="col-md-12">
-                                <div class="form-group @if($errors->has('course_id')) has-error @endif">
-                                    {!! Form::label('Course') !!}
-{{--                                    {!! Form::select('course_id', null, ['class'=> 'form-control']) !!}--}}
-                                    <select class="form-control"  name="course_id">
-                                        <option value="">Select</option>
-{{--                                    <select name="course_id" id="" class="form-control">--}}
-                                        @foreach($courses as $course)
-                                            <option value={{ $course->id }} {{ old($course->id) }}> {{ $course->course_code." | ".$course->course_name. " | "  }} {{ $course->course_type == 0 ? 'Theory' : 'Sessional' }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('course_id'))
-                                        <span class="help-block">
-                                        {!! $errors->first('course_id') !!}
-                                    </span>
-                                    @endif
+                                <div class="form-group">
+
+                                        {!! Form::label('course Name') !!}
+
+
+                                        <select name="courses[]" class="select2 form-control select2-multiple" multiple="multiple" data-placeholder="Choose courses">
+                                            <optgroup>
+                                                @foreach($courses as $course)
+                                                    <option value={{ $course->id }} {{ old($course->id) }}> {{ $course->course_code." | ".$course->course_name. " | "  }} {{ $course->course_type == 0 ? 'Theory' : 'Sessional' }}</option>
+                                                @endforeach
+                                            </optgroup>
+                                        </select>
+
                                 </div>
                             </div>
 
 
-
-
-                                <div class="col-md-12">
-                                    <div class="form-group @if($errors->has('batch_id')) has-error @endif">
-                                        {!! Form::label('Batch') !!}
-{{--                                        {!! Form::select('batch_id', null, ['class'=> 'form-control']) !!}--}}
-                                        <select  name="batch_id" id="" class="form-control">
-                                            <option value="">Select</option>
-                                            @foreach($batches as $batch)
-                                                <option value={{ $batch->id }} {{ old($batch->id) }}> {{ $batch->department->department_name. '-' . $batch->batch_no. '-' . $batch->shift->slug}}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($errors->has('batch_id'))
-                                            <span class="help-block">
-                                            {!! $errors->first('batch_id') !!}
-                                        </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-{{--                                <div class="col-md-12">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        {!! Form::label('Department') !!}--}}
-{{--                                        {!! Form::select('department_id', null ,['class'=> 'form-control']) !!}--}}
-
-{{--                                        @if ($errors->has('department_id'))--}}
-{{--                                            <span class="help-block">--}}
-{{--                                            {!! $errors->first('department_id') !!}--}}
-{{--                                        </span>--}}
-{{--                                        @endif--}}
-
-{{--                                    </div>--}}
-{{--                                </div>--}}
-
-{{--                                <div class="col-md-12">--}}
-{{--                                    <div class="form-group">--}}
-{{--                                        {!! Form::label('Shift') !!}--}}
-{{--                                        {!! Form::select('shift_id', null ,['class'=> 'form-control']) !!}--}}
-
-{{--                                        @if ($errors->has('shift_id'))--}}
-{{--                                            <span class="help-block">--}}
-{{--                                            {!! $errors->first('shift_id') !!}--}}
-{{--                                        </span>--}}
-{{--                                        @endif--}}
-
-{{--                                    </div>--}}
-{{--                                </div>--}}
                             </div>
 
                             {!! Form::submit('Create',['class' => 'btn btn-sm btn-primary'] ) !!}
@@ -161,10 +112,6 @@
 
     <script>
         $(".select2").select2();
-
-        // $(".select2-limiting").select2({
-        //     maximumSelectionLength: 2
-        // });
     </script>
 @endpush
 

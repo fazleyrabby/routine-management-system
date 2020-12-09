@@ -61,11 +61,8 @@
                                         <td>{{ $section->section_name }}</td>
                                         <td>{{ (empty($section->sub)) ? "-" : $section->sub }}</td>
                                         <td>{{ $section->slug }}</td>
-                                        <td>{{ $section->type == 'lab' ? 'Lab' : 'Theory' }}</td>
-
                                         <td>{{ $section->is_active == 'yes' ? "Active" : "Inactive" }}</td>
-                                        </td>
-
+                                        <td>{{ $section->type == 'lab' ? 'Lab' : 'Theory' }}</td>
                                         <td>
                                             <a href="{{ route('sections.edit', $section->id) }}"
                                                class="btn btn-sm btn-primary">Edit</a>

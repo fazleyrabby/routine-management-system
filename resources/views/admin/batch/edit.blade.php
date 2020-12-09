@@ -27,7 +27,7 @@
                                 </div>
                             @endif
                             <div class="mt-0 header-title mb-4">
-                                Shift Session - Create
+                                Batch - Edit
                                 <a href="{{ route('batches.index') }}" class="btn btn-sm btn-primary float-right">Batch List</a>
                             </div>
                                 {!! Form::open(['route' => ['batches.update', $batch->id], "method"=>"put" ])!!}

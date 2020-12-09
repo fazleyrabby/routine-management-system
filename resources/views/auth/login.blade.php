@@ -77,12 +77,12 @@
 
                             </div>
 
-                            <div class="col-md-8 offset-md-4 pt-3">
-                                Don't have account??
-                                <a class="" href="{{ route('register') }}">
-                                    Register here
-                                </a>
-                            </div>
+{{--                            <div class="col-md-8 offset-md-4 pt-3">--}}
+{{--                                Don't have account??--}}
+{{--                                <a class="" href="{{ route('register') }}">--}}
+{{--                                    Register here--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
 
 
                         </div>

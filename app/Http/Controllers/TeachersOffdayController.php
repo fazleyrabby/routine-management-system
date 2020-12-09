@@ -29,7 +29,6 @@ class TeachersOffdayController extends MasterController
     {
         $days = Day::all();
         $teacher = Teacher::with(['user','teachers_offday'])->where('teachers.id',$id)->first();
-
         return view('admin.teacher.offday', compact('days','teacher'));
     }
 

@@ -9,6 +9,7 @@ use App\Models\Teacher;
 use App\Models\YearlySession;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AssignCourseController extends MasterController
 {
@@ -19,7 +20,29 @@ class AssignCourseController extends MasterController
      */
     public function index()
     {
-        $assign_courses = AssignCourse::with(['teacher','session','course','teacher.user','teacher.rank','session.session','batch','batch.shift','batch.department'])->get();
+//        $assign_courses = AssignCourse::with(['teacher','session','course','teacher.user','teacher.rank','session.session','batch','batch.shift','batch.department'])->get();
+
+//        $assign_courses = DB::table('assign_courses_to_teachers')
+//                ->select('assign_courses_to_teachers.id as assign_courses_to_teachers_id','users.firstname','users.lastname','years','', DB::raw("GROUP_CONCAT(courses.course_code,' | ',courses.course_name,' | ', if(courses.course_type='0','Theory','Sessional'), ' | Credit - ',courses.credit) as course "))
+//                ->leftJoin('teachers', 'teachers.id','assign_courses_to_teachers.teacher_id')
+//                ->leftJoin('users', 'teachers.user_id','users.id')
+//                ->leftJoin('yearly_sessions', 'assign_courses_to_teachers.session_id','yearly_sessions.id')
+//                ->leftJoin('sessions', 'yearly_sessions.session_id','sessions.id')
+//                ->leftJoin('batch', 'batch.id','assign_courses_to_teachers.batch_id')
+//                ->leftJoin('courses', 'courses.id','assign_courses_to_teachers.course_id')
+//                ->groupBy('teacher_id')
+//                ->get();
+
+        $assign_courses = AssignCourse::select("*","assign_courses_to_teachers.id as assign_courses_id", DB::raw("GROUP_CONCAT(courses.course_code,' | ',courses.course_name,' | ', if(courses.course_type='0','Theory','Sessional'), ' | Credit -',courses.credit) as course "))
+            ->leftJoin('yearly_sessions','yearly_sessions.id','assign_courses_to_teachers.session_id')
+            ->leftJoin('teachers', 'teachers.id','assign_courses_to_teachers.teacher_id')
+            ->leftJoin('users', 'teachers.user_id','users.id')
+            ->leftJoin('sessions','sessions.id','yearly_sessions.session_id')
+            ->leftjoin('courses',DB::raw("FIND_IN_SET(courses.id, assign_courses_to_teachers.courses)"),">", DB::raw("'0'"))
+            ->groupBy('assign_courses_to_teachers.id')
+            ->get();
+
+
 //        dd($courses);
 //        $course = AssignCourse::all();
 //        dd($assign_courses);
@@ -49,64 +72,26 @@ class AssignCourseController extends MasterController
      */
     public function store(Request $request)
     {
-        $existData = AssignCourse::where([
-            ['teacher_id',$request->teacher_id],
-            ['session_id',$request->session_id],
-            ['course_id',$request->course_id]
-        ])->first();
+        $courses = implode(",", $request->courses);
 
-
-        $this->validate($request, [
-            'session_id' => 'required',
-            'teacher_id' => 'required',
-            'course_id' => 'required',
-            'batch_id' => 'required'
-        ],
-            [
-                'session_id.unique' => 'Session already assigned',
-                'teacher_id.unique' => 'Teacher already assigned',
-                'course_id.unique' => 'Course already assigned',
-                'batch_id.unique' => 'Batch already assigned',
-            ]);
+        $exists = AssignCourse::where([
+            ['teacher_id', $request->teacher_id],
+            ['session_id', $request->session_id],
+        ])->count();
 
         $assign_course = new AssignCourse();
         $assign_course->session_id = $request->session_id;
+        $assign_course->courses = $courses;
         $assign_course->teacher_id = $request->teacher_id;
-        $assign_course->course_id = $request->course_id;
-        $assign_course->batch_id = $request->batch_id;
-        $assign_course->save();
 
-        if ($existData){
+        if ($exists){
             Session::flash('error', 'Data already assigned');
             return redirect()->route('assign_courses.create');
         }else{
             $assign_course->save();
-            Session::flash('message', 'Data assigned successfully');
+            Session::flash('success', 'Data assigned successfully');
             return redirect()->route('assign_courses.index');
         }
-
-////        dd($request->all());
-//        $count = AssignCourse::where('teacher_id',$request->teacher_id)->where('session_id',$request->session_id)->get()->count();
-////        dd($count);
-//        if ($count == 0){
-//            foreach ($request->course_id as $key => $course) {
-//                $data[] = [
-//                    'teacher_id' => $request->teacher_id,
-//                    'session_id' => $request->session_id,
-//                    'batch_id' => $request->batch_id,
-//                    'course_id' => $course,
-//                    'created_at' => now(),
-//                    'updated_at' => now()
-//                ];
-//            }
-////            AssignCourse::where('teacher_id',$request->teacher_id)->delete();
-//            AssignCourse::insert($data);
-//            return redirect()->route('assign_courses.index');
-//        }
-//        else{
-//            Session::flash('message', 'Already assigned for this teacher');
-//            return redirect()->route('assign_courses.create');
-//        }
     }
 
     /**
@@ -128,11 +113,10 @@ class AssignCourseController extends MasterController
      */
     public function edit(AssignCourse $assign_course)
     {
-        $batches = Batch::with(['shift','department'])->get();
         $teachers = Teacher::with(['user'])->get();
         $courses = Course::where('is_active','yes')->get();
         $sessions = YearlySession::with('session')->where('is_active','yes')->get();
-        return view('admin.assign_course.edit', compact('batches','teachers','courses','sessions','assign_course'));
+        return view('admin.assign_course.edit', compact('teachers','courses','sessions','assign_course'));
     }
 
     /**
@@ -144,38 +128,24 @@ class AssignCourseController extends MasterController
      */
     public function update(Request $request, AssignCourse $assign_course)
     {
-        $existData = AssignCourse::where([
-            ['id','!=',$assign_course->id],
-            ['teacher_id',$request->teacher_id],
-            ['session_id',$request->session_id],
-            ['course_id',$request->course_id]
-        ])->first();
+        $courses = implode(",", $request->courses);
 
-        $this->validate($request, [
-            'session_id' => 'required',
-            'teacher_id' => 'required',
-            'course_id' => 'required',
-            'batch_id' => 'required'
-        ],
-            [
-                'session_id.unique' => 'Session already assigned',
-                'teacher_id.unique' => 'Teacher already assigned',
-                'course_id.unique' => 'Course already assigned',
-                'batch_id.unique' => 'Batch already assigned',
-            ]);
+        $exists = AssignCourse::where([
+            ['teacher_id', $request->teacher_id],
+            ['id', '!=', $assign_course->id],
+            ['session_id', $request->session_id],
+        ])->count();
 
         $assign_course->session_id = $request->session_id;
+        $assign_course->courses = $courses;
         $assign_course->teacher_id = $request->teacher_id;
-        $assign_course->course_id = $request->course_id;
-        $assign_course->batch_id = $request->batch_id;
 
-
-        if ($existData){
+        if ($exists){
             Session::flash('error', 'Data already assigned');
-            return redirect()->route('assign_courses.edit', $assign_course->id);
+            return redirect()->route('assign_courses.edit',$assign_course->id);
         }else{
             $assign_course->save();
-            Session::flash('message', 'Data assigned successfully');
+            Session::flash('success', 'Data updated successfully');
             return redirect()->route('assign_courses.index');
         }
 
