@@ -8,31 +8,10 @@
 | 6 | Sessions &amp; Yearly Sessions | <ol><li>Create Sessions (example: Fall, Summer, Spring) </li><li>Edit / Delete Sessions3. Generate Yearly Sessions every year which includes sessions (example: Fall-2020, Summer-2020, Spring-2020)</li><li>Activate or Deactivate yearly sessions</li></ol> |
 | 7 | Teacher Ranks | <ol><li> Create Teacher Ranks (example: Lecturer, Sr. Lecturer)</li><li>Edit / Delete Teacher Ranks</li></ol> |
 | 8 | Teacher Management | <ol><li> Add New Teacher with their corresponding information which includes role, rank and photo etc. </li><li>Edit / Delete Teacher Data</li><li>Assign teachers off day</li><li>Assigning teachers in routine committee</li><li>Inviting Teachers with expire time of accessing the main sheet</li><li>Revoke access of main sheet</li></ol> |
-| 9 | Teacher Workloads |1. Assign courses to teachers including the yearly session2. Edit / Delete Workload Data|
-| 10 | Student Management Batch &amp; Section Wise |
-1. Assign number of students in a batch including the yearly session and shifts
-2. Assign number of students theory and lab wise
-3. Edit / Delete Assigned Data
-|
-| 11 | Time Slot Management |
-1. Create Time Slots by Start time and end time
-2. Edit / Delete time slots
- |
-| 12 | Course Offers |
-1. Assign Courses to Batch with sessions
-2. Edit / Delete Course offers data
- |
-| 13 | Day wise time &amp; Class slot management |
-1. Assign Time Slots to Days
-2. Assign Class Slots to Day and time slot
-3. Edit Information of day
- |
-| 16 | Assign Data in Main Sheet |
-1. Assign data (Teacher, Course, Room) in main sheet
-2. Edit Assigned Data
- |
-| 17 | Routine View &amp; Download |
-1. List view for batch and teachers
-2. Search Teacher and batch view
-3. Download as PDF
- |
+| 9 | Teacher Workloads |  <ol><li>Assign courses to teachers including the yearly session</li><li>Edit / Delete Workload Data </li> </ol> |
+| 10 | Student Management Batch &amp; Section Wise |  <ol><li>Assign number of students in a batch including the yearly session and shifts</li><li>Assign number of students theory and lab wise </li><li>Edit / Delete Assigned Data </li> </ol> |
+| 11 | Time Slot Management | <ol><li>Create Time Slots by Start time and end time</li><li>Edit / Delete time slots</li></ol> |
+| 12 | Course Offers | <ol><li>Assign Courses to Batch with sessions</li><li>Edit / Delete Course offers data</li></ol> |
+| 13 | Day wise time &amp; Class slot management | <ol><li>Assign Time Slots to Days</li><li>Assign Class Slots to Day and time slot</li><li>Edit Information of day</li></ol>|
+| 16 | Assign Data in Main Sheet |<ol><li>Assign data (Teacher, Course, Room) in main sheet</li><li>Edit Assigned Data</li></ol>|
+| 17 | Routine View &amp; Download | <ol><li>List view for batch and teachers</li><li>Search Teacher and batch view</li><li>Download as PDF</li></ol>|
