@@ -4,7 +4,6 @@
 <li>System study of the manual system practiced for class routine management.</li>
 <li>Design and Development a dynamic web application for faculty.</li>
 <li>Implementation of Class Routine Management System.</li>
-<li>User training and documentation.</li>
 <li>Maintenance of the Class Routine Management System.</li>
 </ul>
 
