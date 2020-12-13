@@ -1,11 +1,6 @@
 | **SL** | **Module Title** | **Description** |
 | --- | --- | --- |
-| 1 | Batch | 
-<ol>
-<li>Create Batch with Department, Batch No. and Shift</li>
-<li>Edit / Delete Batch </li>
-</ol>
-|
+| 1 | Batch | <ol> <li>Create Batch with Department, Batch No. and Shift</li><li>Edit / Delete Batch </li> </ol>|
 | 2 | Departments |
 1. Create Departments (example: CSE, MBA etc.)
 2. Edit / Delete Departments
