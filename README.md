@@ -1,18 +1,9 @@
 | **SL** | **Module Title** | **Description** |
 | --- | --- | --- |
-| 1 | Batch | <ol> <li>Create Batch with Department, Batch No. and Shift</li><li>Edit / Delete Batch </li> </ol>|
-| 2 | Departments |
-1. Create Departments (example: CSE, MBA etc.)
-2. Edit / Delete Departments
- |
-| 3 | Courses |
-1. Create Courses with Course Code, Credit and Course type (example: Data Communication-CSE435-3-Theory etc.)
-2. Edit / Delete Courses
- |
-| 4 | Rooms |
-1. Create Rooms with Building, Room no, Capacity (example: A-101-Theory, B-203-Lab etc.)
-2. Edit / Delete Rooms
- |
+| 1 | Batch | <ol><li>Create Batch with Department, Batch No. and Shift</li><li>Edit / Delete Batch </li> </ol>|
+| 2 | Departments | <ol><li> Create Departments (example: CSE, MBA etc.) </li><li>  Edit / Delete Departments </li> </ol> |
+| 3 | Courses | <ol><li>Create Courses with Course Code, Credit and Course type (example: Data Communication-CSE435-3-Theory etc.) </li> <li>Edit / Delete Courses</li> <ol>|
+| 4 | Rooms | <ol> <li>Create Rooms with Building, Room no, Capacity (example: A-101-Theory, B-203-Lab etc.)</li> <li>Edit / Delete Rooms</li> </ol> |
 | 5 | Sections |
 1. Create different sections and their sub sections including their type (example: A-Theory, A1-Lab)
 2. Edit / Delete Sections
