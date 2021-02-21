@@ -1,4 +1,4 @@
-### The scope for works will include the followings:
+### The scope for works include the followings:
 
 <ul>
 <li>System study of the manual system practiced for class routine management.</li>
