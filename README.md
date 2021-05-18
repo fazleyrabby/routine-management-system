@@ -30,19 +30,32 @@
     
     
 ### Some Screenshots:
+###Teachers
 ![Teachers](https://user-images.githubusercontent.com/26044286/118698795-a3263d80-b832-11eb-91b3-6989a31ff063.png)
+###Teacher Update
 ![Teacher Update](https://user-images.githubusercontent.com/26044286/118699254-221b7600-b833-11eb-9c52-86239f863a9f.png)
+###Batch Wise Student
 ![Batch Wise Student](https://user-images.githubusercontent.com/26044286/118699326-36f80980-b833-11eb-826f-03087c64ba15.png)
+###Time Slot
 ![Time Slot](https://user-images.githubusercontent.com/26044286/118699334-38c1cd00-b833-11eb-8eaf-edc33e0beede.png)
+###Courses
 ![Courses](https://user-images.githubusercontent.com/26044286/118699339-39f2fa00-b833-11eb-97ff-dd1f9fcb8525.png)
+###Time Wise Class Slots
 ![Time Wise Class Slots](https://user-images.githubusercontent.com/26044286/118699347-3cedea80-b833-11eb-8a85-75f27a195c7b.png)
-![Teacher   Batch wise routine list](https://user-images.githubusercontent.com/26044286/118699383-47a87f80-b833-11eb-9270-c2b77e254115.png)
+###Teacher Batch wise routine list
+![Teacher Batch wise routine list](https://user-images.githubusercontent.com/26044286/118699383-47a87f80-b833-11eb-9270-c2b77e254115.png)
+###Batch Routine PDF
 ![Batch Routine PDF](https://user-images.githubusercontent.com/26044286/118699387-49724300-b833-11eb-94f7-067a2237686f.png)
+###Batch Routine View
 ![Batch Routine View](https://user-images.githubusercontent.com/26044286/118699390-4a0ad980-b833-11eb-9b9f-762c836437f9.png)
+###Teacher Routine PDF
 ![Teacher Routine PDF](https://user-images.githubusercontent.com/26044286/118699394-4b3c0680-b833-11eb-8645-e28171811535.png)
+###Teacher Routine View
 ![Teacher Routine View](https://user-images.githubusercontent.com/26044286/118699396-4bd49d00-b833-11eb-8412-41064e4362f4.png)
+###Main Routine Sheet
 ![Main Routine Sheet](https://user-images.githubusercontent.com/26044286/118699397-4c6d3380-b833-11eb-80cb-79d7ec49edf4.png)
-![Day WIse Time Slot   Class Slot Count](https://user-images.githubusercontent.com/26044286/118699400-4d05ca00-b833-11eb-8c7f-e0023804417e.png)
+###Day WIse Time Slot Class Slot Count
+![Day WIse Time Slot Class Slot Count](https://user-images.githubusercontent.com/26044286/118699400-4d05ca00-b833-11eb-8c7f-e0023804417e.png)
 
 
 
