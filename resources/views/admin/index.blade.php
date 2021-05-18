@@ -162,7 +162,6 @@
                                                 <td>{{ ucwords($teacher->user->contact) }}</td>
                                                 <td>{{ $teacher->is_active == 'yes' ? 'Active' : 'Inactive' }}</td>
                                             </tr>
-
                                         @endforeach
                                         </tbody>
                                     </table>
