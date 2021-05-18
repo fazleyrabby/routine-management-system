@@ -43,7 +43,6 @@ CREATE TABLE `assigned_class` (
 --
 -- Table structure for table `assign_courses_to_teachers`
 --
-
 CREATE TABLE `assign_courses_to_teachers` (
   `id` int(10) UNSIGNED NOT NULL,
   `session_id` int(10) UNSIGNED DEFAULT NULL,

@@ -153,7 +153,7 @@
                                         <tbody>
                                         @foreach($teachers as $teacher)
                                             <tr>
-                                                <td>{{ $teacher->id }}</td>
+                                            <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $teacher->user->firstname." ".$teacher->user->lastname }}</td>
                                                 <td>{{ $teacher->department->department_name }}</td>
                                                 <td>{{ $teacher->rank->rank }}</td>
@@ -192,7 +192,7 @@
                                         <tbody>
                                         @foreach($rooms as $room)
                                             <tr>
-                                                <td>{{ $room->id }}</td>
+                                            <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $room->building }}</td>
                                                 <td>{{ $room->room_no }}</td>
                                                 <td>{{ $room->room_type == '0' ? 'Theory' : 'Lab' }}</td>
@@ -233,7 +233,7 @@
                                         <tbody>
                                         @foreach($courses as $course)
                                             <tr>
-                                                <td>{{ $course->id }}</td>
+                                                <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $course->course_name }}</td>
                                                 <td>{{ $course->course_code }}</td>
                                                 <td>{{ $course->credit }}</td>
@@ -247,16 +247,6 @@
                             </div>
                         </div>
                     </div>
-{{--                    <div class="col-xl-6">--}}
-{{--                        <div class="card">--}}
-{{--                            <div class="card-body">--}}
-{{--                                <h4 class="mt-0 header-title mb-4">Rooms</h4>--}}
-{{--                                <div class="table-responsive order-table">--}}
-
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
                 </div>
 
 
