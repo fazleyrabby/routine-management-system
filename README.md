@@ -45,7 +45,7 @@ This project was created using Laravel 7 and mysql on my last semester as my fin
 ![Courses](https://user-images.githubusercontent.com/26044286/118699339-39f2fa00-b833-11eb-97ff-dd1f9fcb8525.png)
 ### Time Wise Class Slots
 ![Time Wise Class Slots](https://user-images.githubusercontent.com/26044286/118699347-3cedea80-b833-11eb-8a85-75f27a195c7b.png)
-### Teacher Batch wise routine list
+### Teacher / Batch wise routine list
 ![Teacher Batch wise routine list](https://user-images.githubusercontent.com/26044286/118699383-47a87f80-b833-11eb-9270-c2b77e254115.png)
 ### Batch Routine PDF
 ![Batch Routine PDF](https://user-images.githubusercontent.com/26044286/118699387-49724300-b833-11eb-94f7-067a2237686f.png)
