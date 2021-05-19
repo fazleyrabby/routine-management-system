@@ -28,8 +28,8 @@ This project was created using Laravel 7 and mysql on my last semester as my fin
 | 11 | Time Slot Management | <ol><li>Create Time Slots by Start time and end time</li><li>Edit / Delete time slots</li></ol> |
 | 12 | Course Offers | <ol><li>Assign Courses to Batch with sessions</li><li>Edit / Delete Course offers data</li></ol> |
 | 13 | Day wise time &amp; Class slot management | <ol><li>Assign Time Slots to Days</li><li>Assign Class Slots to Day and time slot</li><li>Edit Information of day</li></ol>|
-| 16 | Assign Data in Main Sheet |<ol><li>Assign data (Teacher, Course, Room) in main sheet</li><li>Edit Assigned Data</li></ol>|
-| 17 | Routine View &amp; Download | <ol><li>List view for batch and teachers</li><li>Search Teacher and batch view</li><li>Download as PDF</li></ol>|
+| 14 | Assign Data in Main Sheet |<ol><li>Assign data (Teacher, Course, Room) in main sheet</li><li>Edit Assigned Data</li></ol>|
+| 15 | Routine View &amp; Download | <ol><li>List view for batch and teachers</li><li>Search Teacher and batch view</li><li>Download as PDF</li></ol>|
     
     
 ### Some Screenshots:
