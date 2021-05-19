@@ -57,7 +57,7 @@ This project was created using Laravel 7 and mysql on my last semester as my fin
 ![Teacher Routine View](https://user-images.githubusercontent.com/26044286/118699396-4bd49d00-b833-11eb-8412-41064e4362f4.png)
 ### Main Routine Sheet
 ![Main Routine Sheet](https://user-images.githubusercontent.com/26044286/118699397-4c6d3380-b833-11eb-80cb-79d7ec49edf4.png)
-### Day WIse Time Slot Class Slot Count
+### Day WIse Time Slot with Class Slot Count
 ![Day WIse Time Slot Class Slot Count](https://user-images.githubusercontent.com/26044286/118699400-4d05ca00-b833-11eb-8c7f-e0023804417e.png)
 
 
