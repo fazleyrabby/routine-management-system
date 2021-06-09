@@ -1,6 +1,8 @@
 ### Project Overview
 This project was created using Laravel 7 and mysql on my last semester as my final year project. The database design was completely done my me as my first laravel project I tried my best to make it as optimize as possible. Most of the complicated DB queries created with raw query as I was not much familiar with eloquent relationships at the beginning but recently I have worked with a team and improved my coding structure as well as eloquent relationship knowledge. This project was appreciated by my university faculty as it's almost a new concept of migrating a manual routine system to an automated one. As I can say this was not completed entriely because I was working alone in this project but I can surely say that I have gained alot of real world experience.
 
+(I am working on this project currently to modify unoptimized codes and Integrating AdminLTE 3)
+
 ### The scope for works include the followings:
 
 <ul>
